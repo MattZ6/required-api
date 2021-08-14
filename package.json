@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "bcrypt": "5.0.1",
+    "reflect-metadata": "0.1.13",
     "typeorm": "0.2.37"
   }
 }
