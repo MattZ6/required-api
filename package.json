@@ -6,5 +6,8 @@
     "email": "matt_z6@hotmail.com",
     "url": "https://github.com/mattz6"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "4.3.5"
+  }
 }
