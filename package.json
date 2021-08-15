@@ -8,6 +8,7 @@
   },
   "license": "MIT",
   "scripts": {
+    "dev": "tsnd --inspect --poll --transpile-only --ignore-watch node_modules --respawn src/main/server.ts",
     "typeorm": "tsnd ./node_modules/typeorm/cli"
   },
   "devDependencies": {
