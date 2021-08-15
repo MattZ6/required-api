@@ -6,6 +6,8 @@
     "email": "matt_z6@hotmail.com",
     "url": "https://github.com/mattz6"
   },
+  "repository": "https://github.com/MattZ6/authentication-app-api",
+  "bugs": "https://github.com/MattZ6/authentication-app-api/issues",
   "license": "MIT",
   "scripts": {
     "dev": "tsnd --inspect --poll --transpile-only --ignore-watch node_modules --respawn src/main/server.ts",
