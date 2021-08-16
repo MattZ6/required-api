@@ -1,11 +1,11 @@
-import { UserAlreadyExistsWithThisEmailError } from '../../../domain/error/UserAlreadyExistsWithThisEmail';
-import { ICreateUserUseCase } from '../../../domain/usecases/CreateUser';
-import { created, unprocessableEntity } from '../../helpers/http/http';
-import { IController } from '../../protocols/Controller';
-import { IHttpRespose } from '../../protocols/Http';
-import { SignUpRequest } from './SignUpController.types';
+import { UserAlreadyExistsWithThisEmailError } from '../../../../domain/error/UserAlreadyExistsWithThisEmail';
+import { ICreateUserUseCase } from '../../../../domain/usecases/CreateUser';
+import { created, unprocessableEntity } from '../../../helpers/http/http';
+import { IController } from '../../../protocols/Controller';
+import { IHttpRespose } from '../../../protocols/Http';
+import { SignUpRequest } from './types';
 
-export class SignUpController implements IController {
+export class CreateAccountController implements IController {
   constructor(private readonly createUserUseCase: ICreateUserUseCase) {}
 
   async handle(request: SignUpRequest): Promise<IHttpRespose> {
