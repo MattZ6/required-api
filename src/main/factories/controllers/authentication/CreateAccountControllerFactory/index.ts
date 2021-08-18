@@ -5,11 +5,11 @@ import { CreateAccountController } from '../../../../../presentation/controllers
 import { IController } from '../../../../../presentation/protocols/Controller';
 
 export const makeCreateAccountController = (): IController => {
-  const BcryotHashProvider = new BcryptHashProvider(12);
+  const bcryptHashProvider = new BcryptHashProvider(12);
 
   const createUserUseCase = new CreateUseUseCase(
     PostgresUsersRepository,
-    BcryotHashProvider,
+    bcryptHashProvider,
     PostgresUsersRepository
   );
 
