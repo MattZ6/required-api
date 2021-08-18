@@ -1,10 +1,10 @@
 import { hash, compare } from 'bcryptjs';
 
 import { ICompareHashProvider } from '@data/protocols/cryptography/hash/CompareHashProvider';
-import { ICreateHashProvider } from '@data/protocols/cryptography/hash/CreateHashProvider';
+import { IGenerateHashProvider } from '@data/protocols/cryptography/hash/GenerateHashProvider';
 
 export class BcryptHashProvider
-  implements ICreateHashProvider, ICompareHashProvider
+  implements IGenerateHashProvider, ICompareHashProvider
 {
   constructor(private readonly salt: number) {}
 
