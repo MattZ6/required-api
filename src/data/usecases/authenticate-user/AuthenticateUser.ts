@@ -7,13 +7,13 @@ import {
 } from '@domain/usecases/AuthenticateUser';
 
 import { IEncryptProvider } from '@data/protocols/cryptography/criptography/EncryptProvider';
-import { ICompareHash } from '@data/protocols/cryptography/hash/CompareHash';
+import { ICompareHashProvider } from '@data/protocols/cryptography/hash/CompareHashProvider';
 import { IFindUserByEmailRepository } from '@data/protocols/repositories/user/FindUserByEmailRepository';
 
 export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
   constructor(
     private readonly findUserByEmailRepository: IFindUserByEmailRepository,
-    private readonly compareHash: ICompareHash,
+    private readonly compareHashProvider: ICompareHashProvider,
     private readonly encryptProvider: IEncryptProvider
   ) {}
 
@@ -26,7 +26,7 @@ export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
       throw new UserNotFoundWithThisEmailError();
     }
 
-    const passwordsMatch = await this.compareHash.compare(
+    const passwordsMatch = await this.compareHashProvider.compare(
       password,
       user.password_hash
     );

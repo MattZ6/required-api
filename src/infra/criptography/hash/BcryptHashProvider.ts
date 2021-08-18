@@ -1,9 +1,11 @@
 import { hash, compare } from 'bcryptjs';
 
-import { ICompareHash } from '@data/protocols/cryptography/hash/CompareHash';
+import { ICompareHashProvider } from '@data/protocols/cryptography/hash/CompareHashProvider';
 import { ICreateHashProvider } from '@data/protocols/cryptography/hash/CreateHashProvider';
 
-export class BcryptHashProvider implements ICreateHashProvider, ICompareHash {
+export class BcryptHashProvider
+  implements ICreateHashProvider, ICompareHashProvider
+{
   constructor(private readonly salt: number) {}
 
   hash(value: string): Promise<string> {
