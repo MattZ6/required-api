@@ -2,14 +2,14 @@ import { UserAlreadyExistsWithThisEmailError } from '@domain/error/UserAlreadyEx
 import { IUserModel } from '@domain/models/User';
 import { ICreateUserUseCase, CreateUserDTO } from '@domain/usecases/CreateUser';
 
-import { ICreateHash } from '@data/protocols/cryptography/hash/CreateHash';
+import { ICreateHashProvider } from '@data/protocols/cryptography/hash/CreateHashProvider';
 import { ICheckIfUserExistsByEmail } from '@data/protocols/repositories/user/CheckIfUserExistsByEmail';
 import { ICreateUserRepository } from '@data/protocols/repositories/user/CreateUserRepository';
 
 export class CreateUseUseCase implements ICreateUserUseCase {
   constructor(
     private readonly checkIfUserExistsByEmail: ICheckIfUserExistsByEmail,
-    private readonly createHash: ICreateHash,
+    private readonly createHashProvider: ICreateHashProvider,
     private readonly createUserRepository: ICreateUserRepository
   ) {}
 
@@ -23,7 +23,7 @@ export class CreateUseUseCase implements ICreateUserUseCase {
       throw new UserAlreadyExistsWithThisEmailError();
     }
 
-    const passwordHash = await this.createHash.hash(password);
+    const passwordHash = await this.createHashProvider.hash(password);
 
     const user = await this.createUserRepository.create({
       name,
