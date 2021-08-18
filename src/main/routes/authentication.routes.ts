@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
-import { adaptRoute } from '../adapters/express/express-route-adapter';
-import { makeAuthenticateUserController } from '../factories/controllers/authentication/AuthenticateUserControllerFactory';
-import { makeCreateAccountController } from '../factories/controllers/authentication/CreateAccountControllerFactory';
+import { adaptRoute } from '@main/adapters/express/express-route-adapter';
+import { makeAuthenticateUserController } from '@main/factories/controllers/authentication/AuthenticateUserControllerFactory';
+import { makeCreateAccountController } from '@main/factories/controllers/authentication/CreateAccountControllerFactory';
 
 const authenticationRoutes = Router();
 

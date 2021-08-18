@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
-import { ServerError } from '../../../presentation/errors/ServerError';
-import { IController } from '../../../presentation/protocols/Controller';
+import { ServerError } from '@presentation/errors/ServerError';
+import { IController } from '@presentation/protocols/Controller';
 
 export const adaptRoute =
   (controller: IController) =>

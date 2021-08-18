@@ -1,13 +1,15 @@
 import { getRepository, Repository, Raw } from 'typeorm';
 
-import { ICheckIfUserExistsByEmail } from '../../../../../data/protocols/repositories/user/CheckIfUserExistsByEmail';
+import { IUserModel } from '@domain/models/User';
+
+import { ICheckIfUserExistsByEmail } from '@data/protocols/repositories/user/CheckIfUserExistsByEmail';
 import {
   CreateUserDTO,
   ICreateUserRepository,
-} from '../../../../../data/protocols/repositories/user/CreateUserRepository';
-import { IFindUserByEmailRepository } from '../../../../../data/protocols/repositories/user/FindUserByEmailRepository';
-import { IUserModel } from '../../../../../domain/models/User';
-import { User } from '../../entities/User';
+} from '@data/protocols/repositories/user/CreateUserRepository';
+import { IFindUserByEmailRepository } from '@data/protocols/repositories/user/FindUserByEmailRepository';
+
+import { User } from '@infra/database/typeorm/entities/User';
 
 class PostgresUsersRepository
   implements

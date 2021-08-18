@@ -1,9 +1,15 @@
-import { PasswordNotMatchError } from '../../../../domain/error/PasswordNotMatchError';
-import { UserNotFoundWithThisEmailError } from '../../../../domain/error/UserNotFoundWithThisEmail';
-import { IAuthenticateUserUseCase } from '../../../../domain/usecases/AuthenticateUser';
-import { notFound, ok, unprocessableEntity } from '../../../helpers/http/http';
-import { IController } from '../../../protocols/Controller';
-import { IHttpRespose } from '../../../protocols/Http';
+import { PasswordNotMatchError } from '@domain/error/PasswordNotMatchError';
+import { UserNotFoundWithThisEmailError } from '@domain/error/UserNotFoundWithThisEmail';
+import { IAuthenticateUserUseCase } from '@domain/usecases/AuthenticateUser';
+
+import {
+  notFound,
+  ok,
+  unprocessableEntity,
+} from '@presentation/helpers/http/http';
+import { IController } from '@presentation/protocols/Controller';
+import { IHttpRespose } from '@presentation/protocols/Http';
+
 import { AuthenticateUserRequest } from './types';
 
 export class AuthenticateUserController implements IController {

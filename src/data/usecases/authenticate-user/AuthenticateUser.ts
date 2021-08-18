@@ -1,13 +1,14 @@
-import { PasswordNotMatchError } from '../../../domain/error/PasswordNotMatchError';
-import { UserNotFoundWithThisEmailError } from '../../../domain/error/UserNotFoundWithThisEmail';
+import { PasswordNotMatchError } from '@domain/error/PasswordNotMatchError';
+import { UserNotFoundWithThisEmailError } from '@domain/error/UserNotFoundWithThisEmail';
 import {
   AccessTokenDTO,
   AuthenticateUserDTO,
   IAuthenticateUserUseCase,
-} from '../../../domain/usecases/AuthenticateUser';
-import { IEncryptProvider } from '../../protocols/cryptography/criptography/EncryptProvider';
-import { ICompareHash } from '../../protocols/cryptography/hash/CompareHash';
-import { IFindUserByEmailRepository } from '../../protocols/repositories/user/FindUserByEmailRepository';
+} from '@domain/usecases/AuthenticateUser';
+
+import { IEncryptProvider } from '@data/protocols/cryptography/criptography/EncryptProvider';
+import { ICompareHash } from '@data/protocols/cryptography/hash/CompareHash';
+import { IFindUserByEmailRepository } from '@data/protocols/repositories/user/FindUserByEmailRepository';
 
 export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
   constructor(

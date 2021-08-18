@@ -1,4 +1,4 @@
-import { IHttpRequest } from '../../../protocols/Http';
+import { IHttpRequest } from '@presentation/protocols/Http';
 
 type BodyRequest = {
   email: string;

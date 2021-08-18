@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { v4 as generateUuid } from 'uuid';
 
-import { IUserModel } from '../../../../domain/models/User';
+import { IUserModel } from '@domain/models/User';
 
 @Entity('users')
 export class User implements IUserModel {

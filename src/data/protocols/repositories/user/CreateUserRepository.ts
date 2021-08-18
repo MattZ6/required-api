@@ -1,4 +1,4 @@
-import { IUserModel } from '../../../../domain/models/User';
+import { IUserModel } from '@domain/models/User';
 
 export type CreateUserDTO = {
   name: string;

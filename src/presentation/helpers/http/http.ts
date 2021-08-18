@@ -1,4 +1,4 @@
-import { IHttpRespose } from '../../protocols/Http';
+import { IHttpRespose } from '@presentation/protocols/Http';
 
 export function ok<T = any>(data: T): IHttpRespose<T> {
   return {

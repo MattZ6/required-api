@@ -1,4 +1,4 @@
-import startDatabaseConnection from '../infra/database/typeorm';
+import startDatabaseConnection from '@infra/database/typeorm';
 
 console.log('Starting database connection...');
 
