@@ -1,5 +1,5 @@
 import { PasswordNotMatchError } from '@domain/error/PasswordNotMatchError';
-import { UserNotFoundWithThisEmailError } from '@domain/error/UserNotFoundWithThisEmail';
+import { UserNotFoundWithThisEmailError } from '@domain/error/UserNotFoundWithThisEmailError';
 import {
   AccessTokenDTO,
   AuthenticateUserDTO,

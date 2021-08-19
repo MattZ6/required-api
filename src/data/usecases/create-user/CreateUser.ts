@@ -1,4 +1,4 @@
-import { UserAlreadyExistsWithThisEmailError } from '@domain/error/UserAlreadyExistsWithThisEmail';
+import { UserAlreadyExistsWithThisEmailError } from '@domain/error/UserAlreadyExistsWithThisEmailError';
 import { IUserModel } from '@domain/models/User';
 import { ICreateUserUseCase, CreateUserDTO } from '@domain/usecases/CreateUser';
 

@@ -1,4 +1,4 @@
-import { UserAlreadyExistsWithThisEmailError } from '@domain/error/UserAlreadyExistsWithThisEmail';
+import { UserAlreadyExistsWithThisEmailError } from '@domain/error/UserAlreadyExistsWithThisEmailError';
 import { ICreateUserUseCase } from '@domain/usecases/CreateUser';
 
 import { created, unprocessableEntity } from '@presentation/helpers/http/http';
