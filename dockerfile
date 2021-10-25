@@ -8,6 +8,6 @@ RUN yarn
 
 COPY . .
 
-EXPOSE 3333
+EXPOSE ${APP_PORT}
 
 CMD ["yarn","dev"]
