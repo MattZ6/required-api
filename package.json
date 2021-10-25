@@ -1,6 +1,7 @@
 {
   "name": "authentication-app-api",
   "version": "0.0.0",
+  "license": "MIT",
   "author": {
     "name": "Matheus Felipe Zanin",
     "email": "matt_z6@hotmail.com",
@@ -8,10 +9,9 @@
   },
   "repository": "https://github.com/MattZ6/authentication-app-api",
   "bugs": "https://github.com/MattZ6/authentication-app-api/issues",
-  "license": "MIT",
   "scripts": {
-    "dev": "tsnd -r tsconfig-paths/register --inspect --poll --transpile-only --ignore-watch node_modules --respawn src/main/server.ts",
-    "typeorm": "tsnd -r tsconfig-paths/register ./node_modules/typeorm/cli"
+    "dev": "tsnd -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/main/server.ts",
+    "typeorm": "cross-env DATABASE_HOST=localhost tsnd -r tsconfig-paths/register ./node_modules/typeorm/cli"
   },
   "devDependencies": {
     "@types/bcryptjs": "2.4.2",
@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
+    "cross-env": "7.0.3",
     "express": "4.17.1",
     "jsonwebtoken": "8.5.1",
     "pg": "8.7.1",
