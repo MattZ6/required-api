@@ -6,7 +6,7 @@ import {
   IAuthenticateUserUseCase,
 } from '@domain/usecases/AuthenticateUser';
 
-import { IEncryptProvider } from '@data/protocols/cryptography/criptography/EncryptProvider';
+import { IEncryptProvider } from '@data/protocols/cryptography/cryptography/EncryptProvider';
 import { ICompareHashProvider } from '@data/protocols/cryptography/hash/CompareHashProvider';
 import { IFindUserByEmailRepository } from '@data/protocols/repositories/user/FindUserByEmailRepository';
 

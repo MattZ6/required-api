@@ -5,14 +5,14 @@ import PostgresUsersRepository from '@infra/database/typeorm/repositories/postgr
 import { AuthenticateUserController } from '@presentation/controllers/authentication/AuthenticateUserController';
 import { IController } from '@presentation/protocols/Controller';
 
-import { makeBcryptjsHashProvider } from '@main/factories/providers/criptography/BcryptjsHashProviderFactory';
-import { makeJWTCriptographyProvider } from '@main/factories/providers/criptography/JWTCriptographyProviderFactory';
+import { makeBcryptjsHashProvider } from '@main/factories/providers/cryptography/BcryptjsHashProviderFactory';
+import { makeJWTCryptographyProvider } from '@main/factories/providers/cryptography/JWTCryptographyProviderFactory';
 
 export const makeAuthenticateUserController = (): IController => {
   const authenticateUserUseCase = new AuthenticateUserUseCase(
     PostgresUsersRepository,
     makeBcryptjsHashProvider(),
-    makeJWTCriptographyProvider()
+    makeJWTCryptographyProvider()
   );
 
   return new AuthenticateUserController(authenticateUserUseCase);
