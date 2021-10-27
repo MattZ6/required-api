@@ -1,4 +1,4 @@
-import { UserNotFoundWithThisIdError } from '@domain/error/UserNotFoundWithThisIdError';
+import { UserNotFoundWithThisIdError } from '@domain/errors/UserNotFoundWithThisIdError';
 import { IGetProfileUseCase } from '@domain/usecases/GetProfile';
 
 import { notFound, ok } from '@presentation/helpers/http/http';

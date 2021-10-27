@@ -1,4 +1,4 @@
-import { UserNotFoundWithThisIdError } from '@domain/error/UserNotFoundWithThisIdError';
+import { UserNotFoundWithThisIdError } from '@domain/errors/UserNotFoundWithThisIdError';
 import { IUserModel } from '@domain/models/User';
 import { GetProfileDTO, IGetProfileUseCase } from '@domain/usecases/GetProfile';
 
