@@ -1,23 +1,18 @@
 import { AuthenticateUserUseCase } from '@data/usecases/authenticate-user/AuthenticateUser';
 
-import { JWTCriptographyProvider } from '@infra/criptography/criptography/JWTCriptographyProvider';
-import { BcryptjsHashProvider } from '@infra/criptography/hash/BcryptHashProvider';
 import PostgresUsersRepository from '@infra/database/typeorm/repositories/postgres/PostgresUsersRepository';
 
 import { AuthenticateUserController } from '@presentation/controllers/authentication/AuthenticateUserController';
 import { IController } from '@presentation/protocols/Controller';
 
-export const makeAuthenticateUserController = (): IController => {
-  const bcryptHashProvider = new BcryptjsHashProvider(12);
-  const jwtCriptographyProvider = new JWTCriptographyProvider(
-    process.env.AUTH_SECRET,
-    '15m'
-  );
+import { makeBcryptjsHashProvider } from '@main/factories/providers/cryptography/BcryptjsHashProviderFactory';
+import { makeJWTCryptographyProvider } from '@main/factories/providers/cryptography/JWTCryptographyProviderFactory';
 
+export const makeAuthenticateUserController = (): IController => {
   const authenticateUserUseCase = new AuthenticateUserUseCase(
     PostgresUsersRepository,
-    bcryptHashProvider,
-    jwtCriptographyProvider
+    makeBcryptjsHashProvider(),
+    makeJWTCryptographyProvider()
   );
 
   return new AuthenticateUserController(authenticateUserUseCase);

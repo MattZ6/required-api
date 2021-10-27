@@ -6,5 +6,6 @@ export interface IHttpRespose<B = any> {
 }
 
 export interface IHttpRequest<B = any> {
+  user_id: string;
   body?: B;
 }

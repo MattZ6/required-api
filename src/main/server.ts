@@ -1,25 +1,34 @@
 import startDatabaseConnection from '@infra/database/typeorm';
 
-console.log('Starting database connection...');
+console.log('⏳ Connecting to the database...');
 
 startDatabaseConnection()
   .then(async () => {
-    console.log('Database connection success');
+    console.log('👌 Connection established!');
 
     try {
-      console.log('Starting server...');
+      console.log('⏳ Starting server...');
 
       const app = (await import('./config/app')).default;
 
       app.listen(process.env.APP_PORT, () => {
         console.log(
-          `Server running at http://localhost:${process.env.APP_PORT}\n`
+          `🚀 Server is running at ${process.env.APP_URL}:${process.env.APP_PORT}\n`
         );
       });
     } catch (error) {
-      console.log('---------------------------------------');
-      console.log('---- Server initialization failure ----');
-      console.log('---------------------------------------');
+      console.log(
+        '\x1b[31m%s\x1b[0m',
+        '---------------------------------------'
+      );
+      console.log(
+        '\x1b[31m%s\x1b[0m',
+        '---- Server initialization failure ----'
+      );
+      console.log(
+        '\x1b[31m%s\x1b[0m',
+        '---------------------------------------'
+      );
 
       console.log('\n');
 
@@ -27,9 +36,9 @@ startDatabaseConnection()
     }
   })
   .catch(err => {
-    console.log('-------------------------------------');
-    console.log('---- Database connection failed ----');
-    console.log('-------------------------------------');
+    console.log('\x1b[31m%s\x1b[0m', '-------------------------------------');
+    console.log('\x1b[31m%s\x1b[0m', '---- Database connection failed ----');
+    console.log('\x1b[31m%s\x1b[0m', '-------------------------------------');
 
     console.log('\n');
 

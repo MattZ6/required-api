@@ -1,12 +1,12 @@
-import { PasswordNotMatchError } from '@domain/error/PasswordNotMatchError';
-import { UserNotFoundWithThisEmailError } from '@domain/error/UserNotFoundWithThisEmailError';
+import { PasswordNotMatchError } from '@domain/errors/PasswordNotMatchError';
+import { UserNotFoundWithThisEmailError } from '@domain/errors/UserNotFoundWithThisEmailError';
 import {
   AccessTokenDTO,
   AuthenticateUserDTO,
   IAuthenticateUserUseCase,
 } from '@domain/usecases/AuthenticateUser';
 
-import { IEncryptProvider } from '@data/protocols/cryptography/criptography/EncryptProvider';
+import { IEncryptProvider } from '@data/protocols/cryptography/cryptography/EncryptProvider';
 import { ICompareHashProvider } from '@data/protocols/cryptography/hash/CompareHashProvider';
 import { IFindUserByEmailRepository } from '@data/protocols/repositories/user/FindUserByEmailRepository';
 

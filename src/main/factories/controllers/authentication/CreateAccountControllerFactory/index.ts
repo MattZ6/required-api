@@ -1,17 +1,16 @@
 import { CreateUseUseCase } from '@data/usecases/create-user/CreateUser';
 
-import { BcryptjsHashProvider } from '@infra/criptography/hash/BcryptHashProvider';
 import PostgresUsersRepository from '@infra/database/typeorm/repositories/postgres/PostgresUsersRepository';
 
 import { CreateAccountController } from '@presentation/controllers/authentication/CreateAccountController';
 import { IController } from '@presentation/protocols/Controller';
 
-export const makeCreateAccountController = (): IController => {
-  const bcryptHashProvider = new BcryptjsHashProvider(12);
+import { makeBcryptjsHashProvider } from '@main/factories/providers/cryptography/BcryptjsHashProviderFactory';
 
+export const makeCreateAccountController = (): IController => {
   const createUserUseCase = new CreateUseUseCase(
     PostgresUsersRepository,
-    bcryptHashProvider,
+    makeBcryptjsHashProvider(),
     PostgresUsersRepository
   );
 

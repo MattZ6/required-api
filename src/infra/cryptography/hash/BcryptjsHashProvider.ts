@@ -8,11 +8,11 @@ export class BcryptjsHashProvider
 {
   constructor(private readonly salt: number) {}
 
-  hash(value: string): Promise<string> {
+  async hash(value: string): Promise<string> {
     return hash(value, this.salt);
   }
 
-  compare(value: string, hashedValue: string): Promise<boolean> {
+  async compare(value: string, hashedValue: string): Promise<boolean> {
     return compare(value, hashedValue);
   }
 }

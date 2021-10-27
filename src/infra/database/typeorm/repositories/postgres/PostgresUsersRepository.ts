@@ -8,6 +8,7 @@ import {
   ICreateUserRepository,
 } from '@data/protocols/repositories/user/CreateUserRepository';
 import { IFindUserByEmailRepository } from '@data/protocols/repositories/user/FindUserByEmailRepository';
+import { IFindUserByIdRepository } from '@data/protocols/repositories/user/FindUserByIdRepository';
 
 import { User } from '@infra/database/typeorm/entities/User';
 
@@ -15,7 +16,8 @@ class PostgresUsersRepository
   implements
     ICheckIfUserExistsByEmail,
     ICreateUserRepository,
-    IFindUserByEmailRepository
+    IFindUserByEmailRepository,
+    IFindUserByIdRepository
 {
   private repository: Repository<User>;
 
@@ -51,6 +53,10 @@ class PostgresUsersRepository
         }),
       },
     });
+  }
+
+  async findById(id: string): Promise<IUserModel | undefined> {
+    return this.repository.findOne(id);
   }
 }
 

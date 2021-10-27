@@ -1,8 +1,8 @@
 import { sign } from 'jsonwebtoken';
 
-import { IEncryptProvider } from '@data/protocols/cryptography/criptography/EncryptProvider';
+import { IEncryptProvider } from '@data/protocols/cryptography/cryptography/EncryptProvider';
 
-export class JWTCriptographyProvider implements IEncryptProvider {
+export class JWTCryptographyProvider implements IEncryptProvider {
   constructor(
     private readonly secret: string,
     private readonly expiresIn: string | number

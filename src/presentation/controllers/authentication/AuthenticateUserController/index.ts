@@ -1,5 +1,5 @@
-import { PasswordNotMatchError } from '@domain/error/PasswordNotMatchError';
-import { UserNotFoundWithThisEmailError } from '@domain/error/UserNotFoundWithThisEmailError';
+import { PasswordNotMatchError } from '@domain/errors/PasswordNotMatchError';
+import { UserNotFoundWithThisEmailError } from '@domain/errors/UserNotFoundWithThisEmailError';
 import { IAuthenticateUserUseCase } from '@domain/usecases/AuthenticateUser';
 
 import {
