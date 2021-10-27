@@ -23,7 +23,7 @@ export function authenticationMiddleware(
   let userId: string;
 
   try {
-    const { sub } = verify(token, process.env.AUTH_SECRET) as JwtPayload;
+    const { sub } = verify(token, process.env.JWT_AUTH_SECRET) as JwtPayload;
 
     userId = sub;
   } catch (error) {

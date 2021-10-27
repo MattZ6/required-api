@@ -21,7 +21,7 @@ services:
     container_name: auth_app_api
     restart: always
     ports:
-      - ${APP_PORT}:3333
+      - ${API_PORT}:3333
       - 9229:9229
     volumes:
       - .:/usr/app
