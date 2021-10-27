@@ -9,6 +9,7 @@ export const adaptRoute =
     try {
       const response = await controller.handle({
         body: req.body,
+        user_id: req.user_id,
       });
 
       return res.status(response.statusCode).json(response.body);
