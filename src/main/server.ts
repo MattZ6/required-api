@@ -11,9 +11,9 @@ startDatabaseConnection()
 
       const app = (await import('./config/app')).default;
 
-      app.listen(process.env.APP_PORT, () => {
+      app.listen(process.env.API_PORT, () => {
         console.log(
-          `🚀 Server is running at ${process.env.APP_URL}:${process.env.APP_PORT}\n`
+          `🚀 Server is running at ${process.env.API_URL}:${process.env.API_PORT}\n`
         );
       });
     } catch (error) {
