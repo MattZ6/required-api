@@ -9,7 +9,9 @@ import { v4 as generateUuid } from 'uuid';
 
 import { IUserModel } from '@domain/models/User';
 
-@Entity('users')
+import { tableNames } from '../constants';
+
+@Entity(tableNames.USERS)
 export class User implements IUserModel {
   @PrimaryColumn()
   id: string;
