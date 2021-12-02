@@ -2,13 +2,13 @@ import { getRepository, Repository, Raw } from 'typeorm';
 
 import { IUserModel } from '@domain/models/User';
 
-import { ICheckIfUserExistsByEmail } from '@data/protocols/repositories/user/CheckIfUserExistsByEmail';
 import {
   CreateUserDTO,
+  ICheckIfUserExistsByEmail,
   ICreateUserRepository,
-} from '@data/protocols/repositories/user/CreateUserRepository';
-import { IFindUserByEmailRepository } from '@data/protocols/repositories/user/FindUserByEmailRepository';
-import { IFindUserByIdRepository } from '@data/protocols/repositories/user/FindUserByIdRepository';
+  IFindUserByEmailRepository,
+  IFindUserByIdRepository,
+} from '@data/protocols/repositories/user';
 
 import { User } from '@infra/database/typeorm/entities/User';
 
