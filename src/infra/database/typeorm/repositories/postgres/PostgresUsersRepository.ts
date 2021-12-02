@@ -12,7 +12,7 @@ import {
 
 import { User } from '@infra/database/typeorm/entities/User';
 
-class PostgresUsersRepository
+export class PostgresUsersRepository
   implements
     ICheckIfUserExistsByEmail,
     ICreateUserRepository,
@@ -59,5 +59,3 @@ class PostgresUsersRepository
     return this.repository.findOne(id);
   }
 }
-
-export default new PostgresUsersRepository();
