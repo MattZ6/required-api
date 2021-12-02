@@ -1,9 +1,9 @@
 import { IHttpRequest } from '@presentation/protocols/Http';
 
-type BodyRequest = {
+type CreateAccountBodyRequest = {
   name: string;
   email: string;
   password: string;
 };
 
-export type SignUpRequest = IHttpRequest<BodyRequest>;
+export type CreateAccountRequest = IHttpRequest<CreateAccountBodyRequest>;

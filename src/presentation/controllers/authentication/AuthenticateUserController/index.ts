@@ -1,5 +1,7 @@
-import { PasswordNotMatchError } from '@domain/errors/PasswordNotMatchError';
-import { UserNotFoundWithThisEmailError } from '@domain/errors/UserNotFoundWithThisEmailError';
+import {
+  PasswordNotMatchError,
+  UserNotFoundWithThisEmailError,
+} from '@domain/errors';
 import { IAuthenticateUserUseCase } from '@domain/usecases/AuthenticateUser';
 
 import {
@@ -7,8 +9,7 @@ import {
   ok,
   unprocessableEntity,
 } from '@presentation/helpers/http/http';
-import { IController } from '@presentation/protocols/Controller';
-import { IHttpRespose } from '@presentation/protocols/Http';
+import { IController, IHttpRespose } from '@presentation/protocols';
 
 import { AuthenticateUserRequest } from './types';
 

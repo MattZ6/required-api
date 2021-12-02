@@ -1,16 +1,15 @@
-import { UserAlreadyExistsWithThisEmailError } from '@domain/errors/UserAlreadyExistsWithThisEmailError';
+import { UserAlreadyExistsWithThisEmailError } from '@domain/errors';
 import { ICreateUserUseCase } from '@domain/usecases/CreateUser';
 
 import { created, unprocessableEntity } from '@presentation/helpers/http/http';
-import { IController } from '@presentation/protocols/Controller';
-import { IHttpRespose } from '@presentation/protocols/Http';
+import { IController, IHttpRespose } from '@presentation/protocols';
 
-import { SignUpRequest } from './types';
+import { CreateAccountRequest } from './types';
 
 export class CreateAccountController implements IController {
   constructor(private readonly createUserUseCase: ICreateUserUseCase) {}
 
-  async handle(request: SignUpRequest): Promise<IHttpRespose> {
+  async handle(request: CreateAccountRequest): Promise<IHttpRespose> {
     try {
       const { name, email, password } = request.body;
 

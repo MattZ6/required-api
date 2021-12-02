@@ -1,9 +1,12 @@
-import { UserNotFoundWithThisIdError } from '@domain/errors/UserNotFoundWithThisIdError';
+import { UserNotFoundWithThisIdError } from '@domain/errors';
 import { IGetProfileUseCase } from '@domain/usecases/GetProfile';
 
 import { notFound, ok } from '@presentation/helpers/http/http';
-import { IController } from '@presentation/protocols/Controller';
-import { IHttpRequest, IHttpRespose } from '@presentation/protocols/Http';
+import {
+  IController,
+  IHttpRequest,
+  IHttpRespose,
+} from '@presentation/protocols';
 
 import { toProfileDTO } from './types';
 
@@ -14,9 +17,11 @@ export class GetProfileController implements IController {
     try {
       const { user_id } = request;
 
-      const profile = await this.getProfileUseCase.execute({ user_id });
+      const user = await this.getProfileUseCase.execute({ user_id });
 
-      return ok(toProfileDTO(profile));
+      const profile = toProfileDTO(user);
+
+      return ok(profile);
     } catch (error) {
       if (error instanceof UserNotFoundWithThisIdError) {
         return notFound(error);

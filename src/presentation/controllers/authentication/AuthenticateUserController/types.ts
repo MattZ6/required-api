@@ -1,8 +1,8 @@
 import { IHttpRequest } from '@presentation/protocols/Http';
 
-type BodyRequest = {
+type AuthenticateUserBodyRequest = {
   email: string;
   password: string;
 };
 
-export type AuthenticateUserRequest = IHttpRequest<BodyRequest>;
+export type AuthenticateUserRequest = IHttpRequest<AuthenticateUserBodyRequest>;
