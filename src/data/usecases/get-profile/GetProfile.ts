@@ -1,8 +1,8 @@
-import { UserNotFoundWithThisIdError } from '@domain/errors/UserNotFoundWithThisIdError';
+import { UserNotFoundWithThisIdError } from '@domain/errors';
 import { IUserModel } from '@domain/models/User';
 import { GetProfileDTO, IGetProfileUseCase } from '@domain/usecases/GetProfile';
 
-import { IFindUserByIdRepository } from '@data/protocols/repositories/user/FindUserByIdRepository';
+import { IFindUserByIdRepository } from '@data/protocols/repositories/user';
 
 export class GetProfileUseCase implements IGetProfileUseCase {
   constructor(

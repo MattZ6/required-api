@@ -1,10 +1,12 @@
-import { UserAlreadyExistsWithThisEmailError } from '@domain/errors/UserAlreadyExistsWithThisEmailError';
+import { UserAlreadyExistsWithThisEmailError } from '@domain/errors';
 import { IUserModel } from '@domain/models/User';
 import { ICreateUserUseCase, CreateUserDTO } from '@domain/usecases/CreateUser';
 
-import { IGenerateHashProvider } from '@data/protocols/cryptography/hash/GenerateHashProvider';
-import { ICheckIfUserExistsByEmail } from '@data/protocols/repositories/user/CheckIfUserExistsByEmail';
-import { ICreateUserRepository } from '@data/protocols/repositories/user/CreateUserRepository';
+import { IGenerateHashProvider } from '@data/protocols/cryptography/hash';
+import {
+  ICheckIfUserExistsByEmail,
+  ICreateUserRepository,
+} from '@data/protocols/repositories/user';
 
 export class CreateUseUseCase implements ICreateUserUseCase {
   constructor(
