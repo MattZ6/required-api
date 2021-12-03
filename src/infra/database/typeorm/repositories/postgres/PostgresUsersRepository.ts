@@ -8,6 +8,7 @@ import {
   ICreateUserRepository,
   IFindUserByEmailRepository,
   IFindUserByIdRepository,
+  IUpdateUserRepository,
 } from '@data/protocols/repositories/user';
 
 import { User } from '@infra/database/typeorm/entities/User';
@@ -17,7 +18,8 @@ export class PostgresUsersRepository
     ICheckIfUserExistsByEmail,
     ICreateUserRepository,
     IFindUserByEmailRepository,
-    IFindUserByIdRepository
+    IFindUserByIdRepository,
+    IUpdateUserRepository
 {
   private repository: Repository<User>;
 
@@ -57,5 +59,9 @@ export class PostgresUsersRepository
 
   async findById(id: string): Promise<IUserModel | undefined> {
     return this.repository.findOne(id);
+  }
+
+  async update(user: IUserModel): Promise<IUserModel> {
+    return this.repository.save(user);
   }
 }

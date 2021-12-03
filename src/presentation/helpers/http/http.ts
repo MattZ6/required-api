@@ -15,6 +15,12 @@ export function created<T = any>(data?: T): IHttpRespose<T> {
   };
 }
 
+export function noContent(): IHttpRespose<void> {
+  return {
+    statusCode: 204,
+  };
+}
+
 export function notFound(error: Error): IHttpRespose<Error> {
   return {
     statusCode: 404,
