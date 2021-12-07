@@ -28,6 +28,13 @@ export function notFound(error: Error): IHttpRespose<Error> {
   };
 }
 
+export function conflict(error: Error): IHttpRespose<Error> {
+  return {
+    statusCode: 409,
+    body: error,
+  };
+}
+
 export function unprocessableEntity(error: Error): IHttpRespose<Error> {
   return {
     statusCode: 422,
