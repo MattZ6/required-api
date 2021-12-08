@@ -8,7 +8,7 @@ import {
   ICreateUserRepository,
 } from '@data/protocols/repositories/user';
 
-export class CreateUseUseCase implements ICreateUserUseCase {
+export class CreateUserUseCase implements ICreateUserUseCase {
   constructor(
     private readonly checkIfUserExistsByEmail: ICheckIfUserExistsByEmailRepository,
     private readonly generateHashProvider: IGenerateHashProvider,
