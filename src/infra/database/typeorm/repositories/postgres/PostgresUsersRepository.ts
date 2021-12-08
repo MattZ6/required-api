@@ -4,7 +4,7 @@ import { IUserModel } from '@domain/models/User';
 
 import {
   CreateUserDTO,
-  ICheckIfUserExistsByEmail,
+  ICheckIfUserExistsByEmailRepository,
   ICreateUserRepository,
   IFindUserByEmailRepository,
   IFindUserByIdRepository,
@@ -15,7 +15,7 @@ import { User } from '@infra/database/typeorm/entities/User';
 
 export class PostgresUsersRepository
   implements
-    ICheckIfUserExistsByEmail,
+    ICheckIfUserExistsByEmailRepository,
     ICreateUserRepository,
     IFindUserByEmailRepository,
     IFindUserByIdRepository,

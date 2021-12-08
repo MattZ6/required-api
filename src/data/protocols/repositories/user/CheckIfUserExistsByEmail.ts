@@ -1,3 +1,3 @@
-export interface ICheckIfUserExistsByEmail {
+export interface ICheckIfUserExistsByEmailRepository {
   checkIfExistsByEmail(email: string): Promise<boolean>;
 }

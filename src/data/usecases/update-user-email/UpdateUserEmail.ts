@@ -8,7 +8,7 @@ import {
 } from '@domain/usecases/UpdateUserEmail';
 
 import {
-  ICheckIfUserExistsByEmail,
+  ICheckIfUserExistsByEmailRepository,
   IFindUserByIdRepository,
   IUpdateUserRepository,
 } from '@data/protocols/repositories/user';
@@ -16,7 +16,7 @@ import {
 export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
   constructor(
     private readonly findUserByIdRepository: IFindUserByIdRepository,
-    private readonly checkIfUserExistsByEmail: ICheckIfUserExistsByEmail,
+    private readonly checkIfUserExistsByEmail: ICheckIfUserExistsByEmailRepository,
     private readonly updateUserRepository: IUpdateUserRepository
   ) {}
 
@@ -32,6 +32,7 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
     const isSameEmail = user.email.toLowerCase() === email.toLowerCase();
 
     if (isSameEmail) {
+      // TODO: Criar um error para este caso
       throw new Error('Este já é o seu e-mail');
     }
 

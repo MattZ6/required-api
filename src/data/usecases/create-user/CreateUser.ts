@@ -4,13 +4,13 @@ import { ICreateUserUseCase, CreateUserDTO } from '@domain/usecases/CreateUser';
 
 import { IGenerateHashProvider } from '@data/protocols/cryptography/hash';
 import {
-  ICheckIfUserExistsByEmail,
+  ICheckIfUserExistsByEmailRepository,
   ICreateUserRepository,
 } from '@data/protocols/repositories/user';
 
 export class CreateUseUseCase implements ICreateUserUseCase {
   constructor(
-    private readonly checkIfUserExistsByEmail: ICheckIfUserExistsByEmail,
+    private readonly checkIfUserExistsByEmail: ICheckIfUserExistsByEmailRepository,
     private readonly generateHashProvider: IGenerateHashProvider,
     private readonly createUserRepository: ICreateUserRepository
   ) {}
