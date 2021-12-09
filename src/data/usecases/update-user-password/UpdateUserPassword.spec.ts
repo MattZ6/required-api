@@ -30,7 +30,7 @@ class FindUserByIdRepositoryStub implements IFindUserByIdRepository {
 }
 
 class CompareHashProviderStub implements ICompareHashProvider {
-  async compare(value: string, hashedValue: string): Promise<boolean> {
+  async compare(_: string, __: string): Promise<boolean> {
     return true;
   }
 }
