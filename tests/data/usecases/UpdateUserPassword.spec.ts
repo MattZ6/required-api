@@ -4,72 +4,39 @@ import {
 } from '@domain/errors';
 import { IUserModel } from '@domain/models/User';
 
+import { UpdateUserPasswordUseCase } from '@data/usecases/update-user-password/UpdateUserPassword';
+
 import {
-  ICompareHashProvider,
-  IGenerateHashProvider,
-} from '@data/protocols/cryptography/hash';
-import {
-  IFindUserByIdRepository,
-  IUpdateUserRepository,
-} from '@data/protocols/repositories/user';
+  CompareHashProviderSpy,
+  FindUserByIdRepositorySpy,
+  GenerateHashProviderSpy,
+  UpdateUserRepositorySpy,
+} from '../mocks';
 
-import { UpdateUserPasswordUseCase } from './UpdateUserPassword';
-
-class FindUserByIdRepositoryStub implements IFindUserByIdRepository {
-  async findById(id: string): Promise<IUserModel> {
-    return {
-      id,
-      name: 'John Doe',
-      email: 'john.doe@email.com',
-      password_hash: 'passwordhash',
-      created_at: new Date(),
-      updated_at: new Date(),
-    };
-  }
-}
-
-class CompareHashProviderStub implements ICompareHashProvider {
-  async compare(_: string, __: string): Promise<boolean> {
-    return true;
-  }
-}
-
-class GenerateHashProviderStub implements IGenerateHashProvider {
-  async hash(value: string): Promise<string> {
-    return value;
-  }
-}
-
-class UpdateUserRepositoryStub implements IUpdateUserRepository {
-  async update(user: IUserModel): Promise<IUserModel> {
-    return user;
-  }
-}
-
-let findUserByIdRepositoryStub: FindUserByIdRepositoryStub;
-let compareHashProviderStub: CompareHashProviderStub;
-let generateHashProviderStub: GenerateHashProviderStub;
-let updateUserRepositoryStub: UpdateUserRepositoryStub;
+let findUserByIdRepositorySpy: FindUserByIdRepositorySpy;
+let compareHashProviderSpy: CompareHashProviderSpy;
+let generateHashProviderSpy: GenerateHashProviderSpy;
+let updateUserRepositorySpy: UpdateUserRepositorySpy;
 
 let updateUserPasswordUseCase: UpdateUserPasswordUseCase;
 
 describe('UpdateUserPasswordUseCase', () => {
   beforeEach(() => {
-    findUserByIdRepositoryStub = new FindUserByIdRepositoryStub();
-    compareHashProviderStub = new CompareHashProviderStub();
-    generateHashProviderStub = new GenerateHashProviderStub();
-    updateUserRepositoryStub = new UpdateUserRepositoryStub();
+    findUserByIdRepositorySpy = new FindUserByIdRepositorySpy();
+    compareHashProviderSpy = new CompareHashProviderSpy();
+    generateHashProviderSpy = new GenerateHashProviderSpy();
+    updateUserRepositorySpy = new UpdateUserRepositorySpy();
 
     updateUserPasswordUseCase = new UpdateUserPasswordUseCase(
-      findUserByIdRepositoryStub,
-      compareHashProviderStub,
-      generateHashProviderStub,
-      updateUserRepositoryStub
+      findUserByIdRepositorySpy,
+      compareHashProviderSpy,
+      generateHashProviderSpy,
+      updateUserRepositorySpy
     );
   });
 
   it('should call FindUserByIdRepository with correct data', async () => {
-    const findByIdSpy = jest.spyOn(findUserByIdRepositoryStub, 'findById');
+    const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
 
     const user_id = 'any-id';
 
@@ -84,7 +51,7 @@ describe('UpdateUserPasswordUseCase', () => {
 
   it('should throw if FindUserByIdRepository throws', async () => {
     jest
-      .spyOn(findUserByIdRepositoryStub, 'findById')
+      .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserPasswordUseCase.execute({
@@ -99,7 +66,7 @@ describe('UpdateUserPasswordUseCase', () => {
   it('should call CompareHashProvider with correct data', async () => {
     const userPassword = 'old-password';
 
-    jest.spyOn(findUserByIdRepositoryStub, 'findById').mockReturnValueOnce(
+    jest.spyOn(findUserByIdRepositorySpy, 'findById').mockReturnValueOnce(
       Promise.resolve({
         id: 'any-id',
         name: 'any-name',
@@ -110,7 +77,7 @@ describe('UpdateUserPasswordUseCase', () => {
       })
     );
 
-    const compareSpy = jest.spyOn(compareHashProviderStub, 'compare');
+    const compareSpy = jest.spyOn(compareHashProviderSpy, 'compare');
 
     const old_password = 'password';
 
@@ -125,7 +92,7 @@ describe('UpdateUserPasswordUseCase', () => {
 
   it('should throw if CompareHashProvider throws', async () => {
     jest
-      .spyOn(compareHashProviderStub, 'compare')
+      .spyOn(compareHashProviderSpy, 'compare')
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserPasswordUseCase.execute({
@@ -138,7 +105,7 @@ describe('UpdateUserPasswordUseCase', () => {
   });
 
   it('should call GenerateHashProvider with correct data', async () => {
-    const hashSpy = jest.spyOn(generateHashProviderStub, 'hash');
+    const hashSpy = jest.spyOn(generateHashProviderSpy, 'hash');
 
     const new_password = 'new-password';
 
@@ -153,7 +120,7 @@ describe('UpdateUserPasswordUseCase', () => {
 
   it('should throw if GenerateHashProvider throws', async () => {
     jest
-      .spyOn(generateHashProviderStub, 'hash')
+      .spyOn(generateHashProviderSpy, 'hash')
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserPasswordUseCase.execute({
@@ -176,16 +143,16 @@ describe('UpdateUserPasswordUseCase', () => {
     };
 
     jest
-      .spyOn(findUserByIdRepositoryStub, 'findById')
+      .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockReturnValueOnce(Promise.resolve(user));
 
     const hashedPassword = 'hashed-password';
 
     jest
-      .spyOn(generateHashProviderStub, 'hash')
+      .spyOn(generateHashProviderSpy, 'hash')
       .mockReturnValueOnce(Promise.resolve(hashedPassword));
 
-    const updateSpy = jest.spyOn(updateUserRepositoryStub, 'update');
+    const updateSpy = jest.spyOn(updateUserRepositorySpy, 'update');
 
     await updateUserPasswordUseCase.execute({
       user_id: 'any-id',
@@ -201,7 +168,7 @@ describe('UpdateUserPasswordUseCase', () => {
 
   it('should throw if UpdateUserRepository throws', async () => {
     jest
-      .spyOn(updateUserRepositoryStub, 'update')
+      .spyOn(updateUserRepositorySpy, 'update')
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserPasswordUseCase.execute({
@@ -215,7 +182,7 @@ describe('UpdateUserPasswordUseCase', () => {
 
   it('should not be able to update password of a non-existing user', async () => {
     jest
-      .spyOn(findUserByIdRepositoryStub, 'findById')
+      .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockReturnValueOnce(Promise.resolve(undefined));
 
     const promise = updateUserPasswordUseCase.execute({
@@ -229,7 +196,7 @@ describe('UpdateUserPasswordUseCase', () => {
 
   it('should not be able to update password with wrong old password', async () => {
     jest
-      .spyOn(compareHashProviderStub, 'compare')
+      .spyOn(compareHashProviderSpy, 'compare')
       .mockReturnValueOnce(Promise.resolve(false));
 
     const promise = updateUserPasswordUseCase.execute({
@@ -254,11 +221,11 @@ describe('UpdateUserPasswordUseCase', () => {
     };
 
     jest
-      .spyOn(findUserByIdRepositoryStub, 'findById')
+      .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockReturnValueOnce(Promise.resolve(user));
 
     jest
-      .spyOn(generateHashProviderStub, 'hash')
+      .spyOn(generateHashProviderSpy, 'hash')
       .mockReturnValueOnce(Promise.resolve(newPasswordHash));
 
     await updateUserPasswordUseCase.execute({

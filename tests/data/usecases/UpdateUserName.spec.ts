@@ -1,50 +1,28 @@
 import { UserNotFoundWithThisIdError } from '@domain/errors';
 import { IUserModel } from '@domain/models/User';
 
-import {
-  IFindUserByIdRepository,
-  IUpdateUserRepository,
-} from '@data/protocols/repositories/user';
+import { UpdateUserNameUseCase } from '@data/usecases/update-user-name/UpdateUserName';
 
-import { UpdateUserNameUseCase } from './UpdateUserName';
+import { FindUserByIdRepositorySpy, UpdateUserRepositorySpy } from '../mocks';
 
-class FindUserByIdRepositoryStub implements IFindUserByIdRepository {
-  async findById(id: string): Promise<IUserModel> {
-    return {
-      id,
-      name: 'John Doe',
-      email: 'john.doe@email.com',
-      password_hash: 'passwordhash',
-      created_at: new Date(),
-      updated_at: new Date(),
-    };
-  }
-}
-
-class UpdateUserRepositoryStub implements IUpdateUserRepository {
-  async update(user: IUserModel): Promise<IUserModel> {
-    return user;
-  }
-}
-
-let findUserByIdRepositoryStub: FindUserByIdRepositoryStub;
-let updateUserRepositoryStub: UpdateUserRepositoryStub;
+let findUserByIdRepositorySpy: FindUserByIdRepositorySpy;
+let updateUserRepositorySpy: UpdateUserRepositorySpy;
 
 let updateUserNameUseCase: UpdateUserNameUseCase;
 
 describe('UpdateUserNameUseCase', () => {
   beforeEach(() => {
-    findUserByIdRepositoryStub = new FindUserByIdRepositoryStub();
-    updateUserRepositoryStub = new UpdateUserRepositoryStub();
+    findUserByIdRepositorySpy = new FindUserByIdRepositorySpy();
+    updateUserRepositorySpy = new UpdateUserRepositorySpy();
 
     updateUserNameUseCase = new UpdateUserNameUseCase(
-      findUserByIdRepositoryStub,
-      updateUserRepositoryStub
+      findUserByIdRepositorySpy,
+      updateUserRepositorySpy
     );
   });
 
   it('should call FindUserByIdRepository with correct data', async () => {
-    const findByIdSpy = jest.spyOn(findUserByIdRepositoryStub, 'findById');
+    const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
 
     const user_id = 'any-id';
 
@@ -58,7 +36,7 @@ describe('UpdateUserNameUseCase', () => {
 
   it('should throw if FindUserByIdRepository throws', async () => {
     jest
-      .spyOn(findUserByIdRepositoryStub, 'findById')
+      .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserNameUseCase.execute({
@@ -80,10 +58,10 @@ describe('UpdateUserNameUseCase', () => {
     };
 
     jest
-      .spyOn(findUserByIdRepositoryStub, 'findById')
+      .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockReturnValueOnce(Promise.resolve(user));
 
-    const updateSpy = jest.spyOn(updateUserRepositoryStub, 'update');
+    const updateSpy = jest.spyOn(updateUserRepositorySpy, 'update');
 
     const newName = 'updated-name';
 
@@ -99,7 +77,7 @@ describe('UpdateUserNameUseCase', () => {
 
   it('should throw if UpdateUserRepository throws', async () => {
     jest
-      .spyOn(updateUserRepositoryStub, 'update')
+      .spyOn(updateUserRepositorySpy, 'update')
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserNameUseCase.execute({
@@ -112,7 +90,7 @@ describe('UpdateUserNameUseCase', () => {
 
   it('should not be able to update name of a non-existing user', async () => {
     jest
-      .spyOn(findUserByIdRepositoryStub, 'findById')
+      .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockReturnValueOnce(Promise.resolve(undefined));
 
     const promise = updateUserNameUseCase.execute({
@@ -134,7 +112,7 @@ describe('UpdateUserNameUseCase', () => {
     };
 
     jest
-      .spyOn(findUserByIdRepositoryStub, 'findById')
+      .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockReturnValueOnce(Promise.resolve(user));
 
     const updatedName = 'any-name';

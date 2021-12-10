@@ -1,63 +1,36 @@
 import { UserAlreadyExistsWithThisEmailError } from '@domain/errors';
-import { IUserModel } from '@domain/models/User';
 
-import { IGenerateHashProvider } from '@data/protocols/cryptography/hash';
+import { CreateUserUseCase } from '@data/usecases/create-user/CreateUser';
+
 import {
-  CreateUserDTO,
-  ICheckIfUserExistsByEmailRepository,
-  ICreateUserRepository,
-} from '@data/protocols/repositories/user';
+  CheckIfUserExistsByEmailRepositorySpy,
+  CreateUserRepositorySpy,
+  GenerateHashProviderSpy,
+} from '../mocks';
 
-import { CreateUserUseCase } from './CreateUser';
-
-class GenerateHashProviderStub implements IGenerateHashProvider {
-  async hash(value: string): Promise<string> {
-    return value;
-  }
-}
-
-class CheckIfUserExistsByEmailRepositoryStub
-  implements ICheckIfUserExistsByEmailRepository
-{
-  async checkIfExistsByEmail(_: string): Promise<boolean> {
-    return false;
-  }
-}
-
-class CreateUserRepositoryStub implements ICreateUserRepository {
-  async create(data: CreateUserDTO): Promise<IUserModel> {
-    return {
-      ...data,
-      id: 'any-id',
-      created_at: new Date(),
-      updated_at: new Date(),
-    };
-  }
-}
-
-let checkIfUserExistsByEmailRepositoryStub: CheckIfUserExistsByEmailRepositoryStub;
-let createUserRepository: CreateUserRepositoryStub;
-let generateHashProviderStub: GenerateHashProviderStub;
+let checkIfUserExistsByEmailRepositorySpy: CheckIfUserExistsByEmailRepositorySpy;
+let generateHashProviderSpy: GenerateHashProviderSpy;
+let createUserRepositorySpy: CreateUserRepositorySpy;
 
 let createUserUseCase: CreateUserUseCase;
 
 describe('CreateUserUseCase', () => {
   beforeEach(() => {
-    checkIfUserExistsByEmailRepositoryStub =
-      new CheckIfUserExistsByEmailRepositoryStub();
-    generateHashProviderStub = new GenerateHashProviderStub();
-    createUserRepository = new CreateUserRepositoryStub();
+    checkIfUserExistsByEmailRepositorySpy =
+      new CheckIfUserExistsByEmailRepositorySpy();
+    generateHashProviderSpy = new GenerateHashProviderSpy();
+    createUserRepositorySpy = new CreateUserRepositorySpy();
 
     createUserUseCase = new CreateUserUseCase(
-      checkIfUserExistsByEmailRepositoryStub,
-      generateHashProviderStub,
-      createUserRepository
+      checkIfUserExistsByEmailRepositorySpy,
+      generateHashProviderSpy,
+      createUserRepositorySpy
     );
   });
 
   it('should call CheckIfUserExistsByEmailRepository with correct data', async () => {
     const checkIfExistsByEmailSpy = jest.spyOn(
-      checkIfUserExistsByEmailRepositoryStub,
+      checkIfUserExistsByEmailRepositorySpy,
       'checkIfExistsByEmail'
     );
 
@@ -74,7 +47,7 @@ describe('CreateUserUseCase', () => {
 
   it('should throw if CheckIfUserExistsByEmailRepository throws', async () => {
     jest
-      .spyOn(checkIfUserExistsByEmailRepositoryStub, 'checkIfExistsByEmail')
+      .spyOn(checkIfUserExistsByEmailRepositorySpy, 'checkIfExistsByEmail')
       .mockRejectedValueOnce(new Error());
 
     const promise = createUserUseCase.execute({
@@ -87,7 +60,7 @@ describe('CreateUserUseCase', () => {
   });
 
   it('should call GenerateHashProvider with correct data', async () => {
-    const hashSpy = jest.spyOn(generateHashProviderStub, 'hash');
+    const hashSpy = jest.spyOn(generateHashProviderSpy, 'hash');
 
     const password = 'any-password';
 
@@ -102,7 +75,7 @@ describe('CreateUserUseCase', () => {
 
   it('should throw if GenerateHashProvider throws', async () => {
     jest
-      .spyOn(generateHashProviderStub, 'hash')
+      .spyOn(generateHashProviderSpy, 'hash')
       .mockRejectedValueOnce(new Error());
 
     const promise = createUserUseCase.execute({
@@ -118,10 +91,10 @@ describe('CreateUserUseCase', () => {
     const passwordHash = 'hashed-password';
 
     jest
-      .spyOn(generateHashProviderStub, 'hash')
+      .spyOn(generateHashProviderSpy, 'hash')
       .mockReturnValueOnce(Promise.resolve(passwordHash));
 
-    const createSpy = jest.spyOn(createUserRepository, 'create');
+    const createSpy = jest.spyOn(createUserRepositorySpy, 'create');
 
     const name = 'any-name';
     const email = 'any@email.com';
@@ -141,7 +114,7 @@ describe('CreateUserUseCase', () => {
 
   it('should throw if CreateUserRepositoryStub throws', async () => {
     jest
-      .spyOn(createUserRepository, 'create')
+      .spyOn(createUserRepositorySpy, 'create')
       .mockRejectedValueOnce(new Error());
 
     const promise = createUserUseCase.execute({
@@ -155,7 +128,7 @@ describe('CreateUserUseCase', () => {
 
   it('should not be able to create an user with a email from another user', async () => {
     jest
-      .spyOn(checkIfUserExistsByEmailRepositoryStub, 'checkIfExistsByEmail')
+      .spyOn(checkIfUserExistsByEmailRepositorySpy, 'checkIfExistsByEmail')
       .mockReturnValueOnce(Promise.resolve(true));
 
     const promise = createUserUseCase.execute({
@@ -173,7 +146,7 @@ describe('CreateUserUseCase', () => {
     const password_hash = 'hashed-password';
 
     jest
-      .spyOn(generateHashProviderStub, 'hash')
+      .spyOn(generateHashProviderSpy, 'hash')
       .mockReturnValueOnce(Promise.resolve(password_hash));
 
     const name = 'John Doe';

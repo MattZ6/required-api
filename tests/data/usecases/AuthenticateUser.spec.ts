@@ -2,61 +2,37 @@ import {
   PasswordNotMatchError,
   UserNotFoundWithThisEmailError,
 } from '@domain/errors';
-import { IUserModel } from '@domain/models/User';
 
-import { IEncryptProvider } from '@data/protocols/cryptography/cryptography';
-import { ICompareHashProvider } from '@data/protocols/cryptography/hash';
-import { IFindUserByEmailRepository } from '@data/protocols/repositories/user';
+import { AuthenticateUserUseCase } from '@data/usecases/authenticate-user/AuthenticateUser';
 
-import { AuthenticateUserUseCase } from './AuthenticateUser';
+import {
+  CompareHashProviderSpy,
+  EncryptProviderSpy,
+  FindUserByEmailRepositorySpy,
+} from '../mocks';
 
-class CompareHashProviderStub implements ICompareHashProvider {
-  async compare(_: string, __: string): Promise<boolean> {
-    return true;
-  }
-}
-
-class EncryptProviderStub implements IEncryptProvider {
-  async encrypt(value: string): Promise<string> {
-    return value;
-  }
-}
-
-class FindUserByEmailRepositoryStub implements IFindUserByEmailRepository {
-  async findByEmail(email: string): Promise<IUserModel> {
-    return {
-      id: 'any-id',
-      name: 'John Doe',
-      email,
-      password_hash: 'passwordhash',
-      created_at: new Date(),
-      updated_at: new Date(),
-    };
-  }
-}
-
-let findUserByEmailRepositoryStub: FindUserByEmailRepositoryStub;
-let compareHashProviderStub: CompareHashProviderStub;
-let encryptProviderStub: EncryptProviderStub;
+let findUserByEmailRepositorySpy: FindUserByEmailRepositorySpy;
+let compareHashProviderSpy: CompareHashProviderSpy;
+let encryptProviderSpy: EncryptProviderSpy;
 
 let authenticateUserUseCase: AuthenticateUserUseCase;
 
 describe('AuthenticateUserUseCase', () => {
   beforeEach(() => {
-    findUserByEmailRepositoryStub = new FindUserByEmailRepositoryStub();
-    compareHashProviderStub = new CompareHashProviderStub();
-    encryptProviderStub = new EncryptProviderStub();
+    findUserByEmailRepositorySpy = new FindUserByEmailRepositorySpy();
+    compareHashProviderSpy = new CompareHashProviderSpy();
+    encryptProviderSpy = new EncryptProviderSpy();
 
     authenticateUserUseCase = new AuthenticateUserUseCase(
-      findUserByEmailRepositoryStub,
-      compareHashProviderStub,
-      encryptProviderStub
+      findUserByEmailRepositorySpy,
+      compareHashProviderSpy,
+      encryptProviderSpy
     );
   });
 
   it('should call FindUserByEmailRepository with correct data', async () => {
     const findByEmailSpy = jest.spyOn(
-      findUserByEmailRepositoryStub,
+      findUserByEmailRepositorySpy,
       'findByEmail'
     );
 
@@ -72,7 +48,7 @@ describe('AuthenticateUserUseCase', () => {
 
   it('should throw if FindUserByEmailRepository throws', async () => {
     jest
-      .spyOn(findUserByEmailRepositoryStub, 'findByEmail')
+      .spyOn(findUserByEmailRepositorySpy, 'findByEmail')
       .mockRejectedValueOnce(new Error());
 
     const promise = authenticateUserUseCase.execute({
@@ -86,20 +62,18 @@ describe('AuthenticateUserUseCase', () => {
   it('should call CompareHashProvider with correct data', async () => {
     const password_hash = 'password-hash';
 
-    jest
-      .spyOn(findUserByEmailRepositoryStub, 'findByEmail')
-      .mockReturnValueOnce(
-        Promise.resolve({
-          id: 'any-id',
-          name: 'any-name',
-          email: 'any@email.com',
-          password_hash,
-          created_at: new Date(),
-          updated_at: new Date(),
-        })
-      );
+    jest.spyOn(findUserByEmailRepositorySpy, 'findByEmail').mockReturnValueOnce(
+      Promise.resolve({
+        id: 'any-id',
+        name: 'any-name',
+        email: 'any@email.com',
+        password_hash,
+        created_at: new Date(),
+        updated_at: new Date(),
+      })
+    );
 
-    const compareSpy = jest.spyOn(compareHashProviderStub, 'compare');
+    const compareSpy = jest.spyOn(compareHashProviderSpy, 'compare');
 
     const password = 'any-password';
 
@@ -113,7 +87,7 @@ describe('AuthenticateUserUseCase', () => {
 
   it('should throw if CompareHashProvider throws', async () => {
     jest
-      .spyOn(compareHashProviderStub, 'compare')
+      .spyOn(compareHashProviderSpy, 'compare')
       .mockRejectedValueOnce(new Error());
 
     const promise = authenticateUserUseCase.execute({
@@ -127,20 +101,18 @@ describe('AuthenticateUserUseCase', () => {
   it('should call EncryptProvider with correct data', async () => {
     const id = 'any-id';
 
-    jest
-      .spyOn(findUserByEmailRepositoryStub, 'findByEmail')
-      .mockReturnValueOnce(
-        Promise.resolve({
-          id,
-          name: 'any-name',
-          email: 'any@email.com',
-          password_hash: 'any-password',
-          created_at: new Date(),
-          updated_at: new Date(),
-        })
-      );
+    jest.spyOn(findUserByEmailRepositorySpy, 'findByEmail').mockReturnValueOnce(
+      Promise.resolve({
+        id,
+        name: 'any-name',
+        email: 'any@email.com',
+        password_hash: 'any-password',
+        created_at: new Date(),
+        updated_at: new Date(),
+      })
+    );
 
-    const encryptSpy = jest.spyOn(encryptProviderStub, 'encrypt');
+    const encryptSpy = jest.spyOn(encryptProviderSpy, 'encrypt');
 
     await authenticateUserUseCase.execute({
       email: 'any@email.com',
@@ -152,7 +124,7 @@ describe('AuthenticateUserUseCase', () => {
 
   it('should throw if EncryptProvider throws', async () => {
     jest
-      .spyOn(encryptProviderStub, 'encrypt')
+      .spyOn(encryptProviderSpy, 'encrypt')
       .mockRejectedValueOnce(new Error());
 
     const promise = authenticateUserUseCase.execute({
@@ -165,7 +137,7 @@ describe('AuthenticateUserUseCase', () => {
 
   it('should not be able to authenticate a non-existing user', async () => {
     jest
-      .spyOn(findUserByEmailRepositoryStub, 'findByEmail')
+      .spyOn(findUserByEmailRepositorySpy, 'findByEmail')
       .mockReturnValueOnce(Promise.resolve(undefined));
 
     const promise = authenticateUserUseCase.execute({
@@ -180,7 +152,7 @@ describe('AuthenticateUserUseCase', () => {
 
   it('should not be able to authenticate user with wrong password', async () => {
     jest
-      .spyOn(compareHashProviderStub, 'compare')
+      .spyOn(compareHashProviderSpy, 'compare')
       .mockReturnValueOnce(Promise.resolve(false));
 
     const promise = authenticateUserUseCase.execute({
@@ -195,7 +167,7 @@ describe('AuthenticateUserUseCase', () => {
     const token = 'encrypted-value';
 
     jest
-      .spyOn(encryptProviderStub, 'encrypt')
+      .spyOn(encryptProviderSpy, 'encrypt')
       .mockReturnValueOnce(Promise.resolve(token));
 
     const { access_token } = await authenticateUserUseCase.execute({

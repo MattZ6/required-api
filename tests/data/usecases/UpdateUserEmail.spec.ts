@@ -4,63 +4,36 @@ import {
 } from '@domain/errors';
 import { IUserModel } from '@domain/models/User';
 
+import { UpdateUserEmailUseCase } from '@data/usecases/update-user-email/UpdateUserEmail';
+
 import {
-  ICheckIfUserExistsByEmailRepository,
-  IFindUserByIdRepository,
-  IUpdateUserRepository,
-} from '@data/protocols/repositories/user';
+  CheckIfUserExistsByEmailRepositorySpy,
+  FindUserByIdRepositorySpy,
+  UpdateUserRepositorySpy,
+} from '../mocks';
 
-import { UpdateUserEmailUseCase } from './UpdateUserEmail';
-
-class FindUserByIdRepositoryStub implements IFindUserByIdRepository {
-  async findById(id: string): Promise<IUserModel> {
-    return {
-      id,
-      name: 'John Doe',
-      email: 'john.doe@email.com',
-      password_hash: 'passwordhash',
-      created_at: new Date(),
-      updated_at: new Date(),
-    };
-  }
-}
-
-class CheckIfUserExistsByEmailRepositoryStub
-  implements ICheckIfUserExistsByEmailRepository
-{
-  async checkIfExistsByEmail(_: string): Promise<boolean> {
-    return false;
-  }
-}
-
-class UpdateUserRepositoryStub implements IUpdateUserRepository {
-  async update(user: IUserModel): Promise<IUserModel> {
-    return user;
-  }
-}
-
-let findUserByIdRepositoryStub: FindUserByIdRepositoryStub;
-let checkIfUserExistsByEmailRepositoryStub: CheckIfUserExistsByEmailRepositoryStub;
-let updateUserRepositoryStub: UpdateUserRepositoryStub;
+let findUserByIdRepositorySpy: FindUserByIdRepositorySpy;
+let checkIfUserExistsByEmailRepositorySpy: CheckIfUserExistsByEmailRepositorySpy;
+let updateUserRepositorySpy: UpdateUserRepositorySpy;
 
 let updateUserEmailUseCase: UpdateUserEmailUseCase;
 
 describe('UpdateUserEmailUseCase', () => {
   beforeEach(() => {
-    findUserByIdRepositoryStub = new FindUserByIdRepositoryStub();
-    checkIfUserExistsByEmailRepositoryStub =
-      new CheckIfUserExistsByEmailRepositoryStub();
-    updateUserRepositoryStub = new UpdateUserRepositoryStub();
+    findUserByIdRepositorySpy = new FindUserByIdRepositorySpy();
+    checkIfUserExistsByEmailRepositorySpy =
+      new CheckIfUserExistsByEmailRepositorySpy();
+    updateUserRepositorySpy = new UpdateUserRepositorySpy();
 
     updateUserEmailUseCase = new UpdateUserEmailUseCase(
-      findUserByIdRepositoryStub,
-      checkIfUserExistsByEmailRepositoryStub,
-      updateUserRepositoryStub
+      findUserByIdRepositorySpy,
+      checkIfUserExistsByEmailRepositorySpy,
+      updateUserRepositorySpy
     );
   });
 
   it('should call FindUserByIdRepository with correct data', async () => {
-    const findByIdSpy = jest.spyOn(findUserByIdRepositoryStub, 'findById');
+    const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
 
     const user_id = 'any-id';
 
@@ -74,7 +47,7 @@ describe('UpdateUserEmailUseCase', () => {
 
   it('should throw if FindUserByIdRepository throws', async () => {
     jest
-      .spyOn(findUserByIdRepositoryStub, 'findById')
+      .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserEmailUseCase.execute({
@@ -87,7 +60,7 @@ describe('UpdateUserEmailUseCase', () => {
 
   it('should call CheckIfUserExistsByEmailRepository with correct data', async () => {
     const checkIfExistsByEmailSpy = jest.spyOn(
-      checkIfUserExistsByEmailRepositoryStub,
+      checkIfUserExistsByEmailRepositorySpy,
       'checkIfExistsByEmail'
     );
 
@@ -103,7 +76,7 @@ describe('UpdateUserEmailUseCase', () => {
 
   it('should throw if CheckIfUserExistsByEmailRepository throws', async () => {
     jest
-      .spyOn(checkIfUserExistsByEmailRepositoryStub, 'checkIfExistsByEmail')
+      .spyOn(checkIfUserExistsByEmailRepositorySpy, 'checkIfExistsByEmail')
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserEmailUseCase.execute({
@@ -125,10 +98,10 @@ describe('UpdateUserEmailUseCase', () => {
     };
 
     jest
-      .spyOn(findUserByIdRepositoryStub, 'findById')
+      .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockReturnValueOnce(Promise.resolve(user));
 
-    const updateSpy = jest.spyOn(updateUserRepositoryStub, 'update');
+    const updateSpy = jest.spyOn(updateUserRepositorySpy, 'update');
 
     const newEmail = 'updated@email.com';
 
@@ -142,7 +115,7 @@ describe('UpdateUserEmailUseCase', () => {
 
   it('should throw if UpdateUserRepository throws', async () => {
     jest
-      .spyOn(updateUserRepositoryStub, 'update')
+      .spyOn(updateUserRepositorySpy, 'update')
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserEmailUseCase.execute({
@@ -155,7 +128,7 @@ describe('UpdateUserEmailUseCase', () => {
 
   it('should not be able to update name of a non-existing user', async () => {
     jest
-      .spyOn(findUserByIdRepositoryStub, 'findById')
+      .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockReturnValueOnce(Promise.resolve(undefined));
 
     const promise = updateUserEmailUseCase.execute({
@@ -168,7 +141,7 @@ describe('UpdateUserEmailUseCase', () => {
 
   it("should not be able to update the user's email if the email is from another user", async () => {
     jest
-      .spyOn(checkIfUserExistsByEmailRepositoryStub, 'checkIfExistsByEmail')
+      .spyOn(checkIfUserExistsByEmailRepositorySpy, 'checkIfExistsByEmail')
       .mockReturnValueOnce(Promise.resolve(true));
 
     const promise = updateUserEmailUseCase.execute({
@@ -192,7 +165,7 @@ describe('UpdateUserEmailUseCase', () => {
     };
 
     jest
-      .spyOn(findUserByIdRepositoryStub, 'findById')
+      .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockReturnValueOnce(Promise.resolve(user));
 
     const updatedEmail = 'updated@email.com';

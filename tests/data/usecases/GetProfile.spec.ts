@@ -1,35 +1,22 @@
 import { IUserModel } from '@domain/models/User';
 
-import { IFindUserByIdRepository } from '@data/protocols/repositories/user';
+import { GetProfileUseCase } from '@data/usecases/get-profile/GetProfile';
 
-import { GetProfileUseCase } from './GetProfile';
+import { FindUserByIdRepositorySpy } from '../mocks';
 
-class FindUserByIdRepositoryStub implements IFindUserByIdRepository {
-  async findById(id: string): Promise<IUserModel> {
-    return {
-      id,
-      name: 'John Doe',
-      email: 'john.doe@email.com',
-      password_hash: 'passwordhash',
-      created_at: new Date(),
-      updated_at: new Date(),
-    };
-  }
-}
-
-let findUserByIdRepository: FindUserByIdRepositoryStub;
+let findUserByIdRepositorySpy: FindUserByIdRepositorySpy;
 
 let getProfileUseCase: GetProfileUseCase;
 
 describe('GetProfileUseCase', () => {
   beforeEach(() => {
-    findUserByIdRepository = new FindUserByIdRepositoryStub();
+    findUserByIdRepositorySpy = new FindUserByIdRepositorySpy();
 
-    getProfileUseCase = new GetProfileUseCase(findUserByIdRepository);
+    getProfileUseCase = new GetProfileUseCase(findUserByIdRepositorySpy);
   });
 
   it('should call FindUserByIdRepository with correct data', async () => {
-    const findByIdSpy = jest.spyOn(findUserByIdRepository, 'findById');
+    const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
 
     const user_id = 'any-id';
 
@@ -42,7 +29,7 @@ describe('GetProfileUseCase', () => {
 
   it('should throw if FindUserByIdRepository throws', async () => {
     jest
-      .spyOn(findUserByIdRepository, 'findById')
+      .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockRejectedValueOnce(new Error());
 
     const promise = getProfileUseCase.execute({
@@ -63,7 +50,7 @@ describe('GetProfileUseCase', () => {
     };
 
     jest
-      .spyOn(findUserByIdRepository, 'findById')
+      .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockReturnValueOnce(Promise.resolve(user));
 
     const profile = await getProfileUseCase.execute({
