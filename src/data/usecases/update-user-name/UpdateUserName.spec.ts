@@ -1,4 +1,3 @@
-/* eslint-disable max-classes-per-file */
 import { UserNotFoundWithThisIdError } from '@domain/errors';
 import { IUserModel } from '@domain/models/User';
 

@@ -1,4 +1,3 @@
-/* eslint-disable max-classes-per-file */
 import { UserAlreadyExistsWithThisEmailError } from '@domain/errors';
 import { IUserModel } from '@domain/models/User';
 
