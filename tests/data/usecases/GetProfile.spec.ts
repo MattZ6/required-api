@@ -1,3 +1,5 @@
+import Faker from 'faker';
+
 import { IUserModel } from '@domain/models/User';
 
 import { GetProfileUseCase } from '@data/usecases/get-profile/GetProfile';
@@ -18,7 +20,7 @@ describe('GetProfileUseCase', () => {
   it('should call FindUserByIdRepository with correct data', async () => {
     const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
 
-    const user_id = 'any-id';
+    const user_id = Faker.datatype.uuid();
 
     await getProfileUseCase.execute({
       user_id,
@@ -33,7 +35,7 @@ describe('GetProfileUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = getProfileUseCase.execute({
-      user_id: 'any-id',
+      user_id: Faker.datatype.uuid(),
     });
 
     await expect(promise).rejects.toThrow();
@@ -41,12 +43,12 @@ describe('GetProfileUseCase', () => {
 
   it('should be able to get user data', async () => {
     const user: IUserModel = {
-      id: 'any-id',
-      name: 'John Doe',
-      email: 'john.doe@email.com',
-      password_hash: 'passwordhash',
-      created_at: new Date(),
-      updated_at: new Date(),
+      id: Faker.datatype.uuid(),
+      name: Faker.name.findName(),
+      email: Faker.internet.email(),
+      password_hash: Faker.internet.password(),
+      created_at: Faker.datatype.datetime(),
+      updated_at: Faker.datatype.datetime(),
     };
 
     jest
@@ -54,7 +56,7 @@ describe('GetProfileUseCase', () => {
       .mockReturnValueOnce(Promise.resolve(user));
 
     const profile = await getProfileUseCase.execute({
-      user_id: 'any-id',
+      user_id: Faker.datatype.uuid(),
     });
 
     expect(profile).toBe(user);

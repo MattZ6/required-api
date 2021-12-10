@@ -1,3 +1,5 @@
+import Faker from 'faker';
+
 import { IUserModel } from '@domain/models/User';
 
 import {
@@ -21,9 +23,9 @@ export class CreateUserRepositorySpy implements ICreateUserRepository {
   async create(data: CreateUserDTO): Promise<IUserModel> {
     return {
       ...data,
-      id: 'any-id',
-      created_at: new Date(),
-      updated_at: new Date(),
+      id: Faker.datatype.uuid(),
+      created_at: Faker.datatype.datetime(),
+      updated_at: Faker.datatype.datetime(),
     };
   }
 }
@@ -33,12 +35,12 @@ export class FindUserByEmailRepositorySpy
 {
   async findByEmail(email: string): Promise<IUserModel | undefined> {
     return {
-      id: 'any-id',
-      name: 'John Doe',
+      id: Faker.datatype.uuid(),
+      name: Faker.name.findName(),
       email,
-      password_hash: 'passwordhash',
-      created_at: new Date(),
-      updated_at: new Date(),
+      password_hash: Faker.datatype.string(10),
+      created_at: Faker.datatype.datetime(),
+      updated_at: Faker.datatype.datetime(),
     };
   }
 }
@@ -47,11 +49,11 @@ export class FindUserByIdRepositorySpy implements IFindUserByIdRepository {
   async findById(id: string): Promise<IUserModel | undefined> {
     return {
       id,
-      name: 'John Doe',
-      email: 'john.doe@email.com',
-      password_hash: 'passwordhash',
-      created_at: new Date(),
-      updated_at: new Date(),
+      name: Faker.name.findName(),
+      email: Faker.internet.email(),
+      password_hash: Faker.internet.password(),
+      created_at: Faker.datatype.datetime(),
+      updated_at: Faker.datatype.datetime(),
     };
   }
 }

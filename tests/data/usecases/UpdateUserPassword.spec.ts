@@ -1,3 +1,5 @@
+import Faker from 'faker';
+
 import {
   PasswordNotMatchError,
   UserNotFoundWithThisIdError,
@@ -38,12 +40,12 @@ describe('UpdateUserPasswordUseCase', () => {
   it('should call FindUserByIdRepository with correct data', async () => {
     const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
 
-    const user_id = 'any-id';
+    const user_id = Faker.datatype.uuid();
 
     await updateUserPasswordUseCase.execute({
       user_id,
-      old_password: 'old-password',
-      new_password: 'new-password',
+      old_password: Faker.internet.password(),
+      new_password: Faker.internet.password(),
     });
 
     expect(findByIdSpy).toHaveBeenCalledWith(user_id);
@@ -55,36 +57,36 @@ describe('UpdateUserPasswordUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserPasswordUseCase.execute({
-      user_id: 'any-id',
-      old_password: 'old-password',
-      new_password: 'new-password',
+      user_id: Faker.datatype.uuid(),
+      old_password: Faker.internet.password(),
+      new_password: Faker.internet.password(),
     });
 
     await expect(promise).rejects.toThrow();
   });
 
   it('should call CompareHashProvider with correct data', async () => {
-    const userPassword = 'old-password';
+    const userPassword = Faker.internet.password();
 
     jest.spyOn(findUserByIdRepositorySpy, 'findById').mockReturnValueOnce(
       Promise.resolve({
-        id: 'any-id',
-        name: 'any-name',
-        email: 'any@email.com',
+        id: Faker.datatype.uuid(),
+        name: Faker.name.findName(),
+        email: Faker.internet.email(),
         password_hash: userPassword,
-        created_at: new Date(),
-        updated_at: new Date(),
+        created_at: Faker.datatype.datetime(),
+        updated_at: Faker.datatype.datetime(),
       })
     );
 
     const compareSpy = jest.spyOn(compareHashProviderSpy, 'compare');
 
-    const old_password = 'password';
+    const old_password = Faker.internet.password();
 
     await updateUserPasswordUseCase.execute({
-      user_id: 'any-id',
+      user_id: Faker.datatype.uuid(),
       old_password,
-      new_password: 'new-password',
+      new_password: Faker.internet.password(),
     });
 
     expect(compareSpy).toHaveBeenCalledWith(old_password, userPassword);
@@ -96,9 +98,9 @@ describe('UpdateUserPasswordUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserPasswordUseCase.execute({
-      user_id: 'any-id',
-      old_password: 'old-password',
-      new_password: 'new-password',
+      user_id: Faker.datatype.uuid(),
+      old_password: Faker.internet.password(),
+      new_password: Faker.internet.password(),
     });
 
     await expect(promise).rejects.toThrow();
@@ -107,11 +109,11 @@ describe('UpdateUserPasswordUseCase', () => {
   it('should call GenerateHashProvider with correct data', async () => {
     const hashSpy = jest.spyOn(generateHashProviderSpy, 'hash');
 
-    const new_password = 'new-password';
+    const new_password = Faker.internet.password();
 
     await updateUserPasswordUseCase.execute({
-      user_id: 'any-id',
-      old_password: 'old-password',
+      user_id: Faker.datatype.uuid(),
+      old_password: Faker.internet.password(),
       new_password,
     });
 
@@ -124,9 +126,9 @@ describe('UpdateUserPasswordUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserPasswordUseCase.execute({
-      user_id: 'any-id',
-      old_password: 'old-password',
-      new_password: 'new-password',
+      user_id: Faker.datatype.uuid(),
+      old_password: Faker.internet.password(),
+      new_password: Faker.internet.password(),
     });
 
     await expect(promise).rejects.toThrow();
@@ -134,19 +136,19 @@ describe('UpdateUserPasswordUseCase', () => {
 
   it('should call UpdateUserRepository with correct data', async () => {
     const user: IUserModel = {
-      id: 'any-id',
-      name: 'any-name',
-      email: 'any@email.com',
-      password_hash: 'any-password',
-      created_at: new Date(),
-      updated_at: new Date(),
+      id: Faker.datatype.uuid(),
+      name: Faker.name.findName(),
+      email: Faker.internet.email(),
+      password_hash: Faker.internet.password(),
+      created_at: Faker.datatype.datetime(),
+      updated_at: Faker.datatype.datetime(),
     };
 
     jest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockReturnValueOnce(Promise.resolve(user));
 
-    const hashedPassword = 'hashed-password';
+    const hashedPassword = Faker.internet.password();
 
     jest
       .spyOn(generateHashProviderSpy, 'hash')
@@ -155,9 +157,9 @@ describe('UpdateUserPasswordUseCase', () => {
     const updateSpy = jest.spyOn(updateUserRepositorySpy, 'update');
 
     await updateUserPasswordUseCase.execute({
-      user_id: 'any-id',
-      old_password: 'old-password',
-      new_password: 'new-password',
+      user_id: Faker.datatype.uuid(),
+      old_password: Faker.internet.password(),
+      new_password: Faker.internet.password(),
     });
 
     expect(updateSpy).toHaveBeenCalledWith({
@@ -172,9 +174,9 @@ describe('UpdateUserPasswordUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserPasswordUseCase.execute({
-      user_id: 'any-id',
-      old_password: 'old-password',
-      new_password: 'new-password',
+      user_id: Faker.datatype.uuid(),
+      old_password: Faker.internet.password(),
+      new_password: Faker.internet.password(),
     });
 
     await expect(promise).rejects.toThrow();
@@ -186,9 +188,9 @@ describe('UpdateUserPasswordUseCase', () => {
       .mockReturnValueOnce(Promise.resolve(undefined));
 
     const promise = updateUserPasswordUseCase.execute({
-      user_id: 'no-existing-user-id',
-      old_password: 'old-password',
-      new_password: 'new-password',
+      user_id: Faker.datatype.uuid(),
+      old_password: Faker.internet.password(),
+      new_password: Faker.internet.password(),
     });
 
     await expect(promise).rejects.toBeInstanceOf(UserNotFoundWithThisIdError);
@@ -200,9 +202,9 @@ describe('UpdateUserPasswordUseCase', () => {
       .mockReturnValueOnce(Promise.resolve(false));
 
     const promise = updateUserPasswordUseCase.execute({
-      user_id: 'no-existing-user-id',
-      old_password: 'old-password',
-      new_password: 'new-password',
+      user_id: Faker.datatype.uuid(),
+      old_password: Faker.internet.password(),
+      new_password: Faker.internet.password(),
     });
 
     await expect(promise).rejects.toBeInstanceOf(PasswordNotMatchError);
@@ -212,12 +214,12 @@ describe('UpdateUserPasswordUseCase', () => {
     const newPasswordHash = 'new-password-hash';
 
     const user: IUserModel = {
-      id: 'any-id',
-      name: 'any-name',
-      email: 'any@email.com',
-      password_hash: 'password-hash',
-      created_at: new Date(),
-      updated_at: new Date(),
+      id: Faker.datatype.uuid(),
+      name: Faker.name.findName(),
+      email: Faker.internet.email(),
+      password_hash: Faker.internet.password(),
+      created_at: Faker.datatype.datetime(),
+      updated_at: Faker.datatype.datetime(),
     };
 
     jest
@@ -229,9 +231,9 @@ describe('UpdateUserPasswordUseCase', () => {
       .mockReturnValueOnce(Promise.resolve(newPasswordHash));
 
     await updateUserPasswordUseCase.execute({
-      user_id: 'no-existing-user-id',
-      old_password: 'old-password',
-      new_password: 'new-password',
+      user_id: Faker.datatype.uuid(),
+      old_password: Faker.internet.password(),
+      new_password: Faker.internet.password(),
     });
 
     expect(user.password_hash).toBe(newPasswordHash);

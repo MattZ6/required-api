@@ -1,3 +1,5 @@
+import Faker from 'faker';
+
 import { UserAlreadyExistsWithThisEmailError } from '@domain/errors';
 
 import { CreateUserUseCase } from '@data/usecases/create-user/CreateUser';
@@ -34,12 +36,12 @@ describe('CreateUserUseCase', () => {
       'checkIfExistsByEmail'
     );
 
-    const email = 'any@email.com';
+    const email = Faker.internet.email();
 
     await createUserUseCase.execute({
-      name: 'any-name',
+      name: Faker.name.findName(),
       email,
-      password: 'any-password',
+      password: Faker.internet.password(),
     });
 
     expect(checkIfExistsByEmailSpy).toHaveBeenCalledWith(email);
@@ -51,9 +53,9 @@ describe('CreateUserUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = createUserUseCase.execute({
-      name: 'any-name',
-      email: 'any@email.com',
-      password: 'any-password',
+      name: Faker.name.findName(),
+      email: Faker.internet.email(),
+      password: Faker.internet.password(),
     });
 
     await expect(promise).rejects.toThrow();
@@ -62,11 +64,11 @@ describe('CreateUserUseCase', () => {
   it('should call GenerateHashProvider with correct data', async () => {
     const hashSpy = jest.spyOn(generateHashProviderSpy, 'hash');
 
-    const password = 'any-password';
+    const password = Faker.internet.password();
 
     await createUserUseCase.execute({
-      name: 'any-name',
-      email: 'any@email.com',
+      name: Faker.name.findName(),
+      email: Faker.internet.email(),
       password,
     });
 
@@ -79,16 +81,16 @@ describe('CreateUserUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = createUserUseCase.execute({
-      name: 'any-name',
-      email: 'any@email.com',
-      password: 'any-password',
+      name: Faker.name.findName(),
+      email: Faker.internet.email(),
+      password: Faker.internet.password(),
     });
 
     await expect(promise).rejects.toThrow();
   });
 
   it('should call CreateUserRepositoryStub with correct data', async () => {
-    const passwordHash = 'hashed-password';
+    const passwordHash = Faker.internet.password();
 
     jest
       .spyOn(generateHashProviderSpy, 'hash')
@@ -96,13 +98,13 @@ describe('CreateUserUseCase', () => {
 
     const createSpy = jest.spyOn(createUserRepositorySpy, 'create');
 
-    const name = 'any-name';
-    const email = 'any@email.com';
+    const name = Faker.name.findName();
+    const email = Faker.internet.email();
 
     await createUserUseCase.execute({
       name,
       email,
-      password: 'any-password',
+      password: Faker.internet.password(),
     });
 
     expect(createSpy).toHaveBeenCalledWith({
@@ -118,9 +120,9 @@ describe('CreateUserUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = createUserUseCase.execute({
-      name: 'any-name',
-      email: 'any@email.com',
-      password: 'any-password',
+      name: Faker.name.findName(),
+      email: Faker.internet.email(),
+      password: Faker.internet.password(),
     });
 
     await expect(promise).rejects.toThrow();
@@ -132,9 +134,9 @@ describe('CreateUserUseCase', () => {
       .mockReturnValueOnce(Promise.resolve(true));
 
     const promise = createUserUseCase.execute({
-      name: 'any-name',
-      email: 'another-user@email.com',
-      password: 'any-password',
+      name: Faker.name.findName(),
+      email: Faker.internet.email(),
+      password: Faker.internet.password(),
     });
 
     await expect(promise).rejects.toBeInstanceOf(
@@ -143,19 +145,19 @@ describe('CreateUserUseCase', () => {
   });
 
   it('should be able to create a new user', async () => {
-    const password_hash = 'hashed-password';
+    const password_hash = Faker.internet.password();
 
     jest
       .spyOn(generateHashProviderSpy, 'hash')
       .mockReturnValueOnce(Promise.resolve(password_hash));
 
-    const name = 'John Doe';
-    const email = 'john-doe@email.com';
+    const name = Faker.name.findName();
+    const email = Faker.internet.email();
 
     const user = await createUserUseCase.execute({
       name,
       email,
-      password: 'john-password',
+      password: Faker.internet.password(),
     });
 
     expect(user).toHaveProperty('id');

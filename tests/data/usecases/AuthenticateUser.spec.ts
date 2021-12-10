@@ -1,3 +1,5 @@
+import Faker from 'faker';
+
 import {
   PasswordNotMatchError,
   UserNotFoundWithThisEmailError,
@@ -36,11 +38,11 @@ describe('AuthenticateUserUseCase', () => {
       'findByEmail'
     );
 
-    const email = 'any@email.com';
+    const email = Faker.internet.email();
 
     await authenticateUserUseCase.execute({
       email,
-      password: 'any-password',
+      password: Faker.internet.password(),
     });
 
     expect(findByEmailSpy).toHaveBeenCalledWith(email);
@@ -52,33 +54,33 @@ describe('AuthenticateUserUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = authenticateUserUseCase.execute({
-      email: 'any@email.com',
-      password: 'any-password',
+      email: Faker.internet.email(),
+      password: Faker.internet.password(),
     });
 
     await expect(promise).rejects.toThrow();
   });
 
   it('should call CompareHashProvider with correct data', async () => {
-    const password_hash = 'password-hash';
+    const password_hash = Faker.internet.password();
 
     jest.spyOn(findUserByEmailRepositorySpy, 'findByEmail').mockReturnValueOnce(
       Promise.resolve({
-        id: 'any-id',
-        name: 'any-name',
-        email: 'any@email.com',
+        id: Faker.datatype.uuid(),
+        name: Faker.name.findName(),
+        email: Faker.internet.email(),
         password_hash,
-        created_at: new Date(),
-        updated_at: new Date(),
+        created_at: Faker.datatype.datetime(),
+        updated_at: Faker.datatype.datetime(),
       })
     );
 
     const compareSpy = jest.spyOn(compareHashProviderSpy, 'compare');
 
-    const password = 'any-password';
+    const password = Faker.internet.password();
 
     await authenticateUserUseCase.execute({
-      email: 'any@email.com',
+      email: Faker.internet.email(),
       password,
     });
 
@@ -91,32 +93,32 @@ describe('AuthenticateUserUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = authenticateUserUseCase.execute({
-      email: 'any@email.com',
-      password: 'any-password',
+      email: Faker.internet.email(),
+      password: Faker.internet.password(),
     });
 
     await expect(promise).rejects.toThrow();
   });
 
   it('should call EncryptProvider with correct data', async () => {
-    const id = 'any-id';
+    const id = Faker.datatype.uuid();
 
     jest.spyOn(findUserByEmailRepositorySpy, 'findByEmail').mockReturnValueOnce(
       Promise.resolve({
         id,
-        name: 'any-name',
-        email: 'any@email.com',
-        password_hash: 'any-password',
-        created_at: new Date(),
-        updated_at: new Date(),
+        name: Faker.name.findName(),
+        email: Faker.internet.email(),
+        password_hash: Faker.internet.password(),
+        created_at: Faker.datatype.datetime(),
+        updated_at: Faker.datatype.datetime(),
       })
     );
 
     const encryptSpy = jest.spyOn(encryptProviderSpy, 'encrypt');
 
     await authenticateUserUseCase.execute({
-      email: 'any@email.com',
-      password: 'any-password',
+      email: Faker.internet.email(),
+      password: Faker.internet.password(),
     });
 
     expect(encryptSpy).toHaveBeenCalledWith(id);
@@ -128,8 +130,8 @@ describe('AuthenticateUserUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = authenticateUserUseCase.execute({
-      email: 'any@email.com',
-      password: 'any-password',
+      email: Faker.internet.email(),
+      password: Faker.internet.password(),
     });
 
     await expect(promise).rejects.toThrow();
@@ -141,8 +143,8 @@ describe('AuthenticateUserUseCase', () => {
       .mockReturnValueOnce(Promise.resolve(undefined));
 
     const promise = authenticateUserUseCase.execute({
-      email: 'any@email.com',
-      password: 'any-password',
+      email: Faker.internet.email(),
+      password: Faker.internet.password(),
     });
 
     await expect(promise).rejects.toBeInstanceOf(
@@ -156,23 +158,23 @@ describe('AuthenticateUserUseCase', () => {
       .mockReturnValueOnce(Promise.resolve(false));
 
     const promise = authenticateUserUseCase.execute({
-      email: 'any@email.com',
-      password: 'any-password',
+      email: Faker.internet.email(),
+      password: Faker.internet.password(),
     });
 
     await expect(promise).rejects.toBeInstanceOf(PasswordNotMatchError);
   });
 
   it('should be able to authenticate user', async () => {
-    const token = 'encrypted-value';
+    const token = Faker.datatype.string(10);
 
     jest
       .spyOn(encryptProviderSpy, 'encrypt')
       .mockReturnValueOnce(Promise.resolve(token));
 
     const { access_token } = await authenticateUserUseCase.execute({
-      email: 'any@email.com',
-      password: 'any-password',
+      email: Faker.internet.email(),
+      password: Faker.internet.password(),
     });
 
     expect(access_token).toEqual(token);
