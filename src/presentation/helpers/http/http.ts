@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IHttpRespose } from '@presentation/protocols/Http';
 
 export function ok<T = any>(data: T): IHttpRespose<T> {
