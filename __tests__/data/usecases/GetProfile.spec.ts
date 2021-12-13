@@ -1,5 +1,6 @@
 import Faker from 'faker';
 
+import { UserNotFoundWithThisIdError } from '@domain/errors';
 import { IUserModel } from '@domain/models/User';
 
 import { GetProfileUseCase } from '@data/usecases/get-profile/GetProfile';
@@ -39,6 +40,18 @@ describe('GetProfileUseCase', () => {
     });
 
     await expect(promise).rejects.toThrow();
+  });
+
+  it('should not be able to get profile of a non-existing user', async () => {
+    jest
+      .spyOn(findUserByIdRepositorySpy, 'findById')
+      .mockReturnValueOnce(Promise.resolve(undefined));
+
+    const promise = getProfileUseCase.execute({
+      user_id: Faker.datatype.uuid(),
+    });
+
+    await expect(promise).rejects.toBeInstanceOf(UserNotFoundWithThisIdError);
   });
 
   it('should be able to get user data', async () => {
