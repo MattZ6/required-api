@@ -1,7 +1,8 @@
 version: "3.9"
 
 services:
-  # Banco de dados
+
+  # Database
   auth_app_database:
     image: postgres
     container_name: auth_app_database
@@ -15,14 +16,14 @@ services:
     volumes:
       - pgdata:/data/postgres
 
-  # Aplicação
+  # Application
   auth_app_api:
     build: .
     container_name: auth_app_api
     restart: always
     ports:
       - ${API_PORT}:3333
-      - 9229:9229
+      - 9229:9229 # For debug purposes
     volumes:
       - .:/usr/app
     depends_on:
