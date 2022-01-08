@@ -32,7 +32,7 @@
     "eslint-plugin-import": "2.25.4",
     "eslint-plugin-import-helpers": "1.2.0",
     "eslint-plugin-prettier": "4.0.0",
-    "faker": "5.5.3",
+    "faker": "6.6.6",
     "jest": "27.4.5",
     "prettier": "2.5.1",
     "ts-jest": "27.1.2",
