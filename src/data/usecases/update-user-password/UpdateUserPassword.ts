@@ -33,10 +33,10 @@ export class UpdateUserPasswordUseCase implements IUpdateUserPasswordUseCase {
       throw new UserNotFoundWithThisIdError();
     }
 
-    const passwordsMatch = await this.compareHashProvider.compare(
-      old_password,
-      user.password_hash
-    );
+    const passwordsMatch = await this.compareHashProvider.compare({
+      value: old_password,
+      hashed_value: user.password_hash,
+    });
 
     if (!passwordsMatch) {
       throw new PasswordNotMatchError();

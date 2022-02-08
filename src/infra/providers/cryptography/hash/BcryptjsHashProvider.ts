@@ -18,7 +18,11 @@ export class BcryptjsHashProvider
     return hash(value, this.salt);
   }
 
-  async compare(value: string, hashedValue: string): Promise<boolean> {
-    return compare(value, hashedValue);
+  async compare(
+    data: ICompareHashProvider.Input
+  ): Promise<ICompareHashProvider.Output> {
+    const { value, hashed_value } = data;
+
+    return compare(value, hashed_value);
   }
 }

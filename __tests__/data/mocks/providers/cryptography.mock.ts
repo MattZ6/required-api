@@ -15,7 +15,9 @@ export class GenerateHashProviderSpy implements IGenerateHashProvider {
 }
 
 export class CompareHashProviderSpy implements ICompareHashProvider {
-  async compare(_: string, __: string): Promise<boolean> {
+  async compare(
+    _: ICompareHashProvider.Input
+  ): Promise<ICompareHashProvider.Output> {
     return true;
   }
 }

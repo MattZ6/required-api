@@ -28,10 +28,10 @@ export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
       throw new UserNotFoundWithThisEmailError();
     }
 
-    const passwordsMatch = await this.compareHashProvider.compare(
-      password,
-      user.password_hash
-    );
+    const passwordsMatch = await this.compareHashProvider.compare({
+      value: password,
+      hashed_value: user.password_hash,
+    });
 
     if (!passwordsMatch) {
       throw new PasswordNotMatchError();
