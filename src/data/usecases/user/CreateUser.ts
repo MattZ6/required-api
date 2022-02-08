@@ -1,6 +1,5 @@
 import { UserAlreadyExistsWithThisEmailError } from '@domain/errors';
-import { IUserModel } from '@domain/models/User';
-import { ICreateUserUseCase, CreateUserDTO } from '@domain/usecases/CreateUser';
+import { ICreateUserUseCase } from '@domain/usecases/user/CreateUser';
 
 import { IGenerateHashProvider } from '@data/protocols/providers/cryptography/hash';
 import {
@@ -15,7 +14,9 @@ export class CreateUserUseCase implements ICreateUserUseCase {
     private readonly createUserRepository: ICreateUserRepository
   ) {}
 
-  async execute(data: CreateUserDTO): Promise<IUserModel> {
+  async execute(
+    data: ICreateUserUseCase.Input
+  ): Promise<ICreateUserUseCase.Output> {
     const { name, email, password } = data;
 
     const alreadyExists =

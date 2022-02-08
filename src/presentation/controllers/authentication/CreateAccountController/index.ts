@@ -1,5 +1,5 @@
 import { UserAlreadyExistsWithThisEmailError } from '@domain/errors';
-import { ICreateUserUseCase } from '@domain/usecases/CreateUser';
+import { ICreateUserUseCase } from '@domain/usecases/user/CreateUser';
 
 import { created, unprocessableEntity } from '@presentation/helpers/http/http';
 import { IController, IHttpRespose } from '@presentation/protocols';
