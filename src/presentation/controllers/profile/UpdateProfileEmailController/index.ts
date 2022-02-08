@@ -2,7 +2,7 @@ import {
   UserAlreadyExistsWithThisEmailError,
   UserNotFoundWithThisIdError,
 } from '@domain/errors';
-import { IUpdateUserEmailUseCase } from '@domain/usecases/UpdateUserEmail';
+import { IUpdateUserEmailUseCase } from '@domain/usecases/user/UpdateUserEmail';
 
 import { conflict, noContent, notFound } from '@presentation/helpers/http/http';
 import { IController, IHttpRespose } from '@presentation/protocols';

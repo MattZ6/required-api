@@ -2,10 +2,7 @@ import {
   UserAlreadyExistsWithThisEmailError,
   UserNotFoundWithThisIdError,
 } from '@domain/errors';
-import {
-  IUpdateUserEmailUseCase,
-  UpdateUserEmailDTO,
-} from '@domain/usecases/UpdateUserEmail';
+import { IUpdateUserEmailUseCase } from '@domain/usecases/user/UpdateUserEmail';
 
 import {
   ICheckIfUserExistsByEmailRepository,
@@ -20,7 +17,9 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
     private readonly updateUserRepository: IUpdateUserRepository
   ) {}
 
-  async execute(data: UpdateUserEmailDTO): Promise<void> {
+  async execute(
+    data: IUpdateUserEmailUseCase.Input
+  ): Promise<IUpdateUserEmailUseCase.Output> {
     const { user_id, email } = data;
 
     const user = await this.findUserByIdRepository.findById({ id: user_id });
