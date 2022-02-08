@@ -1,4 +1,4 @@
-import { AuthenticateUserUseCase } from '@data/usecases/authenticate-user/AuthenticateUser';
+import { AuthenticateUserUseCase } from '@data/usecases/user/AuthenticateUser';
 
 import { AuthenticateUserController } from '@presentation/controllers/authentication/AuthenticateUserController';
 import { IController } from '@presentation/protocols/Controller';

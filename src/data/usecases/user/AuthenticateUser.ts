@@ -2,11 +2,7 @@ import {
   PasswordNotMatchError,
   UserNotFoundWithThisEmailError,
 } from '@domain/errors';
-import {
-  AccessTokenDTO,
-  AuthenticateUserDTO,
-  IAuthenticateUserUseCase,
-} from '@domain/usecases/AuthenticateUser';
+import { IAuthenticateUserUseCase } from '@domain/usecases/user/AuthenticateUser';
 
 import { IEncryptProvider } from '@data/protocols/providers/cryptography/cryptography';
 import { ICompareHashProvider } from '@data/protocols/providers/cryptography/hash';
@@ -19,7 +15,9 @@ export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
     private readonly encryptProvider: IEncryptProvider
   ) {}
 
-  async execute(data: AuthenticateUserDTO): Promise<AccessTokenDTO> {
+  async execute(
+    data: IAuthenticateUserUseCase.Input
+  ): Promise<IAuthenticateUserUseCase.Output> {
     const { email, password } = data;
 
     const user = await this.findUserByEmailRepository.findByEmail({ email });

@@ -5,7 +5,7 @@ import {
   UserNotFoundWithThisEmailError,
 } from '@domain/errors';
 
-import { AuthenticateUserUseCase } from '@data/usecases/authenticate-user/AuthenticateUser';
+import { AuthenticateUserUseCase } from '@data/usecases/user/AuthenticateUser';
 
 import {
   CompareHashProviderSpy,

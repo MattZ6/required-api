@@ -2,7 +2,7 @@ import {
   PasswordNotMatchError,
   UserNotFoundWithThisEmailError,
 } from '@domain/errors';
-import { IAuthenticateUserUseCase } from '@domain/usecases/AuthenticateUser';
+import { IAuthenticateUserUseCase } from '@domain/usecases/user/AuthenticateUser';
 
 import {
   notFound,
