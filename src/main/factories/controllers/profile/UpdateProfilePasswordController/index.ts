@@ -1,4 +1,4 @@
-import { UpdateUserPasswordUseCase } from '@data/usecases/update-user-password/UpdateUserPassword';
+import { UpdateUserPasswordUseCase } from '@data/usecases/user/UpdateUserPassword';
 
 import { UpdateProfilePasswordController } from '@presentation/controllers/profile/UpdateProfilePasswordController';
 import { IController } from '@presentation/protocols/Controller';

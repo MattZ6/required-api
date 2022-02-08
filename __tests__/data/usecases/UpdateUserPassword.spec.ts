@@ -6,7 +6,7 @@ import {
 } from '@domain/errors';
 import { IUserModel } from '@domain/models/User';
 
-import { UpdateUserPasswordUseCase } from '@data/usecases/update-user-password/UpdateUserPassword';
+import { UpdateUserPasswordUseCase } from '@data/usecases/user/UpdateUserPassword';
 
 import {
   CompareHashProviderSpy,

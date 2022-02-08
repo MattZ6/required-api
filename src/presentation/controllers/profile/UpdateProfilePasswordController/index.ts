@@ -2,7 +2,7 @@ import {
   PasswordNotMatchError,
   UserNotFoundWithThisIdError,
 } from '@domain/errors';
-import { IUpdateUserPasswordUseCase } from '@domain/usecases/UpdateUserPassword';
+import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdateUserPassword';
 
 import {
   noContent,

@@ -2,10 +2,7 @@ import {
   PasswordNotMatchError,
   UserNotFoundWithThisIdError,
 } from '@domain/errors';
-import {
-  IUpdateUserPasswordUseCase,
-  UpdateUserPasswordDTO,
-} from '@domain/usecases/UpdateUserPassword';
+import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdateUserPassword';
 
 import {
   ICompareHashProvider,
@@ -24,7 +21,9 @@ export class UpdateUserPasswordUseCase implements IUpdateUserPasswordUseCase {
     private readonly updateUserRepository: IUpdateUserRepository
   ) {}
 
-  async execute(data: UpdateUserPasswordDTO): Promise<void> {
+  async execute(
+    data: IUpdateUserPasswordUseCase.Input
+  ): Promise<IUpdateUserPasswordUseCase.Output> {
     const { user_id, old_password, new_password } = data;
 
     const user = await this.findUserByIdRepository.findById({ id: user_id });
