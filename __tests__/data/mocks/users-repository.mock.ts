@@ -14,7 +14,9 @@ import {
 export class CheckIfUserExistsByEmailRepositorySpy
   implements ICheckIfUserExistsByEmailRepository
 {
-  async checkIfExistsByEmail(_: string): Promise<boolean> {
+  async checkIfExistsByEmail(
+    _: ICheckIfUserExistsByEmailRepository.Input
+  ): Promise<ICheckIfUserExistsByEmailRepository.Output> {
     return false;
   }
 }

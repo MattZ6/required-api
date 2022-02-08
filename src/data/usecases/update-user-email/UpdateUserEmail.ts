@@ -37,7 +37,7 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
     }
 
     const emailAlreadyInUse =
-      await this.checkIfUserExistsByEmail.checkIfExistsByEmail(email);
+      await this.checkIfUserExistsByEmail.checkIfExistsByEmail({ email });
 
     if (emailAlreadyInUse) {
       throw new UserAlreadyExistsWithThisEmailError();

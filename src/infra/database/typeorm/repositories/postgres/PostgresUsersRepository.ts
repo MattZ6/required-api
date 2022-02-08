@@ -27,7 +27,11 @@ export class PostgresUsersRepository
     this.repository = getRepository(User);
   }
 
-  async checkIfExistsByEmail(email: string): Promise<boolean> {
+  async checkIfExistsByEmail(
+    data: ICheckIfUserExistsByEmailRepository.Input
+  ): Promise<ICheckIfUserExistsByEmailRepository.Output> {
+    const { email } = data;
+
     const count = await this.repository.count({
       where: {
         email: Raw(field => `LOWER(${field}) = LOWER(:value)`, {
