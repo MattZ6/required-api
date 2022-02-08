@@ -3,7 +3,6 @@ import { faker } from '@faker-js/faker';
 import { IUserModel } from '@domain/models/User';
 
 import {
-  CreateUserDTO,
   ICheckIfUserExistsByEmailRepository,
   ICreateUserRepository,
   IFindUserByEmailRepository,
@@ -22,7 +21,9 @@ export class CheckIfUserExistsByEmailRepositorySpy
 }
 
 export class CreateUserRepositorySpy implements ICreateUserRepository {
-  async create(data: CreateUserDTO): Promise<IUserModel> {
+  async create(
+    data: ICreateUserRepository.Input
+  ): Promise<ICreateUserRepository.Output> {
     return {
       ...data,
       id: faker.datatype.uuid(),

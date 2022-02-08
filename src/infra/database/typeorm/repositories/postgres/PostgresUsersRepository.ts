@@ -3,7 +3,6 @@ import { getRepository, Repository, Raw } from 'typeorm';
 import { IUserModel } from '@domain/models/User';
 
 import {
-  CreateUserDTO,
   ICheckIfUserExistsByEmailRepository,
   ICreateUserRepository,
   IFindUserByEmailRepository,
@@ -43,7 +42,9 @@ export class PostgresUsersRepository
     return count >= 1;
   }
 
-  async create(data: CreateUserDTO): Promise<IUserModel> {
+  async create(
+    data: ICreateUserRepository.Input
+  ): Promise<ICreateUserRepository.Output> {
     const { name, email, password_hash } = data;
 
     const user = this.repository.create({ name, email, password_hash });

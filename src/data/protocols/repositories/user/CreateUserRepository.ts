@@ -1,11 +1,19 @@
 import { IUserModel } from '@domain/models/User';
 
-export type CreateUserDTO = {
-  name: string;
-  email: string;
-  password_hash: string;
-};
-
-export interface ICreateUserRepository {
-  create(data: CreateUserDTO): Promise<IUserModel>;
+interface ICreateUserRepository {
+  create(
+    data: ICreateUserRepository.Input
+  ): Promise<ICreateUserRepository.Output>;
 }
+
+namespace ICreateUserRepository {
+  export type Input = {
+    name: string;
+    email: string;
+    password_hash: string;
+  };
+
+  export type Output = IUserModel;
+}
+
+export { ICreateUserRepository };
