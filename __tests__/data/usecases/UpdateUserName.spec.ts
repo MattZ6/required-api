@@ -1,4 +1,4 @@
-import Faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import { UserNotFoundWithThisIdError } from '@domain/errors';
 import { IUserModel } from '@domain/models/User';
@@ -26,11 +26,11 @@ describe('UpdateUserNameUseCase', () => {
   it('should call FindUserByIdRepository with correct data', async () => {
     const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
 
-    const user_id = Faker.datatype.uuid();
+    const user_id = faker.datatype.uuid();
 
     await updateUserNameUseCase.execute({
       user_id,
-      name: Faker.name.findName(),
+      name: faker.name.findName(),
     });
 
     expect(findByIdSpy).toHaveBeenCalledWith(user_id);
@@ -42,8 +42,8 @@ describe('UpdateUserNameUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserNameUseCase.execute({
-      user_id: Faker.datatype.uuid(),
-      name: Faker.name.findName(),
+      user_id: faker.datatype.uuid(),
+      name: faker.name.findName(),
     });
 
     await expect(promise).rejects.toThrow();
@@ -51,12 +51,12 @@ describe('UpdateUserNameUseCase', () => {
 
   it('should call UpdateUserRepository with correct data', async () => {
     const user: IUserModel = {
-      id: Faker.datatype.uuid(),
-      name: Faker.name.findName(),
-      email: Faker.internet.email(),
-      password_hash: Faker.internet.password(),
-      created_at: Faker.datatype.datetime(),
-      updated_at: Faker.datatype.datetime(),
+      id: faker.datatype.uuid(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      password_hash: faker.internet.password(),
+      created_at: faker.datatype.datetime(),
+      updated_at: faker.datatype.datetime(),
     };
 
     jest
@@ -65,10 +65,10 @@ describe('UpdateUserNameUseCase', () => {
 
     const updateSpy = jest.spyOn(updateUserRepositorySpy, 'update');
 
-    const newName = Faker.name.findName();
+    const newName = faker.name.findName();
 
     await updateUserNameUseCase.execute({
-      user_id: Faker.datatype.uuid(),
+      user_id: faker.datatype.uuid(),
       name: newName,
     });
 
@@ -83,8 +83,8 @@ describe('UpdateUserNameUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserNameUseCase.execute({
-      user_id: Faker.datatype.uuid(),
-      name: Faker.name.findName(),
+      user_id: faker.datatype.uuid(),
+      name: faker.name.findName(),
     });
 
     await expect(promise).rejects.toThrow();
@@ -96,8 +96,8 @@ describe('UpdateUserNameUseCase', () => {
       .mockReturnValueOnce(Promise.resolve(undefined));
 
     const promise = updateUserNameUseCase.execute({
-      user_id: Faker.datatype.uuid(),
-      name: Faker.name.findName(),
+      user_id: faker.datatype.uuid(),
+      name: faker.name.findName(),
     });
 
     await expect(promise).rejects.toBeInstanceOf(UserNotFoundWithThisIdError);
@@ -105,22 +105,22 @@ describe('UpdateUserNameUseCase', () => {
 
   it('should be able to update user name', async () => {
     const user: IUserModel = {
-      id: Faker.datatype.uuid(),
-      name: Faker.name.findName(),
-      email: Faker.internet.email(),
-      password_hash: Faker.internet.password(),
-      created_at: Faker.datatype.datetime(),
-      updated_at: Faker.datatype.datetime(),
+      id: faker.datatype.uuid(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      password_hash: faker.internet.password(),
+      created_at: faker.datatype.datetime(),
+      updated_at: faker.datatype.datetime(),
     };
 
     jest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockReturnValueOnce(Promise.resolve(user));
 
-    const updatedName = Faker.name.findName();
+    const updatedName = faker.name.findName();
 
     await updateUserNameUseCase.execute({
-      user_id: Faker.datatype.uuid(),
+      user_id: faker.datatype.uuid(),
       name: updatedName,
     });
 

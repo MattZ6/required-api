@@ -1,4 +1,4 @@
-import Faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import {
   UserAlreadyExistsWithThisEmailError,
@@ -26,8 +26,8 @@ describe('UpdateProfileEmailController', () => {
   it('should call UpdateProfileEmailController with correct data', async () => {
     const executeSpy = jest.spyOn(updateUserEmailUseCaseSpy, 'execute');
 
-    const user_id = Faker.datatype.uuid();
-    const email = Faker.internet.email();
+    const user_id = faker.datatype.uuid();
+    const email = faker.internet.email();
 
     await updateProfileEmailController.handle({ user_id, body: { email } });
 
@@ -41,8 +41,8 @@ describe('UpdateProfileEmailController', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = updateProfileEmailController.handle({
-      user_id: Faker.datatype.uuid(),
-      body: { email: Faker.internet.email() },
+      user_id: faker.datatype.uuid(),
+      body: { email: faker.internet.email() },
     });
 
     await expect(promise).rejects.toThrow();
@@ -56,9 +56,9 @@ describe('UpdateProfileEmailController', () => {
       .mockRejectedValueOnce(error);
 
     const response = await updateProfileEmailController.handle({
-      user_id: Faker.datatype.uuid(),
+      user_id: faker.datatype.uuid(),
       body: {
-        email: Faker.internet.email(),
+        email: faker.internet.email(),
       },
     });
 
@@ -73,9 +73,9 @@ describe('UpdateProfileEmailController', () => {
       .mockRejectedValueOnce(error);
 
     const response = await updateProfileEmailController.handle({
-      user_id: Faker.datatype.uuid(),
+      user_id: faker.datatype.uuid(),
       body: {
-        email: Faker.internet.email(),
+        email: faker.internet.email(),
       },
     });
 
@@ -84,9 +84,9 @@ describe('UpdateProfileEmailController', () => {
 
   it('should return 204 on success', async () => {
     const response = await updateProfileEmailController.handle({
-      user_id: Faker.datatype.uuid(),
+      user_id: faker.datatype.uuid(),
       body: {
-        email: Faker.internet.email(),
+        email: faker.internet.email(),
       },
     });
 

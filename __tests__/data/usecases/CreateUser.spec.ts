@@ -1,4 +1,4 @@
-import Faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import { UserAlreadyExistsWithThisEmailError } from '@domain/errors';
 
@@ -36,12 +36,12 @@ describe('CreateUserUseCase', () => {
       'checkIfExistsByEmail'
     );
 
-    const email = Faker.internet.email();
+    const email = faker.internet.email();
 
     await createUserUseCase.execute({
-      name: Faker.name.findName(),
+      name: faker.name.findName(),
       email,
-      password: Faker.internet.password(),
+      password: faker.internet.password(),
     });
 
     expect(checkIfExistsByEmailSpy).toHaveBeenCalledWith(email);
@@ -53,9 +53,9 @@ describe('CreateUserUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = createUserUseCase.execute({
-      name: Faker.name.findName(),
-      email: Faker.internet.email(),
-      password: Faker.internet.password(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
     });
 
     await expect(promise).rejects.toThrow();
@@ -64,11 +64,11 @@ describe('CreateUserUseCase', () => {
   it('should call GenerateHashProvider with correct data', async () => {
     const hashSpy = jest.spyOn(generateHashProviderSpy, 'hash');
 
-    const password = Faker.internet.password();
+    const password = faker.internet.password();
 
     await createUserUseCase.execute({
-      name: Faker.name.findName(),
-      email: Faker.internet.email(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
       password,
     });
 
@@ -81,16 +81,16 @@ describe('CreateUserUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = createUserUseCase.execute({
-      name: Faker.name.findName(),
-      email: Faker.internet.email(),
-      password: Faker.internet.password(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
     });
 
     await expect(promise).rejects.toThrow();
   });
 
   it('should call CreateUserRepositoryStub with correct data', async () => {
-    const passwordHash = Faker.internet.password();
+    const passwordHash = faker.internet.password();
 
     jest
       .spyOn(generateHashProviderSpy, 'hash')
@@ -98,13 +98,13 @@ describe('CreateUserUseCase', () => {
 
     const createSpy = jest.spyOn(createUserRepositorySpy, 'create');
 
-    const name = Faker.name.findName();
-    const email = Faker.internet.email();
+    const name = faker.name.findName();
+    const email = faker.internet.email();
 
     await createUserUseCase.execute({
       name,
       email,
-      password: Faker.internet.password(),
+      password: faker.internet.password(),
     });
 
     expect(createSpy).toHaveBeenCalledWith({
@@ -120,9 +120,9 @@ describe('CreateUserUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = createUserUseCase.execute({
-      name: Faker.name.findName(),
-      email: Faker.internet.email(),
-      password: Faker.internet.password(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
     });
 
     await expect(promise).rejects.toThrow();
@@ -134,9 +134,9 @@ describe('CreateUserUseCase', () => {
       .mockReturnValueOnce(Promise.resolve(true));
 
     const promise = createUserUseCase.execute({
-      name: Faker.name.findName(),
-      email: Faker.internet.email(),
-      password: Faker.internet.password(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
     });
 
     await expect(promise).rejects.toBeInstanceOf(
@@ -145,19 +145,19 @@ describe('CreateUserUseCase', () => {
   });
 
   it('should be able to create a new user', async () => {
-    const password_hash = Faker.internet.password();
+    const password_hash = faker.internet.password();
 
     jest
       .spyOn(generateHashProviderSpy, 'hash')
       .mockReturnValueOnce(Promise.resolve(password_hash));
 
-    const name = Faker.name.findName();
-    const email = Faker.internet.email();
+    const name = faker.name.findName();
+    const email = faker.internet.email();
 
     const user = await createUserUseCase.execute({
       name,
       email,
-      password: Faker.internet.password(),
+      password: faker.internet.password(),
     });
 
     expect(user).toHaveProperty('id');

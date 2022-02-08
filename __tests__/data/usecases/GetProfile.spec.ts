@@ -1,4 +1,4 @@
-import Faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import { UserNotFoundWithThisIdError } from '@domain/errors';
 import { IUserModel } from '@domain/models/User';
@@ -21,7 +21,7 @@ describe('GetProfileUseCase', () => {
   it('should call FindUserByIdRepository with correct data', async () => {
     const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
 
-    const user_id = Faker.datatype.uuid();
+    const user_id = faker.datatype.uuid();
 
     await getProfileUseCase.execute({
       user_id,
@@ -36,7 +36,7 @@ describe('GetProfileUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = getProfileUseCase.execute({
-      user_id: Faker.datatype.uuid(),
+      user_id: faker.datatype.uuid(),
     });
 
     await expect(promise).rejects.toThrow();
@@ -48,7 +48,7 @@ describe('GetProfileUseCase', () => {
       .mockReturnValueOnce(Promise.resolve(undefined));
 
     const promise = getProfileUseCase.execute({
-      user_id: Faker.datatype.uuid(),
+      user_id: faker.datatype.uuid(),
     });
 
     await expect(promise).rejects.toBeInstanceOf(UserNotFoundWithThisIdError);
@@ -56,12 +56,12 @@ describe('GetProfileUseCase', () => {
 
   it('should be able to get user data', async () => {
     const user: IUserModel = {
-      id: Faker.datatype.uuid(),
-      name: Faker.name.findName(),
-      email: Faker.internet.email(),
-      password_hash: Faker.internet.password(),
-      created_at: Faker.datatype.datetime(),
-      updated_at: Faker.datatype.datetime(),
+      id: faker.datatype.uuid(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      password_hash: faker.internet.password(),
+      created_at: faker.datatype.datetime(),
+      updated_at: faker.datatype.datetime(),
     };
 
     jest
@@ -69,7 +69,7 @@ describe('GetProfileUseCase', () => {
       .mockReturnValueOnce(Promise.resolve(user));
 
     const profile = await getProfileUseCase.execute({
-      user_id: Faker.datatype.uuid(),
+      user_id: faker.datatype.uuid(),
     });
 
     expect(profile).toBe(user);

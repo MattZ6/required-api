@@ -1,4 +1,4 @@
-import Faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import {
   AccessTokenDTO,
@@ -9,7 +9,7 @@ import {
 export class AuthenticateUserUseCaseSpy implements IAuthenticateUserUseCase {
   async execute(_: AuthenticateUserDTO): Promise<AccessTokenDTO> {
     return {
-      access_token: Faker.datatype.string(),
+      access_token: faker.datatype.string(),
     };
   }
 }

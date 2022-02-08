@@ -1,4 +1,4 @@
-import Faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import { IUserModel } from '@domain/models/User';
 import { CreateUserDTO, ICreateUserUseCase } from '@domain/usecases/CreateUser';
@@ -6,12 +6,12 @@ import { CreateUserDTO, ICreateUserUseCase } from '@domain/usecases/CreateUser';
 export class CreateUserUseCaseSpy implements ICreateUserUseCase {
   async execute(_: CreateUserDTO): Promise<IUserModel> {
     return {
-      id: Faker.datatype.uuid(),
-      name: Faker.name.findName(),
-      email: Faker.internet.email(),
-      password_hash: Faker.internet.password(),
-      created_at: Faker.datatype.datetime(),
-      updated_at: Faker.datatype.datetime(),
+      id: faker.datatype.uuid(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      password_hash: faker.internet.password(),
+      created_at: faker.datatype.datetime(),
+      updated_at: faker.datatype.datetime(),
     };
   }
 }

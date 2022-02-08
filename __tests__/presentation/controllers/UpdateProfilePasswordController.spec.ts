@@ -1,4 +1,4 @@
-import Faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import {
   PasswordNotMatchError,
@@ -30,9 +30,9 @@ describe('UpdateProfilePasswordController', () => {
   it('should call UpdateProfilePasswordController with correct data', async () => {
     const executeSpy = jest.spyOn(updateUserPasswordUseCaseSpy, 'execute');
 
-    const user_id = Faker.datatype.uuid();
-    const old_password = Faker.internet.password();
-    const new_password = Faker.internet.password();
+    const user_id = faker.datatype.uuid();
+    const old_password = faker.internet.password();
+    const new_password = faker.internet.password();
 
     await updateProfilePasswordController.handle({
       user_id,
@@ -53,10 +53,10 @@ describe('UpdateProfilePasswordController', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = updateProfilePasswordController.handle({
-      user_id: Faker.datatype.uuid(),
+      user_id: faker.datatype.uuid(),
       body: {
-        old_password: Faker.internet.password(),
-        password: Faker.internet.password(),
+        old_password: faker.internet.password(),
+        password: faker.internet.password(),
       },
     });
 
@@ -71,10 +71,10 @@ describe('UpdateProfilePasswordController', () => {
       .mockRejectedValueOnce(error);
 
     const response = await updateProfilePasswordController.handle({
-      user_id: Faker.datatype.uuid(),
+      user_id: faker.datatype.uuid(),
       body: {
-        old_password: Faker.internet.password(),
-        password: Faker.internet.password(),
+        old_password: faker.internet.password(),
+        password: faker.internet.password(),
       },
     });
 
@@ -89,10 +89,10 @@ describe('UpdateProfilePasswordController', () => {
       .mockRejectedValueOnce(error);
 
     const response = await updateProfilePasswordController.handle({
-      user_id: Faker.datatype.uuid(),
+      user_id: faker.datatype.uuid(),
       body: {
-        old_password: Faker.internet.password(),
-        password: Faker.internet.password(),
+        old_password: faker.internet.password(),
+        password: faker.internet.password(),
       },
     });
 
@@ -101,10 +101,10 @@ describe('UpdateProfilePasswordController', () => {
 
   it('should return 204 on success', async () => {
     const response = await updateProfilePasswordController.handle({
-      user_id: Faker.datatype.uuid(),
+      user_id: faker.datatype.uuid(),
       body: {
-        old_password: Faker.internet.password(),
-        password: Faker.internet.password(),
+        old_password: faker.internet.password(),
+        password: faker.internet.password(),
       },
     });
 

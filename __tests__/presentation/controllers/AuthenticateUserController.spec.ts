@@ -1,4 +1,4 @@
-import Faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import {
   PasswordNotMatchError,
@@ -30,8 +30,8 @@ describe('AuthenticateUserController', () => {
   it('should call AuthenticateUserUseCase with correct data', async () => {
     const executeSpy = jest.spyOn(authenticateUserUseCaseSpy, 'execute');
 
-    const email = Faker.internet.email();
-    const password = Faker.internet.password();
+    const email = faker.internet.email();
+    const password = faker.internet.password();
 
     await authenticateUserController.handle({
       body: {
@@ -54,8 +54,8 @@ describe('AuthenticateUserController', () => {
 
     const promise = authenticateUserController.handle({
       body: {
-        email: Faker.internet.email(),
-        password: Faker.internet.password(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
       },
     });
 
@@ -71,8 +71,8 @@ describe('AuthenticateUserController', () => {
 
     const response = await authenticateUserController.handle({
       body: {
-        email: Faker.internet.email(),
-        password: Faker.internet.password(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
       },
     });
 
@@ -88,8 +88,8 @@ describe('AuthenticateUserController', () => {
 
     const response = await authenticateUserController.handle({
       body: {
-        email: Faker.internet.email(),
-        password: Faker.internet.password(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
       },
     });
 
@@ -97,7 +97,7 @@ describe('AuthenticateUserController', () => {
   });
 
   it('should return 200 on success', async () => {
-    const access_token = Faker.datatype.string();
+    const access_token = faker.datatype.string();
 
     jest.spyOn(authenticateUserUseCaseSpy, 'execute').mockReturnValueOnce(
       Promise.resolve({
@@ -107,8 +107,8 @@ describe('AuthenticateUserController', () => {
 
     const response = await authenticateUserController.handle({
       body: {
-        email: Faker.internet.email(),
-        password: Faker.internet.password(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
       },
     });
 

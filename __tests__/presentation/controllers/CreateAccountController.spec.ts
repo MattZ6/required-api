@@ -1,4 +1,4 @@
-import Faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import { UserAlreadyExistsWithThisEmailError } from '@domain/errors';
 
@@ -21,9 +21,9 @@ describe('CreateAccountController', () => {
   it('should call CreateUserUseCase with correct data', async () => {
     const executeSpy = jest.spyOn(createUserUseCaseSpy, 'execute');
 
-    const name = Faker.name.findName();
-    const email = Faker.internet.email();
-    const password = Faker.internet.password();
+    const name = faker.name.findName();
+    const email = faker.internet.email();
+    const password = faker.internet.password();
 
     await createAccountController.handle({
       body: {
@@ -48,9 +48,9 @@ describe('CreateAccountController', () => {
 
     const promise = createAccountController.handle({
       body: {
-        name: Faker.name.findName(),
-        email: Faker.internet.email(),
-        password: Faker.internet.password(),
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
       },
     });
 
@@ -64,9 +64,9 @@ describe('CreateAccountController', () => {
 
     const response = await createAccountController.handle({
       body: {
-        name: Faker.name.findName(),
-        email: Faker.internet.email(),
-        password: Faker.internet.password(),
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
       },
     });
 
@@ -76,9 +76,9 @@ describe('CreateAccountController', () => {
   it('should return 201 on success', async () => {
     const response = await createAccountController.handle({
       body: {
-        name: Faker.name.findName(),
-        email: Faker.internet.email(),
-        password: Faker.internet.password(),
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
       },
     });
 

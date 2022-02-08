@@ -1,4 +1,4 @@
-import Faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 import {
   UserAlreadyExistsWithThisEmailError,
@@ -37,11 +37,11 @@ describe('UpdateUserEmailUseCase', () => {
   it('should call FindUserByIdRepository with correct data', async () => {
     const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
 
-    const user_id = Faker.datatype.uuid();
+    const user_id = faker.datatype.uuid();
 
     await updateUserEmailUseCase.execute({
       user_id,
-      email: Faker.internet.email(),
+      email: faker.internet.email(),
     });
 
     expect(findByIdSpy).toHaveBeenCalledWith(user_id);
@@ -53,8 +53,8 @@ describe('UpdateUserEmailUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserEmailUseCase.execute({
-      user_id: Faker.datatype.uuid(),
-      email: Faker.internet.email(),
+      user_id: faker.datatype.uuid(),
+      email: faker.internet.email(),
     });
 
     await expect(promise).rejects.toThrow();
@@ -66,10 +66,10 @@ describe('UpdateUserEmailUseCase', () => {
       'checkIfExistsByEmail'
     );
 
-    const email = Faker.internet.email();
+    const email = faker.internet.email();
 
     await updateUserEmailUseCase.execute({
-      user_id: Faker.datatype.uuid(),
+      user_id: faker.datatype.uuid(),
       email,
     });
 
@@ -82,8 +82,8 @@ describe('UpdateUserEmailUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserEmailUseCase.execute({
-      user_id: Faker.datatype.uuid(),
-      email: Faker.internet.email(),
+      user_id: faker.datatype.uuid(),
+      email: faker.internet.email(),
     });
 
     await expect(promise).rejects.toThrow();
@@ -91,12 +91,12 @@ describe('UpdateUserEmailUseCase', () => {
 
   it('should call UpdateUserRepository with correct data', async () => {
     const user: IUserModel = {
-      id: Faker.datatype.uuid(),
-      name: Faker.name.findName(),
-      email: Faker.internet.email(),
-      password_hash: Faker.internet.password(),
-      created_at: Faker.datatype.datetime(),
-      updated_at: Faker.datatype.datetime(),
+      id: faker.datatype.uuid(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      password_hash: faker.internet.password(),
+      created_at: faker.datatype.datetime(),
+      updated_at: faker.datatype.datetime(),
     };
 
     jest
@@ -105,10 +105,10 @@ describe('UpdateUserEmailUseCase', () => {
 
     const updateSpy = jest.spyOn(updateUserRepositorySpy, 'update');
 
-    const newEmail = Faker.internet.email();
+    const newEmail = faker.internet.email();
 
     await updateUserEmailUseCase.execute({
-      user_id: Faker.datatype.uuid(),
+      user_id: faker.datatype.uuid(),
       email: newEmail,
     });
 
@@ -121,8 +121,8 @@ describe('UpdateUserEmailUseCase', () => {
       .mockRejectedValueOnce(new Error());
 
     const promise = updateUserEmailUseCase.execute({
-      user_id: Faker.datatype.uuid(),
-      email: Faker.internet.email(),
+      user_id: faker.datatype.uuid(),
+      email: faker.internet.email(),
     });
 
     await expect(promise).rejects.toThrow();
@@ -134,8 +134,8 @@ describe('UpdateUserEmailUseCase', () => {
       .mockReturnValueOnce(Promise.resolve(undefined));
 
     const promise = updateUserEmailUseCase.execute({
-      user_id: Faker.datatype.uuid(),
-      email: Faker.internet.email(),
+      user_id: faker.datatype.uuid(),
+      email: faker.internet.email(),
     });
 
     await expect(promise).rejects.toBeInstanceOf(UserNotFoundWithThisIdError);
@@ -147,8 +147,8 @@ describe('UpdateUserEmailUseCase', () => {
       .mockReturnValueOnce(Promise.resolve(true));
 
     const promise = updateUserEmailUseCase.execute({
-      user_id: Faker.datatype.uuid(),
-      email: Faker.internet.email(),
+      user_id: faker.datatype.uuid(),
+      email: faker.internet.email(),
     });
 
     await expect(promise).rejects.toBeInstanceOf(
@@ -158,22 +158,22 @@ describe('UpdateUserEmailUseCase', () => {
 
   it('should be able to update user email', async () => {
     const user: IUserModel = {
-      id: Faker.datatype.uuid(),
-      name: Faker.name.findName(),
-      email: Faker.internet.email(),
-      password_hash: Faker.internet.password(),
-      created_at: Faker.datatype.datetime(),
-      updated_at: Faker.datatype.datetime(),
+      id: faker.datatype.uuid(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
+      password_hash: faker.internet.password(),
+      created_at: faker.datatype.datetime(),
+      updated_at: faker.datatype.datetime(),
     };
 
     jest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockReturnValueOnce(Promise.resolve(user));
 
-    const updatedEmail = Faker.internet.email();
+    const updatedEmail = faker.internet.email();
 
     await updateUserEmailUseCase.execute({
-      user_id: Faker.datatype.uuid(),
+      user_id: faker.datatype.uuid(),
       email: updatedEmail,
     });
 
