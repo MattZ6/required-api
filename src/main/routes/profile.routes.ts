@@ -2,10 +2,10 @@ import { Router } from 'express';
 
 import { adaptRoute } from '@main/adapters/express/express-route-adapter';
 import { authenticationMiddleware } from '@main/config/middlewares/authentication';
-import { makeGetProfileController } from '@main/factories/controllers/profile/GetProfileControllerFactory';
-import { makeUpdateProfileEmailController } from '@main/factories/controllers/profile/UpdateProfileEmailControllerFactory';
-import { makeUpdateProfileNameController } from '@main/factories/controllers/profile/UpdateProfileNameControllerFactory';
-import { makeUpdateProfilePasswordController } from '@main/factories/controllers/profile/UpdateProfilePasswordController';
+import { makeGetProfileController } from '@main/factories/controllers/user/GetProfileControllerFactory';
+import { makeUpdateProfileEmailController } from '@main/factories/controllers/user/UpdateProfileEmailControllerFactory';
+import { makeUpdateProfileNameController } from '@main/factories/controllers/user/UpdateProfileNameControllerFactory';
+import { makeUpdateProfilePasswordController } from '@main/factories/controllers/user/UpdateProfilePasswordController';
 
 const profileRoutes = Router();
 
