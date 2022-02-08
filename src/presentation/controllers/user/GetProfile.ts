@@ -8,20 +8,18 @@ import {
   IHttpRespose,
 } from '@presentation/protocols';
 
-import { toProfileDTO } from './types';
-
-export class GetProfileController implements IController {
+class GetProfileController implements IController {
   constructor(private readonly getProfileUseCase: IGetProfileUseCase) {}
 
-  async handle(request: IHttpRequest): Promise<IHttpRespose> {
+  async handle(
+    request: GetProfileController.Request
+  ): Promise<GetProfileController.Response> {
     try {
       const { user_id } = request;
 
       const user = await this.getProfileUseCase.execute({ user_id });
 
-      const profile = toProfileDTO(user);
-
-      return ok(profile);
+      return ok(user);
     } catch (error) {
       if (error instanceof UserNotFoundWithThisIdError) {
         return notFound(error);
@@ -31,3 +29,11 @@ export class GetProfileController implements IController {
     }
   }
 }
+
+namespace GetProfileController {
+  export type Request = IHttpRequest;
+
+  export type Response = IHttpRespose;
+}
+
+export { GetProfileController };
