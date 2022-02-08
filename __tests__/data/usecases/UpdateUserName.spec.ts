@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
 import { UserNotFoundWithThisIdError } from '@domain/errors';
-import { IUserModel } from '@domain/models/User';
+import { IUser } from '@domain/models/User';
 
 import { UpdateUserNameUseCase } from '@data/usecases/update-user-name/UpdateUserName';
 
@@ -50,7 +50,7 @@ describe('UpdateUserNameUseCase', () => {
   });
 
   it('should call UpdateUserRepository with correct data', async () => {
-    const user: IUserModel = {
+    const user: IUser = {
       id: faker.datatype.uuid(),
       name: faker.name.findName(),
       email: faker.internet.email(),
@@ -104,7 +104,7 @@ describe('UpdateUserNameUseCase', () => {
   });
 
   it('should be able to update user name', async () => {
-    const user: IUserModel = {
+    const user: IUser = {
       id: faker.datatype.uuid(),
       name: faker.name.findName(),
       email: faker.internet.email(),

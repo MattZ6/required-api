@@ -1,4 +1,4 @@
-import { IUserModel } from '@domain/models/User';
+import { IUser } from '@domain/models/User';
 
 interface ICreateUserRepository {
   create(
@@ -13,7 +13,7 @@ namespace ICreateUserRepository {
     password_hash: string;
   };
 
-  export type Output = IUserModel;
+  export type Output = IUser;
 }
 
 export { ICreateUserRepository };

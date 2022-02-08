@@ -7,12 +7,12 @@ import {
 } from 'typeorm';
 import { v4 as generateUuid } from 'uuid';
 
-import { IUserModel } from '@domain/models/User';
+import { IUser } from '@domain/models/User';
 
 import { tableNames } from '../constants';
 
 @Entity(tableNames.USERS)
-export class User implements IUserModel {
+export class User implements IUser {
   @PrimaryColumn()
   id: string;
 

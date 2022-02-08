@@ -1,4 +1,4 @@
-import { IUserModel } from '@domain/models/User';
+import { IUser } from '@domain/models/User';
 
 interface IFindUserByIdRepository {
   findById(
@@ -11,7 +11,7 @@ namespace IFindUserByIdRepository {
     id: string;
   };
 
-  export type Output = IUserModel | undefined;
+  export type Output = IUser | undefined;
 }
 
 export { IFindUserByIdRepository };

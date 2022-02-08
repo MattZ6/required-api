@@ -4,7 +4,7 @@ import {
   UserAlreadyExistsWithThisEmailError,
   UserNotFoundWithThisIdError,
 } from '@domain/errors';
-import { IUserModel } from '@domain/models/User';
+import { IUser } from '@domain/models/User';
 
 import { UpdateUserEmailUseCase } from '@data/usecases/update-user-email/UpdateUserEmail';
 
@@ -90,7 +90,7 @@ describe('UpdateUserEmailUseCase', () => {
   });
 
   it('should call UpdateUserRepository with correct data', async () => {
-    const user: IUserModel = {
+    const user: IUser = {
       id: faker.datatype.uuid(),
       name: faker.name.findName(),
       email: faker.internet.email(),
@@ -157,7 +157,7 @@ describe('UpdateUserEmailUseCase', () => {
   });
 
   it('should be able to update user email', async () => {
-    const user: IUserModel = {
+    const user: IUser = {
       id: faker.datatype.uuid(),
       name: faker.name.findName(),
       email: faker.internet.email(),

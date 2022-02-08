@@ -1,4 +1,4 @@
-import { IUserModel } from '@domain/models/User';
+import { IUser } from '@domain/models/User';
 
 interface IGetProfileUseCase {
   execute(data: IGetProfileUseCase.Input): Promise<IGetProfileUseCase.Output>;
@@ -9,7 +9,7 @@ namespace IGetProfileUseCase {
     user_id: string;
   };
 
-  export type Output = IUserModel;
+  export type Output = IUser;
 }
 
 export { IGetProfileUseCase };

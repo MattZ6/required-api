@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
 import { UserNotFoundWithThisIdError } from '@domain/errors';
-import { IUserModel } from '@domain/models/User';
+import { IUser } from '@domain/models/User';
 
 import { GetProfileController } from '@presentation/controllers/profile/GetProfileController';
 import { toProfileDTO } from '@presentation/controllers/profile/GetProfileController/types';
@@ -56,7 +56,7 @@ describe('GetProfileController', () => {
   });
 
   it('should return 200 on success', async () => {
-    const user: IUserModel = {
+    const user: IUser = {
       id: faker.datatype.uuid(),
       name: faker.name.findName(),
       email: faker.internet.email(),

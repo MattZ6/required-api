@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
 import { UserNotFoundWithThisIdError } from '@domain/errors';
-import { IUserModel } from '@domain/models/User';
+import { IUser } from '@domain/models/User';
 
 import { GetProfileUseCase } from '@data/usecases/user/GetProfile';
 
@@ -55,7 +55,7 @@ describe('GetProfileUseCase', () => {
   });
 
   it('should be able to get user data', async () => {
-    const user: IUserModel = {
+    const user: IUser = {
       id: faker.datatype.uuid(),
       name: faker.name.findName(),
       email: faker.internet.email(),
