@@ -7,8 +7,10 @@ import {
 } from '@data/protocols/providers/cryptography/hash';
 
 export class GenerateHashProviderSpy implements IGenerateHashProvider {
-  async hash(value: string): Promise<string> {
-    return value;
+  async hash(
+    _: IGenerateHashProvider.Input
+  ): Promise<IGenerateHashProvider.Output> {
+    return faker.datatype.string();
   }
 }
 

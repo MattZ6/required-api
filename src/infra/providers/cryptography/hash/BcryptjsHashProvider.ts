@@ -10,7 +10,11 @@ export class BcryptjsHashProvider
 {
   constructor(private readonly salt: number) {}
 
-  async hash(value: string): Promise<string> {
+  async hash(
+    data: IGenerateHashProvider.Input
+  ): Promise<IGenerateHashProvider.Output> {
+    const { value } = data;
+
     return hash(value, this.salt);
   }
 

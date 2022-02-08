@@ -42,7 +42,9 @@ export class UpdateUserPasswordUseCase implements IUpdateUserPasswordUseCase {
       throw new PasswordNotMatchError();
     }
 
-    user.password_hash = await this.generateHashProvider.hash(new_password);
+    user.password_hash = await this.generateHashProvider.hash({
+      value: new_password,
+    });
 
     await this.updateUserRepository.update(user);
   }

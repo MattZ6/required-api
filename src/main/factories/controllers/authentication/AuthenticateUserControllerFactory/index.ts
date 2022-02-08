@@ -8,10 +8,15 @@ import { makeJWTCryptographyProvider } from '@main/factories/providers/cryptogra
 import makePostgresUsersRepository from '@main/factories/repositories/PostgresUsersRepositoryFactory';
 
 export const makeAuthenticateUserController = (): IController => {
+  const usersRepository = makePostgresUsersRepository;
+
+  const hashProvider = makeBcryptjsHashProvider();
+  const cryptographyProvider = makeJWTCryptographyProvider();
+
   const authenticateUserUseCase = new AuthenticateUserUseCase(
-    makePostgresUsersRepository,
-    makeBcryptjsHashProvider(),
-    makeJWTCryptographyProvider()
+    usersRepository,
+    hashProvider,
+    cryptographyProvider
   );
 
   return new AuthenticateUserController(authenticateUserUseCase);

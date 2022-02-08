@@ -25,7 +25,9 @@ export class CreateUserUseCase implements ICreateUserUseCase {
       throw new UserAlreadyExistsWithThisEmailError();
     }
 
-    const passwordHash = await this.generateHashProvider.hash(password);
+    const passwordHash = await this.generateHashProvider.hash({
+      value: password,
+    });
 
     const user = await this.createUserRepository.create({
       name,

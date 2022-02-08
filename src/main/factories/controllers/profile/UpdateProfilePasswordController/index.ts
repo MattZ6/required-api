@@ -7,13 +7,15 @@ import { makeBcryptjsHashProvider } from '@main/factories/providers/cryptography
 import makePostgresUsersRepository from '@main/factories/repositories/PostgresUsersRepositoryFactory';
 
 export const makeUpdateProfilePasswordController = (): IController => {
+  const usersRepository = makePostgresUsersRepository;
+
   const hashProvider = makeBcryptjsHashProvider();
 
   const updateUserPasswordUseCase = new UpdateUserPasswordUseCase(
-    makePostgresUsersRepository,
+    usersRepository,
     hashProvider,
     hashProvider,
-    makePostgresUsersRepository
+    usersRepository
   );
 
   return new UpdateProfilePasswordController(updateUserPasswordUseCase);
