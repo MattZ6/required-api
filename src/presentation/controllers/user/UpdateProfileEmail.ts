@@ -5,16 +5,20 @@ import {
 import { IUpdateUserEmailUseCase } from '@domain/usecases/user/UpdateUserEmail';
 
 import { conflict, noContent, notFound } from '@presentation/helpers/http/http';
-import { IController, IHttpRespose } from '@presentation/protocols';
+import {
+  IController,
+  IHttpRequest,
+  IHttpRespose,
+} from '@presentation/protocols';
 
-import { UpdateProfileEmailRequest } from './types';
-
-export class UpdateProfileEmailController implements IController {
+class UpdateProfileEmailController implements IController {
   constructor(
     private readonly updateUserEmailUseCase: IUpdateUserEmailUseCase
   ) {}
 
-  async handle(request: UpdateProfileEmailRequest): Promise<IHttpRespose> {
+  async handle(
+    request: UpdateProfileEmailController.Request
+  ): Promise<UpdateProfileEmailController.Response> {
     const { user_id } = request;
     const { email } = request.body;
 
@@ -35,3 +39,15 @@ export class UpdateProfileEmailController implements IController {
     }
   }
 }
+
+namespace UpdateProfileEmailController {
+  type RequestBody = {
+    email: string;
+  };
+
+  export type Request = IHttpRequest<RequestBody>;
+
+  export type Response = IHttpRespose;
+}
+
+export { UpdateProfileEmailController };
