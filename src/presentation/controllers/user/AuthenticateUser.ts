@@ -9,16 +9,20 @@ import {
   ok,
   unprocessableEntity,
 } from '@presentation/helpers/http/http';
-import { IController, IHttpRespose } from '@presentation/protocols';
+import {
+  IController,
+  IHttpRequest,
+  IHttpRespose,
+} from '@presentation/protocols';
 
-import { AuthenticateUserRequest } from './types';
-
-export class AuthenticateUserController implements IController {
+class AuthenticateUserController implements IController {
   constructor(
     private readonly authenticateUserUseCase: IAuthenticateUserUseCase
   ) {}
 
-  async handle(request: AuthenticateUserRequest): Promise<IHttpRespose> {
+  async handle(
+    request: AuthenticateUserController.Request
+  ): Promise<AuthenticateUserController.Response> {
     try {
       const { email, password } = request.body;
 
@@ -41,3 +45,16 @@ export class AuthenticateUserController implements IController {
     }
   }
 }
+
+namespace AuthenticateUserController {
+  type RequestBody = {
+    email: string;
+    password: string;
+  };
+
+  export type Request = IHttpRequest<RequestBody>;
+
+  export type Response = IHttpRespose;
+}
+
+export { AuthenticateUserController };
