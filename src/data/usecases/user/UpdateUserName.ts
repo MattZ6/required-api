@@ -1,8 +1,5 @@
 import { UserNotFoundWithThisIdError } from '@domain/errors';
-import {
-  IUpdateUserNameUseCase,
-  UpdateUserNameDTO,
-} from '@domain/usecases/UpdateUserName';
+import { IUpdateUserNameUseCase } from '@domain/usecases/user/UpdateUserName';
 
 import {
   IFindUserByIdRepository,
@@ -15,7 +12,9 @@ export class UpdateUserNameUseCase implements IUpdateUserNameUseCase {
     private readonly updateUserRepository: IUpdateUserRepository
   ) {}
 
-  async execute(data: UpdateUserNameDTO): Promise<void> {
+  async execute(
+    data: IUpdateUserNameUseCase.Input
+  ): Promise<IUpdateUserNameUseCase.Output> {
     const { user_id, name } = data;
 
     const user = await this.findUserByIdRepository.findById({ id: user_id });

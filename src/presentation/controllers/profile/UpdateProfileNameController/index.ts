@@ -1,5 +1,5 @@
 import { UserNotFoundWithThisIdError } from '@domain/errors';
-import { IUpdateUserNameUseCase } from '@domain/usecases/UpdateUserName';
+import { IUpdateUserNameUseCase } from '@domain/usecases/user/UpdateUserName';
 
 import { noContent, notFound } from '@presentation/helpers/http/http';
 import { IController, IHttpRespose } from '@presentation/protocols';
