@@ -27,7 +27,7 @@ export class UpdateUserPasswordUseCase implements IUpdateUserPasswordUseCase {
   async execute(data: UpdateUserPasswordDTO): Promise<void> {
     const { user_id, old_password, new_password } = data;
 
-    const user = await this.findUserByIdRepository.findById(user_id);
+    const user = await this.findUserByIdRepository.findById({ id: user_id });
 
     if (!user) {
       throw new UserNotFoundWithThisIdError();

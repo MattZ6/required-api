@@ -12,7 +12,9 @@ export class GetProfileUseCase implements IGetProfileUseCase {
   async execute(data: GetProfileDTO): Promise<IUserModel> {
     const { user_id } = data;
 
-    const user = await this.findUserByIdRepository.findById(user_id);
+    const user = await this.findUserByIdRepository.findById({
+      id: user_id,
+    });
 
     if (!user) {
       throw new UserNotFoundWithThisIdError();

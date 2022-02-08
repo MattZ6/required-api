@@ -66,7 +66,11 @@ export class PostgresUsersRepository
     });
   }
 
-  async findById(id: string): Promise<IUserModel | undefined> {
+  async findById(
+    data: IFindUserByIdRepository.Input
+  ): Promise<IFindUserByIdRepository.Output> {
+    const { id } = data;
+
     return this.repository.findOne(id);
   }
 

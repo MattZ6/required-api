@@ -18,7 +18,7 @@ export class UpdateUserNameUseCase implements IUpdateUserNameUseCase {
   async execute(data: UpdateUserNameDTO): Promise<void> {
     const { user_id, name } = data;
 
-    const user = await this.findUserByIdRepository.findById(user_id);
+    const user = await this.findUserByIdRepository.findById({ id: user_id });
 
     if (!user) {
       throw new UserNotFoundWithThisIdError();

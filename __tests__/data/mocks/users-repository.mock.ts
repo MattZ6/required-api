@@ -53,7 +53,11 @@ export class FindUserByEmailRepositorySpy
 }
 
 export class FindUserByIdRepositorySpy implements IFindUserByIdRepository {
-  async findById(id: string): Promise<IUserModel | undefined> {
+  async findById(
+    data: IFindUserByIdRepository.Input
+  ): Promise<IFindUserByIdRepository.Output> {
+    const { id } = data;
+
     return {
       id,
       name: faker.name.findName(),
