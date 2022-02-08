@@ -36,7 +36,11 @@ export class CreateUserRepositorySpy implements ICreateUserRepository {
 export class FindUserByEmailRepositorySpy
   implements IFindUserByEmailRepository
 {
-  async findByEmail(email: string): Promise<IUserModel | undefined> {
+  async findByEmail(
+    data: IFindUserByEmailRepository.Input
+  ): Promise<IFindUserByEmailRepository.Output> {
+    const { email } = data;
+
     return {
       id: faker.datatype.uuid(),
       name: faker.name.findName(),

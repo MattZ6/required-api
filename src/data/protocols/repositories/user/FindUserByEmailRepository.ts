@@ -1,5 +1,17 @@
 import { IUserModel } from '@domain/models/User';
 
-export interface IFindUserByEmailRepository {
-  findByEmail(email: string): Promise<IUserModel | undefined>;
+interface IFindUserByEmailRepository {
+  findByEmail(
+    data: IFindUserByEmailRepository.Input
+  ): Promise<IFindUserByEmailRepository.Output>;
 }
+
+namespace IFindUserByEmailRepository {
+  export type Input = {
+    email: string;
+  };
+
+  export type Output = IUserModel | undefined;
+}
+
+export { IFindUserByEmailRepository };

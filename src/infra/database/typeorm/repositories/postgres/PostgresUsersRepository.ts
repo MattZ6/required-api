@@ -52,7 +52,11 @@ export class PostgresUsersRepository
     return this.repository.save(user);
   }
 
-  async findByEmail(email: string): Promise<IUserModel | undefined> {
+  async findByEmail(
+    data: IFindUserByEmailRepository.Input
+  ): Promise<IFindUserByEmailRepository.Output> {
+    const { email } = data;
+
     return this.repository.findOne({
       where: {
         email: Raw(field => `LOWER(${field}) = LOWER(:value)`, {

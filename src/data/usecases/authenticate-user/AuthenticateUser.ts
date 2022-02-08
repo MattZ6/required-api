@@ -22,7 +22,7 @@ export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
   async execute(data: AuthenticateUserDTO): Promise<AccessTokenDTO> {
     const { email, password } = data;
 
-    const user = await this.findUserByEmailRepository.findByEmail(email);
+    const user = await this.findUserByEmailRepository.findByEmail({ email });
 
     if (!user) {
       throw new UserNotFoundWithThisEmailError();
