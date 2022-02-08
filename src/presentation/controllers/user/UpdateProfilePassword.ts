@@ -9,16 +9,20 @@ import {
   notFound,
   unprocessableEntity,
 } from '@presentation/helpers/http/http';
-import { IController, IHttpRespose } from '@presentation/protocols';
+import {
+  IController,
+  IHttpRequest,
+  IHttpRespose,
+} from '@presentation/protocols';
 
-import { UpdateProfilePasswordRequest } from './types';
-
-export class UpdateProfilePasswordController implements IController {
+class UpdateProfilePasswordController implements IController {
   constructor(
     private readonly updateUserPasswordUseCase: IUpdateUserPasswordUseCase
   ) {}
 
-  async handle(request: UpdateProfilePasswordRequest): Promise<IHttpRespose> {
+  async handle(
+    request: UpdateProfilePasswordController.Request
+  ): Promise<UpdateProfilePasswordController.Response> {
     const { user_id } = request;
     const { old_password, password } = request.body;
 
@@ -43,3 +47,16 @@ export class UpdateProfilePasswordController implements IController {
     }
   }
 }
+
+namespace UpdateProfilePasswordController {
+  type RequestBody = {
+    old_password: string;
+    password: string;
+  };
+
+  export type Request = IHttpRequest<RequestBody>;
+
+  export type Response = IHttpRespose;
+}
+
+export { UpdateProfilePasswordController };
