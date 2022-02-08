@@ -1,7 +1,5 @@
 import { getRepository, Repository, Raw } from 'typeorm';
 
-import { IUserModel } from '@domain/models/User';
-
 import {
   ICheckIfUserExistsByEmailRepository,
   ICreateUserRepository,
@@ -74,7 +72,9 @@ export class PostgresUsersRepository
     return this.repository.findOne(id);
   }
 
-  async update(user: IUserModel): Promise<IUserModel> {
-    return this.repository.save(user);
+  async update(
+    data: IUpdateUserRepository.Input
+  ): Promise<IUpdateUserRepository.Output> {
+    return this.repository.save(data);
   }
 }

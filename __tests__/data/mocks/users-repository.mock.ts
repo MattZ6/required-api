@@ -1,7 +1,5 @@
 import { faker } from '@faker-js/faker';
 
-import { IUserModel } from '@domain/models/User';
-
 import {
   ICheckIfUserExistsByEmailRepository,
   ICreateUserRepository,
@@ -70,7 +68,9 @@ export class FindUserByIdRepositorySpy implements IFindUserByIdRepository {
 }
 
 export class UpdateUserRepositorySpy implements IUpdateUserRepository {
-  async update(user: IUserModel): Promise<IUserModel> {
-    return user;
+  async update(
+    data: IUpdateUserRepository.Input
+  ): Promise<IUpdateUserRepository.Output> {
+    return data;
   }
 }
