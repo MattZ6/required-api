@@ -1,10 +1,13 @@
 import { faker } from '@faker-js/faker';
 
-import { IUserModel } from '@domain/models/User';
-import { GetProfileDTO, IGetProfileUseCase } from '@domain/usecases/GetProfile';
+import { IGetProfileUseCase } from '@domain/usecases/user/GetProfile';
 
 export class GetProfileUseCaseSpy implements IGetProfileUseCase {
-  async execute({ user_id }: GetProfileDTO): Promise<IUserModel> {
+  async execute(
+    data: IGetProfileUseCase.Input
+  ): Promise<IGetProfileUseCase.Output> {
+    const { user_id } = data;
+
     return {
       id: user_id,
       name: faker.name.findName(),

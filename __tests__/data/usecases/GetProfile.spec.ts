@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker';
 import { UserNotFoundWithThisIdError } from '@domain/errors';
 import { IUserModel } from '@domain/models/User';
 
-import { GetProfileUseCase } from '@data/usecases/get-profile/GetProfile';
+import { GetProfileUseCase } from '@data/usecases/user/GetProfile';
 
 import { FindUserByIdRepositorySpy } from '../mocks';
 

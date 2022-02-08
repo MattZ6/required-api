@@ -1,4 +1,4 @@
-import { GetProfileUseCase } from '@data/usecases/get-profile/GetProfile';
+import { GetProfileUseCase } from '@data/usecases/user/GetProfile';
 
 import { GetProfileController } from '@presentation/controllers/profile/GetProfileController';
 import { IController } from '@presentation/protocols/Controller';

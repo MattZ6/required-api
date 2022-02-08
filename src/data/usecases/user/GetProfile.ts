@@ -1,6 +1,5 @@
 import { UserNotFoundWithThisIdError } from '@domain/errors';
-import { IUserModel } from '@domain/models/User';
-import { GetProfileDTO, IGetProfileUseCase } from '@domain/usecases/GetProfile';
+import { IGetProfileUseCase } from '@domain/usecases/user/GetProfile';
 
 import { IFindUserByIdRepository } from '@data/protocols/repositories/user';
 
@@ -9,7 +8,9 @@ export class GetProfileUseCase implements IGetProfileUseCase {
     private readonly findUserByIdRepository: IFindUserByIdRepository
   ) {}
 
-  async execute(data: GetProfileDTO): Promise<IUserModel> {
+  async execute(
+    data: IGetProfileUseCase.Input
+  ): Promise<IGetProfileUseCase.Output> {
     const { user_id } = data;
 
     const user = await this.findUserByIdRepository.findById({

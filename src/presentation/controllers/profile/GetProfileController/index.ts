@@ -1,5 +1,5 @@
 import { UserNotFoundWithThisIdError } from '@domain/errors';
-import { IGetProfileUseCase } from '@domain/usecases/GetProfile';
+import { IGetProfileUseCase } from '@domain/usecases/user/GetProfile';
 
 import { notFound, ok } from '@presentation/helpers/http/http';
 import {
