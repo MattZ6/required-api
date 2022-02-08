@@ -1,13 +1,13 @@
 import { UpdateUserPasswordUseCase } from '@data/usecases/user/UpdateUserPassword';
 
-import { UpdateProfilePasswordController } from '@presentation/controllers/profile/UpdateProfilePasswordController';
+import { UpdateProfilePasswordController } from '@presentation/controllers/user/UpdateProfilePassword';
 import { IController } from '@presentation/protocols/Controller';
 
 import { makeBcryptjsHashProvider } from '@main/factories/providers/cryptography/BcryptjsHashProviderFactory';
-import makePostgresUsersRepository from '@main/factories/repositories/PostgresUsersRepositoryFactory';
+import { makePostgresUsersRepository } from '@main/factories/repositories/PostgresUsersRepositoryFactory';
 
 export const makeUpdateProfilePasswordController = (): IController => {
-  const usersRepository = makePostgresUsersRepository;
+  const usersRepository = makePostgresUsersRepository();
 
   const hashProvider = makeBcryptjsHashProvider();
 

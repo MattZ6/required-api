@@ -1,15 +1,17 @@
-import { UpdateUserEmailUseCase } from '@data/usecases/update-user-email/UpdateUserEmail';
+import { UpdateUserEmailUseCase } from '@data/usecases/user/UpdateUserEmail';
 
-import { UpdateProfileEmailController } from '@presentation/controllers/profile/UpdateProfileEmailController';
+import { UpdateProfileEmailController } from '@presentation/controllers/user/UpdateProfileEmail';
 import { IController } from '@presentation/protocols/Controller';
 
-import makePostgresUsersRepository from '@main/factories/repositories/PostgresUsersRepositoryFactory';
+import { makePostgresUsersRepository } from '@main/factories/repositories/PostgresUsersRepositoryFactory';
 
 export const makeUpdateProfileEmailController = (): IController => {
+  const usersRepository = makePostgresUsersRepository();
+
   const updateUserEmailUseCase = new UpdateUserEmailUseCase(
-    makePostgresUsersRepository,
-    makePostgresUsersRepository,
-    makePostgresUsersRepository
+    usersRepository,
+    usersRepository,
+    usersRepository
   );
 
   return new UpdateProfileEmailController(updateUserEmailUseCase);
