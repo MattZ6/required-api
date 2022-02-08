@@ -2,7 +2,7 @@ import { UserAlreadyExistsWithThisEmailError } from '@domain/errors';
 import { IUserModel } from '@domain/models/User';
 import { ICreateUserUseCase, CreateUserDTO } from '@domain/usecases/CreateUser';
 
-import { IGenerateHashProvider } from '@data/protocols/cryptography/hash';
+import { IGenerateHashProvider } from '@data/protocols/providers/cryptography/hash';
 import {
   ICheckIfUserExistsByEmailRepository,
   ICreateUserRepository,

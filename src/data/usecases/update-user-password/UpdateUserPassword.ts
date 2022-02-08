@@ -10,7 +10,7 @@ import {
 import {
   ICompareHashProvider,
   IGenerateHashProvider,
-} from '@data/protocols/cryptography/hash';
+} from '@data/protocols/providers/cryptography/hash';
 import {
   IFindUserByIdRepository,
   IUpdateUserRepository,

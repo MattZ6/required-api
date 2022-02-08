@@ -8,8 +8,8 @@ import {
   IAuthenticateUserUseCase,
 } from '@domain/usecases/AuthenticateUser';
 
-import { IEncryptProvider } from '@data/protocols/cryptography/cryptography';
-import { ICompareHashProvider } from '@data/protocols/cryptography/hash';
+import { IEncryptProvider } from '@data/protocols/providers/cryptography/cryptography';
+import { ICompareHashProvider } from '@data/protocols/providers/cryptography/hash';
 import { IFindUserByEmailRepository } from '@data/protocols/repositories/user';
 
 export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
