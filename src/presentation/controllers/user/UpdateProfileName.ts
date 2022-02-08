@@ -2,14 +2,18 @@ import { UserNotFoundWithThisIdError } from '@domain/errors';
 import { IUpdateUserNameUseCase } from '@domain/usecases/user/UpdateUserName';
 
 import { noContent, notFound } from '@presentation/helpers/http/http';
-import { IController, IHttpRespose } from '@presentation/protocols';
+import {
+  IController,
+  IHttpRequest,
+  IHttpRespose,
+} from '@presentation/protocols';
 
-import { UpdateProfileNameRequest } from './types';
-
-export class UpdateProfileNameController implements IController {
+class UpdateProfileNameController implements IController {
   constructor(private readonly updateUserNameUseCase: IUpdateUserNameUseCase) {}
 
-  async handle(request: UpdateProfileNameRequest): Promise<IHttpRespose> {
+  async handle(
+    request: UpdateProfileNameController.Request
+  ): Promise<UpdateProfileNameController.Response> {
     const { user_id } = request;
     const { name } = request.body;
 
@@ -26,3 +30,15 @@ export class UpdateProfileNameController implements IController {
     }
   }
 }
+
+namespace UpdateProfileNameController {
+  type RequestBody = {
+    name: string;
+  };
+
+  export type Request = IHttpRequest<RequestBody>;
+
+  export type Response = IHttpRespose;
+}
+
+export { UpdateProfileNameController };
