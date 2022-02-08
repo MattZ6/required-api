@@ -5,7 +5,7 @@ import { noContent, notFound } from '@presentation/helpers/http/http';
 import {
   IController,
   IHttpRequest,
-  IHttpRespose,
+  IHttpResponse,
 } from '@presentation/protocols';
 
 class UpdateProfileNameController implements IController {
@@ -38,7 +38,7 @@ namespace UpdateProfileNameController {
 
   export type Request = IHttpRequest<RequestBody>;
 
-  export type Response = IHttpRespose;
+  export type Response = IHttpResponse;
 }
 
 export { UpdateProfileNameController };

@@ -12,7 +12,7 @@ import {
 import {
   IController,
   IHttpRequest,
-  IHttpRespose,
+  IHttpResponse,
 } from '@presentation/protocols';
 
 class UpdateProfilePasswordController implements IController {
@@ -56,7 +56,7 @@ namespace UpdateProfilePasswordController {
 
   export type Request = IHttpRequest<RequestBody>;
 
-  export type Response = IHttpRespose;
+  export type Response = IHttpResponse;
 }
 
 export { UpdateProfilePasswordController };

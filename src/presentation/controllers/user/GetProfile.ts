@@ -5,7 +5,7 @@ import { notFound, ok } from '@presentation/helpers/http/http';
 import {
   IController,
   IHttpRequest,
-  IHttpRespose,
+  IHttpResponse,
 } from '@presentation/protocols';
 
 class GetProfileController implements IController {
@@ -33,7 +33,7 @@ class GetProfileController implements IController {
 namespace GetProfileController {
   export type Request = IHttpRequest;
 
-  export type Response = IHttpRespose;
+  export type Response = IHttpResponse;
 }
 
 export { GetProfileController };
