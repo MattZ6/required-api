@@ -1,2 +1,3 @@
-export * from './cryptography-provider.mock';
+export * from './providers';
+
 export * from './users-repository.mock';

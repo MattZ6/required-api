@@ -37,7 +37,9 @@ export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
       throw new PasswordNotMatchError();
     }
 
-    const token = await this.encryptProvider.encrypt(user.id);
+    const token = await this.encryptProvider.encrypt({
+      value: user.id,
+    });
 
     return { access_token: token };
   }

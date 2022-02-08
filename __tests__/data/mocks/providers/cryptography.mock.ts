@@ -1,3 +1,5 @@
+import faker from '@faker-js/faker';
+
 import { IEncryptProvider } from '@data/protocols/providers/cryptography/cryptography';
 import {
   ICompareHashProvider,
@@ -17,7 +19,7 @@ export class CompareHashProviderSpy implements ICompareHashProvider {
 }
 
 export class EncryptProviderSpy implements IEncryptProvider {
-  async encrypt(value: string): Promise<string> {
-    return value;
+  async encrypt(_: IEncryptProvider.Input): Promise<IEncryptProvider.Output> {
+    return faker.datatype.string();
   }
 }
