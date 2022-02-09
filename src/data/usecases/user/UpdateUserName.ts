@@ -25,6 +25,6 @@ export class UpdateUserNameUseCase implements IUpdateUserNameUseCase {
 
     user.name = name;
 
-    await this.updateUserRepository.update(user);
+    return this.updateUserRepository.update(user);
   }
 }

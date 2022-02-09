@@ -1,3 +1,5 @@
+import { IUser } from '@domain/models/User';
+
 interface IUpdateUserNameUseCase {
   execute(
     data: IUpdateUserNameUseCase.Input
@@ -10,7 +12,7 @@ namespace IUpdateUserNameUseCase {
     name: string;
   };
 
-  export type Output = void;
+  export type Output = IUser;
 }
 
 export { IUpdateUserNameUseCase };
