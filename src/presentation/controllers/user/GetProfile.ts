@@ -1,5 +1,5 @@
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
-import { IGetProfileUseCase } from '@domain/usecases/user/GetProfile';
+import { IGetUserProfileUseCase } from '@domain/usecases/user/GetUserProfile';
 
 import { notFound, ok } from '@presentation/helpers/http/http';
 import {
@@ -9,7 +9,7 @@ import {
 } from '@presentation/protocols';
 
 class GetProfileController implements IController {
-  constructor(private readonly getProfileUseCase: IGetProfileUseCase) {}
+  constructor(private readonly getProfileUseCase: IGetUserProfileUseCase) {}
 
   async handle(
     request: GetProfileController.Request

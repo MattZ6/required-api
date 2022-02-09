@@ -1,11 +1,11 @@
 import { faker } from '@faker-js/faker';
 
-import { IGetProfileUseCase } from '@domain/usecases/user/GetProfile';
+import { IGetUserProfileUseCase } from '@domain/usecases/user/GetUserProfile';
 
-export class GetProfileUseCaseSpy implements IGetProfileUseCase {
+export class GetProfileUseCaseSpy implements IGetUserProfileUseCase {
   async execute(
-    data: IGetProfileUseCase.Input
-  ): Promise<IGetProfileUseCase.Output> {
+    data: IGetUserProfileUseCase.Input
+  ): Promise<IGetUserProfileUseCase.Output> {
     const { user_id } = data;
 
     return {

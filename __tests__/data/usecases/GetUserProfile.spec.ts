@@ -1,6 +1,6 @@
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 
-import { GetProfileUseCase } from '@data/usecases/user/GetProfile';
+import { GetUserProfileUseCase } from '@data/usecases/user/GetUserProfile';
 
 import { makeErrorMock, makeUserMock } from '../../domain';
 import {
@@ -10,13 +10,15 @@ import {
 
 let findUserByIdRepositorySpy: FindUserByIdRepositorySpy;
 
-let getProfileUseCase: GetProfileUseCase;
+let getUserProfileUseCase: GetUserProfileUseCase;
 
 describe('GetUserProfileUseCase', () => {
   beforeEach(() => {
     findUserByIdRepositorySpy = new FindUserByIdRepositorySpy();
 
-    getProfileUseCase = new GetProfileUseCase(findUserByIdRepositorySpy);
+    getUserProfileUseCase = new GetUserProfileUseCase(
+      findUserByIdRepositorySpy
+    );
   });
 
   it('should call FindUserByIdRepository once with correct values', async () => {
@@ -24,7 +26,7 @@ describe('GetUserProfileUseCase', () => {
 
     const input = makeGetUserProfileUseCaseInputMock();
 
-    await getProfileUseCase.execute(input);
+    await getUserProfileUseCase.execute(input);
 
     expect(findByIdSpy).toHaveBeenCalledTimes(1);
     expect(findByIdSpy).toHaveBeenCalledWith({ id: input.user_id });
@@ -39,7 +41,7 @@ describe('GetUserProfileUseCase', () => {
 
     const input = makeGetUserProfileUseCaseInputMock();
 
-    const promise = getProfileUseCase.execute(input);
+    const promise = getUserProfileUseCase.execute(input);
 
     await expect(promise).rejects.toThrowError(errorMock);
   });
@@ -51,7 +53,7 @@ describe('GetUserProfileUseCase', () => {
 
     const input = makeGetUserProfileUseCaseInputMock();
 
-    const promise = getProfileUseCase.execute(input);
+    const promise = getUserProfileUseCase.execute(input);
 
     await expect(promise).rejects.toBeInstanceOf(
       UserNotFoundWithProvidedIdError
@@ -67,7 +69,7 @@ describe('GetUserProfileUseCase', () => {
 
     const input = makeGetUserProfileUseCaseInputMock();
 
-    const output = await getProfileUseCase.execute(input);
+    const output = await getUserProfileUseCase.execute(input);
 
     expect(output).toEqual(userMock);
   });
