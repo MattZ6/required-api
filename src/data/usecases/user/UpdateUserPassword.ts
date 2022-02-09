@@ -1,5 +1,5 @@
 import {
-  PasswordNotMatchError,
+  WrongPasswordError,
   UserNotFoundWithThisIdError,
 } from '@domain/errors';
 import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdateUserPassword';
@@ -38,7 +38,7 @@ export class UpdateUserPasswordUseCase implements IUpdateUserPasswordUseCase {
     });
 
     if (!passwordsMatch) {
-      throw new PasswordNotMatchError();
+      throw new WrongPasswordError();
     }
 
     user.password_hash = await this.generateHashProvider.hash({

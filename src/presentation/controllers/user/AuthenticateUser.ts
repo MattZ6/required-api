@@ -1,6 +1,6 @@
 import {
-  PasswordNotMatchError,
-  UserNotFoundWithThisEmailError,
+  WrongPasswordError,
+  UserNotFoundWithProvidedEmailError,
 } from '@domain/errors';
 import { IAuthenticateUserUseCase } from '@domain/usecases/user/AuthenticateUser';
 
@@ -33,11 +33,11 @@ class AuthenticateUserController implements IController {
 
       return ok(response);
     } catch (error) {
-      if (error instanceof UserNotFoundWithThisEmailError) {
+      if (error instanceof UserNotFoundWithProvidedEmailError) {
         return notFound(error);
       }
 
-      if (error instanceof PasswordNotMatchError) {
+      if (error instanceof WrongPasswordError) {
         return unprocessableEntity(error);
       }
 

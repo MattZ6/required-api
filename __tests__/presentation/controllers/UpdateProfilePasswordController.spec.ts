@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
 import {
-  PasswordNotMatchError,
+  WrongPasswordError,
   UserNotFoundWithThisIdError,
 } from '@domain/errors';
 
@@ -82,7 +82,7 @@ describe('UpdateProfilePasswordController', () => {
   });
 
   it('should return 422 if UpdateUserPasswordUseCase throws PasswordNotMatchError', async () => {
-    const error = new PasswordNotMatchError();
+    const error = new WrongPasswordError();
 
     jest
       .spyOn(updateUserPasswordUseCaseSpy, 'execute')

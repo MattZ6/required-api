@@ -1,3 +1,3 @@
 export * from './providers';
-
-export * from './users-repository.mock';
+export * from './repositories';
+export * from './usecases';

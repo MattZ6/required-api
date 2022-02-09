@@ -1,5 +1,3 @@
-import { faker } from '@faker-js/faker';
-
 import {
   ICheckIfUserExistsByEmailRepository,
   ICreateUserRepository,
@@ -7,6 +5,8 @@ import {
   IFindUserByIdRepository,
   IUpdateUserRepository,
 } from '@data/protocols/repositories/user';
+
+import { makeUserMock } from '../../../../domain';
 
 export class CheckIfUserExistsByEmailRepositorySpy
   implements ICheckIfUserExistsByEmailRepository
@@ -22,12 +22,13 @@ export class CreateUserRepositorySpy implements ICreateUserRepository {
   async create(
     data: ICreateUserRepository.Input
   ): Promise<ICreateUserRepository.Output> {
-    return {
-      ...data,
-      id: faker.datatype.uuid(),
-      created_at: faker.datatype.datetime(),
-      updated_at: faker.datatype.datetime(),
-    };
+    const { name, email, password_hash } = data;
+
+    const userMock = makeUserMock();
+
+    Object.assign(userMock, { name, email, password_hash });
+
+    return userMock;
   }
 }
 
@@ -39,14 +40,11 @@ export class FindUserByEmailRepositorySpy
   ): Promise<IFindUserByEmailRepository.Output> {
     const { email } = data;
 
-    return {
-      id: faker.datatype.uuid(),
-      name: faker.name.findName(),
-      email,
-      password_hash: faker.datatype.string(10),
-      created_at: faker.datatype.datetime(),
-      updated_at: faker.datatype.datetime(),
-    };
+    const userMock = makeUserMock();
+
+    Object.assign(userMock, { email });
+
+    return userMock;
   }
 }
 
@@ -56,14 +54,11 @@ export class FindUserByIdRepositorySpy implements IFindUserByIdRepository {
   ): Promise<IFindUserByIdRepository.Output> {
     const { id } = data;
 
-    return {
-      id,
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      password_hash: faker.internet.password(),
-      created_at: faker.datatype.datetime(),
-      updated_at: faker.datatype.datetime(),
-    };
+    const userMock = makeUserMock();
+
+    Object.assign(userMock, { id });
+
+    return userMock;
   }
 }
 

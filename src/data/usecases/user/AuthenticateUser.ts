@@ -1,6 +1,6 @@
 import {
-  PasswordNotMatchError,
-  UserNotFoundWithThisEmailError,
+  WrongPasswordError,
+  UserNotFoundWithProvidedEmailError,
 } from '@domain/errors';
 import { IAuthenticateUserUseCase } from '@domain/usecases/user/AuthenticateUser';
 
@@ -23,7 +23,7 @@ export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
     const user = await this.findUserByEmailRepository.findByEmail({ email });
 
     if (!user) {
-      throw new UserNotFoundWithThisEmailError();
+      throw new UserNotFoundWithProvidedEmailError();
     }
 
     const passwordsMatch = await this.compareHashProvider.compare({
@@ -32,7 +32,7 @@ export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
     });
 
     if (!passwordsMatch) {
-      throw new PasswordNotMatchError();
+      throw new WrongPasswordError();
     }
 
     const token = await this.encryptProvider.encrypt({

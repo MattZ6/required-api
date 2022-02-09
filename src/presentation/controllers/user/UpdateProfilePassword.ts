@@ -1,5 +1,5 @@
 import {
-  PasswordNotMatchError,
+  WrongPasswordError,
   UserNotFoundWithThisIdError,
 } from '@domain/errors';
 import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdateUserPassword';
@@ -39,7 +39,7 @@ class UpdateProfilePasswordController implements IController {
         return notFound(error);
       }
 
-      if (error instanceof PasswordNotMatchError) {
+      if (error instanceof WrongPasswordError) {
         return unprocessableEntity(error);
       }
 

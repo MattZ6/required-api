@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
 import {
-  PasswordNotMatchError,
+  WrongPasswordError,
   UserNotFoundWithThisIdError,
 } from '@domain/errors';
 import { IUser } from '@domain/models/User';
@@ -207,7 +207,7 @@ describe('UpdateUserPasswordUseCase', () => {
       new_password: faker.internet.password(),
     });
 
-    await expect(promise).rejects.toBeInstanceOf(PasswordNotMatchError);
+    await expect(promise).rejects.toBeInstanceOf(WrongPasswordError);
   });
 
   it('should be able to update user password', async () => {

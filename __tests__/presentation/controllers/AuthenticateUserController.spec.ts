@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 
 import {
-  PasswordNotMatchError,
-  UserNotFoundWithThisEmailError,
+  WrongPasswordError,
+  UserNotFoundWithProvidedEmailError,
 } from '@domain/errors';
 
 import { AuthenticateUserController } from '@presentation/controllers/authentication/AuthenticateUserController';
@@ -63,7 +63,7 @@ describe('AuthenticateUserController', () => {
   });
 
   it('should return 404 if AuthenticateUserUseCase throws UserNotFoundWithThisEmailError', async () => {
-    const error = new UserNotFoundWithThisEmailError();
+    const error = new UserNotFoundWithProvidedEmailError();
 
     jest
       .spyOn(authenticateUserUseCaseSpy, 'execute')
@@ -80,7 +80,7 @@ describe('AuthenticateUserController', () => {
   });
 
   it('should return 422 if AuthenticateUserUseCase throws PasswordNotMatchError', async () => {
-    const error = new PasswordNotMatchError();
+    const error = new WrongPasswordError();
 
     jest
       .spyOn(authenticateUserUseCaseSpy, 'execute')
