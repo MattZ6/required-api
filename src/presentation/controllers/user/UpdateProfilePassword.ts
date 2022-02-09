@@ -1,6 +1,6 @@
 import {
   WrongPasswordError,
-  UserNotFoundWithThisIdError,
+  UserNotFoundWithProvidedIdError,
 } from '@domain/errors';
 import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdateUserPassword';
 
@@ -35,7 +35,7 @@ class UpdateProfilePasswordController implements IController {
 
       return noContent();
     } catch (error) {
-      if (error instanceof UserNotFoundWithThisIdError) {
+      if (error instanceof UserNotFoundWithProvidedIdError) {
         return notFound(error);
       }
 

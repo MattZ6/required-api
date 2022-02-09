@@ -1,4 +1,4 @@
-import { UserNotFoundWithThisIdError } from '@domain/errors';
+import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 import { IGetProfileUseCase } from '@domain/usecases/user/GetProfile';
 
 import { IFindUserByIdRepository } from '@data/protocols/repositories/user';
@@ -18,7 +18,7 @@ export class GetProfileUseCase implements IGetProfileUseCase {
     });
 
     if (!user) {
-      throw new UserNotFoundWithThisIdError();
+      throw new UserNotFoundWithProvidedIdError();
     }
 
     return user;

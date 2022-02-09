@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 
 import {
   WrongPasswordError,
-  UserNotFoundWithThisIdError,
+  UserNotFoundWithProvidedIdError,
 } from '@domain/errors';
 import { IUser } from '@domain/models/User';
 
@@ -193,7 +193,9 @@ describe('UpdateUserPasswordUseCase', () => {
       new_password: faker.internet.password(),
     });
 
-    await expect(promise).rejects.toBeInstanceOf(UserNotFoundWithThisIdError);
+    await expect(promise).rejects.toBeInstanceOf(
+      UserNotFoundWithProvidedIdError
+    );
   });
 
   it('should not be able to update password with wrong old password', async () => {

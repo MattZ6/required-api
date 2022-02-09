@@ -1,4 +1,4 @@
-import { UserNotFoundWithThisIdError } from '@domain/errors';
+import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 import { IUpdateUserNameUseCase } from '@domain/usecases/user/UpdateUserName';
 
 import {
@@ -20,7 +20,7 @@ export class UpdateUserNameUseCase implements IUpdateUserNameUseCase {
     const user = await this.findUserByIdRepository.findById({ id: user_id });
 
     if (!user) {
-      throw new UserNotFoundWithThisIdError();
+      throw new UserNotFoundWithProvidedIdError();
     }
 
     user.name = name;

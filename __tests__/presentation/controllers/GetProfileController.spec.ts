@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { UserNotFoundWithThisIdError } from '@domain/errors';
+import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 import { IUser } from '@domain/models/User';
 
 import { GetProfileController } from '@presentation/controllers/profile/GetProfileController';
@@ -44,7 +44,7 @@ describe('GetProfileController', () => {
   });
 
   it('should return 404 if CreateUserUseCase throws UserNotFoundWithThisIdError', async () => {
-    const error = new UserNotFoundWithThisIdError();
+    const error = new UserNotFoundWithProvidedIdError();
 
     jest.spyOn(getProfileUseCaseSpy, 'execute').mockRejectedValueOnce(error);
 

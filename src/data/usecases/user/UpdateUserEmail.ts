@@ -1,6 +1,6 @@
 import {
   UserAlreadyExistsWithProvidedEmailError,
-  UserNotFoundWithThisIdError,
+  UserNotFoundWithProvidedIdError,
 } from '@domain/errors';
 import { IUpdateUserEmailUseCase } from '@domain/usecases/user/UpdateUserEmail';
 
@@ -25,7 +25,7 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
     const user = await this.findUserByIdRepository.findById({ id: user_id });
 
     if (!user) {
-      throw new UserNotFoundWithThisIdError();
+      throw new UserNotFoundWithProvidedIdError();
     }
 
     const isSameEmail = user.email.toLowerCase() === email.toLowerCase();

@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 
 import {
   WrongPasswordError,
-  UserNotFoundWithThisIdError,
+  UserNotFoundWithProvidedIdError,
 } from '@domain/errors';
 
 import { UpdateProfilePasswordController } from '@presentation/controllers/profile/UpdateProfilePasswordController';
@@ -64,7 +64,7 @@ describe('UpdateProfilePasswordController', () => {
   });
 
   it('should return 404 if UpdateUserPasswordUseCase throws UserNotFoundWithThisIdError', async () => {
-    const error = new UserNotFoundWithThisIdError();
+    const error = new UserNotFoundWithProvidedIdError();
 
     jest
       .spyOn(updateUserPasswordUseCaseSpy, 'execute')

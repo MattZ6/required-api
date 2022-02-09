@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 
 import {
   UserAlreadyExistsWithProvidedEmailError,
-  UserNotFoundWithThisIdError,
+  UserNotFoundWithProvidedIdError,
 } from '@domain/errors';
 
 import { UpdateProfileEmailController } from '@presentation/controllers/profile/UpdateProfileEmailController';
@@ -49,7 +49,7 @@ describe('UpdateProfileEmailController', () => {
   });
 
   it('should return 404 if UpdateUserEmailUseCase throws UserNotFoundWithThisIdError', async () => {
-    const error = new UserNotFoundWithThisIdError();
+    const error = new UserNotFoundWithProvidedIdError();
 
     jest
       .spyOn(updateUserEmailUseCaseSpy, 'execute')

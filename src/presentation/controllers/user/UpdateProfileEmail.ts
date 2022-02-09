@@ -1,6 +1,6 @@
 import {
   UserAlreadyExistsWithProvidedEmailError,
-  UserNotFoundWithThisIdError,
+  UserNotFoundWithProvidedIdError,
 } from '@domain/errors';
 import { IUpdateUserEmailUseCase } from '@domain/usecases/user/UpdateUserEmail';
 
@@ -27,7 +27,7 @@ class UpdateProfileEmailController implements IController {
 
       return noContent();
     } catch (error) {
-      if (error instanceof UserNotFoundWithThisIdError) {
+      if (error instanceof UserNotFoundWithProvidedIdError) {
         return notFound(error);
       }
 

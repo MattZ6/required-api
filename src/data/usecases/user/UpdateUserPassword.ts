@@ -1,6 +1,6 @@
 import {
   WrongPasswordError,
-  UserNotFoundWithThisIdError,
+  UserNotFoundWithProvidedIdError,
 } from '@domain/errors';
 import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdateUserPassword';
 
@@ -29,7 +29,7 @@ export class UpdateUserPasswordUseCase implements IUpdateUserPasswordUseCase {
     const user = await this.findUserByIdRepository.findById({ id: user_id });
 
     if (!user) {
-      throw new UserNotFoundWithThisIdError();
+      throw new UserNotFoundWithProvidedIdError();
     }
 
     const passwordsMatch = await this.compareHashProvider.compare({

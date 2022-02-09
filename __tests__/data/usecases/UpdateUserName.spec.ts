@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { UserNotFoundWithThisIdError } from '@domain/errors';
+import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 import { IUser } from '@domain/models/User';
 
 import { UpdateUserNameUseCase } from '@data/usecases/update-user-name/UpdateUserName';
@@ -100,7 +100,9 @@ describe('UpdateUserNameUseCase', () => {
       name: faker.name.findName(),
     });
 
-    await expect(promise).rejects.toBeInstanceOf(UserNotFoundWithThisIdError);
+    await expect(promise).rejects.toBeInstanceOf(
+      UserNotFoundWithProvidedIdError
+    );
   });
 
   it('should be able to update user name', async () => {

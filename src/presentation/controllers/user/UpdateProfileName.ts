@@ -1,4 +1,4 @@
-import { UserNotFoundWithThisIdError } from '@domain/errors';
+import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 import { IUpdateUserNameUseCase } from '@domain/usecases/user/UpdateUserName';
 
 import { noContent, notFound } from '@presentation/helpers/http/http';
@@ -22,7 +22,7 @@ class UpdateProfileNameController implements IController {
 
       return noContent();
     } catch (error) {
-      if (error instanceof UserNotFoundWithThisIdError) {
+      if (error instanceof UserNotFoundWithProvidedIdError) {
         return notFound(error);
       }
 

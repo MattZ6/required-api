@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 
 import {
   UserAlreadyExistsWithProvidedEmailError,
-  UserNotFoundWithThisIdError,
+  UserNotFoundWithProvidedIdError,
 } from '@domain/errors';
 import { IUser } from '@domain/models/User';
 
@@ -138,7 +138,9 @@ describe('UpdateUserEmailUseCase', () => {
       email: faker.internet.email(),
     });
 
-    await expect(promise).rejects.toBeInstanceOf(UserNotFoundWithThisIdError);
+    await expect(promise).rejects.toBeInstanceOf(
+      UserNotFoundWithProvidedIdError
+    );
   });
 
   it("should not be able to update the user's email if the email is from another user", async () => {
