@@ -28,18 +28,16 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
       throw new UserNotFoundWithProvidedIdError();
     }
 
-    const isSameEmail = user.email.toLowerCase() === email.toLowerCase();
+    const isSameEmail =
+      user.email.trim().toLowerCase() === email.trim().toLowerCase();
 
-    if (isSameEmail) {
-      // TODO: Criar um error para este caso
-      throw new Error('Este já é o seu e-mail');
-    }
+    if (!isSameEmail) {
+      const emailAlreadyInUse =
+        await this.checkIfUserExistsByEmail.checkIfExistsByEmail({ email });
 
-    const emailAlreadyInUse =
-      await this.checkIfUserExistsByEmail.checkIfExistsByEmail({ email });
-
-    if (emailAlreadyInUse) {
-      throw new UserAlreadyExistsWithProvidedEmailError();
+      if (emailAlreadyInUse) {
+        throw new UserAlreadyExistsWithProvidedEmailError();
+      }
     }
 
     user.email = email;

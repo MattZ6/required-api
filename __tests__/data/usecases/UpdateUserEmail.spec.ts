@@ -1,16 +1,15 @@
-import { faker } from '@faker-js/faker';
-
 import {
   UserAlreadyExistsWithProvidedEmailError,
   UserNotFoundWithProvidedIdError,
 } from '@domain/errors';
-import { IUser } from '@domain/models/User';
 
-import { UpdateUserEmailUseCase } from '@data/usecases/update-user-email/UpdateUserEmail';
+import { UpdateUserEmailUseCase } from '@data/usecases/user/UpdateUserEmail';
 
+import { makeErrorMock, makeUserMock } from '../../domain';
 import {
   CheckIfUserExistsByEmailRepositorySpy,
   FindUserByIdRepositorySpy,
+  makeUpdateUserEmailUseCaseInputMock,
   UpdateUserRepositorySpy,
 } from '../mocks';
 
@@ -34,151 +33,152 @@ describe('UpdateUserEmailUseCase', () => {
     );
   });
 
-  it('should call FindUserByIdRepository with correct data', async () => {
+  it('should call FindUserByIdRepository once with correct values', async () => {
     const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
 
-    const user_id = faker.datatype.uuid();
+    const input = makeUpdateUserEmailUseCaseInputMock();
 
-    await updateUserEmailUseCase.execute({
-      user_id,
-      email: faker.internet.email(),
-    });
+    await updateUserEmailUseCase.execute(input);
 
-    expect(findByIdSpy).toHaveBeenCalledWith(user_id);
+    expect(findByIdSpy).toHaveBeenCalledTimes(1);
+    expect(findByIdSpy).toHaveBeenCalledWith({ id: input.user_id });
   });
 
   it('should throw if FindUserByIdRepository throws', async () => {
-    jest
-      .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockRejectedValueOnce(new Error());
-
-    const promise = updateUserEmailUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      email: faker.internet.email(),
-    });
-
-    await expect(promise).rejects.toThrow();
-  });
-
-  it('should call CheckIfUserExistsByEmailRepository with correct data', async () => {
-    const checkIfExistsByEmailSpy = jest.spyOn(
-      checkIfUserExistsByEmailRepositorySpy,
-      'checkIfExistsByEmail'
-    );
-
-    const email = faker.internet.email();
-
-    await updateUserEmailUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      email,
-    });
-
-    expect(checkIfExistsByEmailSpy).toHaveBeenCalledWith(email);
-  });
-
-  it('should throw if CheckIfUserExistsByEmailRepository throws', async () => {
-    jest
-      .spyOn(checkIfUserExistsByEmailRepositorySpy, 'checkIfExistsByEmail')
-      .mockRejectedValueOnce(new Error());
-
-    const promise = updateUserEmailUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      email: faker.internet.email(),
-    });
-
-    await expect(promise).rejects.toThrow();
-  });
-
-  it('should call UpdateUserRepository with correct data', async () => {
-    const user: IUser = {
-      id: faker.datatype.uuid(),
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      password_hash: faker.internet.password(),
-      created_at: faker.datatype.datetime(),
-      updated_at: faker.datatype.datetime(),
-    };
+    const errorMock = makeErrorMock();
 
     jest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockReturnValueOnce(Promise.resolve(user));
+      .mockRejectedValueOnce(errorMock);
 
-    const updateSpy = jest.spyOn(updateUserRepositorySpy, 'update');
+    const input = makeUpdateUserEmailUseCaseInputMock();
 
-    const newEmail = faker.internet.email();
+    const promise = updateUserEmailUseCase.execute(input);
 
-    await updateUserEmailUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      email: newEmail,
-    });
-
-    expect(updateSpy).toHaveBeenCalledWith({ ...user, email: newEmail });
+    await expect(promise).rejects.toThrowError(errorMock);
   });
 
-  it('should throw if UpdateUserRepository throws', async () => {
-    jest
-      .spyOn(updateUserRepositorySpy, 'update')
-      .mockRejectedValueOnce(new Error());
-
-    const promise = updateUserEmailUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      email: faker.internet.email(),
-    });
-
-    await expect(promise).rejects.toThrow();
-  });
-
-  it('should not be able to update name of a non-existing user', async () => {
+  it('should throw UserNotFoundWithProvidedIdError if FindUserByIdRepository returns undefined', async () => {
     jest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockReturnValueOnce(Promise.resolve(undefined));
+      .mockResolvedValueOnce(undefined);
 
-    const promise = updateUserEmailUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      email: faker.internet.email(),
-    });
+    const input = makeUpdateUserEmailUseCaseInputMock();
+
+    const promise = updateUserEmailUseCase.execute(input);
 
     await expect(promise).rejects.toBeInstanceOf(
       UserNotFoundWithProvidedIdError
     );
   });
 
-  it("should not be able to update the user's email if the email is from another user", async () => {
+  it('should call CheckIfUserExistsByEmailRepository once with correct values only if the email has changed', async () => {
+    const checkIfExistsByEmailSpy = jest.spyOn(
+      checkIfUserExistsByEmailRepositorySpy,
+      'checkIfExistsByEmail'
+    );
+
+    const input = makeUpdateUserEmailUseCaseInputMock();
+
+    await updateUserEmailUseCase.execute(input);
+
+    expect(checkIfExistsByEmailSpy).toHaveBeenCalledTimes(1);
+    expect(checkIfExistsByEmailSpy).toHaveBeenCalledWith({
+      email: input.email,
+    });
+  });
+
+  it('should not call CheckIfUserExistsByEmailRepository if the email has not changed', async () => {
+    const userMock = makeUserMock();
+
+    jest
+      .spyOn(findUserByIdRepositorySpy, 'findById')
+      .mockResolvedValueOnce(userMock);
+
+    const checkIfExistsByEmailSpy = jest.spyOn(
+      checkIfUserExistsByEmailRepositorySpy,
+      'checkIfExistsByEmail'
+    );
+
+    const input = makeUpdateUserEmailUseCaseInputMock();
+
+    input.email = `   ${userMock.email.toUpperCase()} `;
+
+    await updateUserEmailUseCase.execute(input);
+
+    expect(checkIfExistsByEmailSpy).not.toHaveBeenCalled();
+  });
+
+  it('should throw if CheckIfUserExistsByEmailRepository throws', async () => {
+    const errorMock = makeErrorMock();
+
     jest
       .spyOn(checkIfUserExistsByEmailRepositorySpy, 'checkIfExistsByEmail')
-      .mockReturnValueOnce(Promise.resolve(true));
+      .mockRejectedValueOnce(errorMock);
 
-    const promise = updateUserEmailUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      email: faker.internet.email(),
-    });
+    const input = makeUpdateUserEmailUseCaseInputMock();
+
+    const promise = updateUserEmailUseCase.execute(input);
+
+    await expect(promise).rejects.toThrowError(errorMock);
+  });
+
+  it('should throw UserAlreadyExistsWithProvidedEmailError if CheckIfUserExistsByEmailRepository returns true', async () => {
+    jest
+      .spyOn(checkIfUserExistsByEmailRepositorySpy, 'checkIfExistsByEmail')
+      .mockResolvedValueOnce(true);
+
+    const input = makeUpdateUserEmailUseCaseInputMock();
+
+    const promise = updateUserEmailUseCase.execute(input);
 
     await expect(promise).rejects.toBeInstanceOf(
       UserAlreadyExistsWithProvidedEmailError
     );
   });
 
-  it('should be able to update user email', async () => {
-    const user: IUser = {
-      id: faker.datatype.uuid(),
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      password_hash: faker.internet.password(),
-      created_at: faker.datatype.datetime(),
-      updated_at: faker.datatype.datetime(),
-    };
+  it('should call UpdateUserRepository once with correct values', async () => {
+    const userMock = makeUserMock();
 
     jest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockReturnValueOnce(Promise.resolve(user));
+      .mockResolvedValueOnce(userMock);
 
-    const updatedEmail = faker.internet.email();
+    const updateSpy = jest.spyOn(updateUserRepositorySpy, 'update');
 
-    await updateUserEmailUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      email: updatedEmail,
-    });
+    const input = makeUpdateUserEmailUseCaseInputMock();
 
-    expect(user.email).toBe(updatedEmail);
+    await updateUserEmailUseCase.execute(input);
+
+    expect(updateSpy).toBeCalledTimes(1);
+    expect(updateSpy).toHaveBeenCalledWith({ ...userMock, email: input.email });
+  });
+
+  it('should throw if UpdateUserRepository throws', async () => {
+    const errorMock = makeErrorMock();
+
+    jest
+      .spyOn(updateUserRepositorySpy, 'update')
+      .mockRejectedValueOnce(errorMock);
+
+    const input = makeUpdateUserEmailUseCaseInputMock();
+
+    const promise = updateUserEmailUseCase.execute(input);
+
+    await expect(promise).rejects.toThrowError(errorMock);
+  });
+
+  it('should return user on success', async () => {
+    const userMock = makeUserMock();
+
+    jest
+      .spyOn(updateUserRepositorySpy, 'update')
+      .mockResolvedValueOnce(userMock);
+
+    const input = makeUpdateUserEmailUseCaseInputMock();
+
+    await updateUserEmailUseCase.execute(input);
+
+    expect(userMock).toEqual(userMock);
   });
 });
