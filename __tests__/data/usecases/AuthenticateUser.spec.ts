@@ -160,9 +160,9 @@ describe('AuthenticateUserUseCase', () => {
 
     const input = makeAuthenticateUserUseCaseInputMock();
 
-    const response = await authenticateUserUseCase.execute(input);
+    const output = await authenticateUserUseCase.execute(input);
 
-    expect(response).toEqual({
+    expect(output).toEqual({
       access_token: accessToken,
     });
   });

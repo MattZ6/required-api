@@ -1,3 +1,5 @@
+import { IUser } from '@domain/models/User';
+
 interface IUpdateUserEmailUseCase {
   execute(
     data: IUpdateUserEmailUseCase.Input
@@ -10,7 +12,7 @@ namespace IUpdateUserEmailUseCase {
     email: string;
   };
 
-  export type Output = void;
+  export type Output = IUser;
 }
 
 export { IUpdateUserEmailUseCase };

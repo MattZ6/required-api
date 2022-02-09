@@ -42,6 +42,6 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
 
     user.email = email;
 
-    await this.updateUserRepository.update(user);
+    return this.updateUserRepository.update(user);
   }
 }

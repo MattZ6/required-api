@@ -177,8 +177,8 @@ describe('UpdateUserEmailUseCase', () => {
 
     const input = makeUpdateUserEmailUseCaseInputMock();
 
-    await updateUserEmailUseCase.execute(input);
+    const output = await updateUserEmailUseCase.execute(input);
 
-    expect(userMock).toEqual(userMock);
+    expect(output).toEqual(userMock);
   });
 });
