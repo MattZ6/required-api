@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { UserAlreadyExistsWithThisEmailError } from '@domain/errors';
+import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
 
 import { CreateAccountController } from '@presentation/controllers/authentication/CreateAccountController';
 import { unprocessableEntity, created } from '@presentation/helpers/http/http';
@@ -58,7 +58,7 @@ describe('CreateAccountController', () => {
   });
 
   it('should return 422 if CreateUserUseCase throws UserAlreadyExistsWithThisEmailError', async () => {
-    const error = new UserAlreadyExistsWithThisEmailError();
+    const error = new UserAlreadyExistsWithProvidedEmailError();
 
     jest.spyOn(createUserUseCaseSpy, 'execute').mockRejectedValueOnce(error);
 

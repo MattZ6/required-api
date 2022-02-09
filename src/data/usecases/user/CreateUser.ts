@@ -1,4 +1,4 @@
-import { UserAlreadyExistsWithThisEmailError } from '@domain/errors';
+import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
 import { ICreateUserUseCase } from '@domain/usecases/user/CreateUser';
 
 import { IGenerateHashProvider } from '@data/protocols/providers/cryptography/hash';
@@ -23,7 +23,7 @@ export class CreateUserUseCase implements ICreateUserUseCase {
       await this.checkIfUserExistsByEmail.checkIfExistsByEmail({ email });
 
     if (alreadyExists) {
-      throw new UserAlreadyExistsWithThisEmailError();
+      throw new UserAlreadyExistsWithProvidedEmailError();
     }
 
     const passwordHash = await this.generateHashProvider.hash({

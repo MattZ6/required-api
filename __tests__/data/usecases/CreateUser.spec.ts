@@ -1,13 +1,15 @@
 import { faker } from '@faker-js/faker';
 
-import { UserAlreadyExistsWithThisEmailError } from '@domain/errors';
+import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
 
-import { CreateUserUseCase } from '@data/usecases/create-user/CreateUser';
+import { CreateUserUseCase } from '@data/usecases/user/CreateUser';
 
+import { makeErrorMock, makeUserMock } from '../../domain';
 import {
   CheckIfUserExistsByEmailRepositorySpy,
   CreateUserRepositorySpy,
   GenerateHashProviderSpy,
+  makeCreateUserUseCaseInputMock,
 } from '../mocks';
 
 let checkIfUserExistsByEmailRepositorySpy: CheckIfUserExistsByEmailRepositorySpy;
@@ -30,141 +32,123 @@ describe('CreateUserUseCase', () => {
     );
   });
 
-  it('should call CheckIfUserExistsByEmailRepository with correct data', async () => {
+  it('should call CheckIfUserExistsByEmailRepository once with correct values', async () => {
     const checkIfExistsByEmailSpy = jest.spyOn(
       checkIfUserExistsByEmailRepositorySpy,
       'checkIfExistsByEmail'
     );
 
-    const email = faker.internet.email();
+    const input = makeCreateUserUseCaseInputMock();
 
-    await createUserUseCase.execute({
-      name: faker.name.findName(),
-      email,
-      password: faker.internet.password(),
+    await createUserUseCase.execute(input);
+
+    expect(checkIfExistsByEmailSpy).toHaveBeenCalledTimes(1);
+    expect(checkIfExistsByEmailSpy).toHaveBeenCalledWith({
+      email: input.email,
     });
-
-    expect(checkIfExistsByEmailSpy).toHaveBeenCalledWith(email);
   });
 
   it('should throw if CheckIfUserExistsByEmailRepository throws', async () => {
+    const errorMock = makeErrorMock();
+
     jest
       .spyOn(checkIfUserExistsByEmailRepositorySpy, 'checkIfExistsByEmail')
-      .mockRejectedValueOnce(new Error());
+      .mockRejectedValueOnce(errorMock);
 
-    const promise = createUserUseCase.execute({
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      password: faker.internet.password(),
-    });
+    const input = makeCreateUserUseCaseInputMock();
 
-    await expect(promise).rejects.toThrow();
+    const promise = createUserUseCase.execute(input);
+
+    await expect(promise).rejects.toThrowError(errorMock);
   });
 
-  it('should call GenerateHashProvider with correct data', async () => {
-    const hashSpy = jest.spyOn(generateHashProviderSpy, 'hash');
-
-    const password = faker.internet.password();
-
-    await createUserUseCase.execute({
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      password,
-    });
-
-    expect(hashSpy).toHaveBeenCalledWith(password);
-  });
-
-  it('should throw if GenerateHashProvider throws', async () => {
-    jest
-      .spyOn(generateHashProviderSpy, 'hash')
-      .mockRejectedValueOnce(new Error());
-
-    const promise = createUserUseCase.execute({
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      password: faker.internet.password(),
-    });
-
-    await expect(promise).rejects.toThrow();
-  });
-
-  it('should call CreateUserRepositoryStub with correct data', async () => {
-    const passwordHash = faker.internet.password();
-
-    jest
-      .spyOn(generateHashProviderSpy, 'hash')
-      .mockReturnValueOnce(Promise.resolve(passwordHash));
-
-    const createSpy = jest.spyOn(createUserRepositorySpy, 'create');
-
-    const name = faker.name.findName();
-    const email = faker.internet.email();
-
-    await createUserUseCase.execute({
-      name,
-      email,
-      password: faker.internet.password(),
-    });
-
-    expect(createSpy).toHaveBeenCalledWith({
-      name,
-      email,
-      password_hash: passwordHash,
-    });
-  });
-
-  it('should throw if CreateUserRepositoryStub throws', async () => {
-    jest
-      .spyOn(createUserRepositorySpy, 'create')
-      .mockRejectedValueOnce(new Error());
-
-    const promise = createUserUseCase.execute({
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      password: faker.internet.password(),
-    });
-
-    await expect(promise).rejects.toThrow();
-  });
-
-  it('should not be able to create an user with a email from another user', async () => {
+  it('should throw UserAlreadyExistsWithProvidedEmailError if CheckIfUserExistsByEmailRepository returns true', async () => {
     jest
       .spyOn(checkIfUserExistsByEmailRepositorySpy, 'checkIfExistsByEmail')
-      .mockReturnValueOnce(Promise.resolve(true));
+      .mockResolvedValueOnce(true);
 
-    const promise = createUserUseCase.execute({
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      password: faker.internet.password(),
-    });
+    const input = makeCreateUserUseCaseInputMock();
+
+    const promise = createUserUseCase.execute(input);
 
     await expect(promise).rejects.toBeInstanceOf(
-      UserAlreadyExistsWithThisEmailError
+      UserAlreadyExistsWithProvidedEmailError
     );
   });
 
-  it('should be able to create a new user', async () => {
-    const password_hash = faker.internet.password();
+  it('should call GenerateHashProvider once with correct values', async () => {
+    const hashSpy = jest.spyOn(generateHashProviderSpy, 'hash');
+
+    const input = makeCreateUserUseCaseInputMock();
+
+    await createUserUseCase.execute(input);
+
+    expect(hashSpy).toHaveBeenCalledTimes(1);
+    expect(hashSpy).toHaveBeenCalledWith({
+      value: input.password,
+    });
+  });
+
+  it('should throw if GenerateHashProvider throws', async () => {
+    const errorMock = makeErrorMock();
 
     jest
       .spyOn(generateHashProviderSpy, 'hash')
-      .mockReturnValueOnce(Promise.resolve(password_hash));
+      .mockRejectedValueOnce(errorMock);
 
-    const name = faker.name.findName();
-    const email = faker.internet.email();
+    const input = makeCreateUserUseCaseInputMock();
 
-    const user = await createUserUseCase.execute({
-      name,
-      email,
-      password: faker.internet.password(),
+    const promise = createUserUseCase.execute(input);
+
+    await expect(promise).rejects.toThrowError(errorMock);
+  });
+
+  it('should call CreateUserRepository once with correct values', async () => {
+    const hashedPassword = faker.internet.password();
+
+    jest
+      .spyOn(generateHashProviderSpy, 'hash')
+      .mockResolvedValueOnce(hashedPassword);
+
+    const createSpy = jest.spyOn(createUserRepositorySpy, 'create');
+
+    const input = makeCreateUserUseCaseInputMock();
+
+    await createUserUseCase.execute(input);
+
+    expect(createSpy).toHaveBeenCalledTimes(1);
+    expect(createSpy).toHaveBeenCalledWith({
+      name: input.name,
+      email: input.email,
+      password_hash: hashedPassword,
     });
+  });
 
-    expect(user).toHaveProperty('id');
-    expect(user).toHaveProperty('created_at');
-    expect(user).toHaveProperty('updated_at');
-    expect(user).toHaveProperty('name', name);
-    expect(user).toHaveProperty('email', email);
-    expect(user).toHaveProperty('password_hash', password_hash);
+  it('should throw if CreateUserRepository throws', async () => {
+    const errorMock = makeErrorMock();
+
+    jest
+      .spyOn(createUserRepositorySpy, 'create')
+      .mockRejectedValueOnce(errorMock);
+
+    const input = makeCreateUserUseCaseInputMock();
+
+    const promise = createUserUseCase.execute(input);
+
+    await expect(promise).rejects.toThrowError(errorMock);
+  });
+
+  it('should return user on success', async () => {
+    const userMock = makeUserMock();
+
+    jest
+      .spyOn(createUserRepositorySpy, 'create')
+      .mockResolvedValueOnce(userMock);
+
+    const input = makeCreateUserUseCaseInputMock();
+
+    const user = await createUserUseCase.execute(input);
+
+    expect(user).toEqual(userMock);
   });
 });

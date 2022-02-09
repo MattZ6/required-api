@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
 import {
-  UserAlreadyExistsWithThisEmailError,
+  UserAlreadyExistsWithProvidedEmailError,
   UserNotFoundWithThisIdError,
 } from '@domain/errors';
 import { IUser } from '@domain/models/User';
@@ -152,7 +152,7 @@ describe('UpdateUserEmailUseCase', () => {
     });
 
     await expect(promise).rejects.toBeInstanceOf(
-      UserAlreadyExistsWithThisEmailError
+      UserAlreadyExistsWithProvidedEmailError
     );
   });
 

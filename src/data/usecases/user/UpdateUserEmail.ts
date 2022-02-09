@@ -1,5 +1,5 @@
 import {
-  UserAlreadyExistsWithThisEmailError,
+  UserAlreadyExistsWithProvidedEmailError,
   UserNotFoundWithThisIdError,
 } from '@domain/errors';
 import { IUpdateUserEmailUseCase } from '@domain/usecases/user/UpdateUserEmail';
@@ -39,7 +39,7 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
       await this.checkIfUserExistsByEmail.checkIfExistsByEmail({ email });
 
     if (emailAlreadyInUse) {
-      throw new UserAlreadyExistsWithThisEmailError();
+      throw new UserAlreadyExistsWithProvidedEmailError();
     }
 
     user.email = email;

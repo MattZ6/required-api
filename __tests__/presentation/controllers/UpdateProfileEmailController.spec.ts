@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
 import {
-  UserAlreadyExistsWithThisEmailError,
+  UserAlreadyExistsWithProvidedEmailError,
   UserNotFoundWithThisIdError,
 } from '@domain/errors';
 
@@ -66,7 +66,7 @@ describe('UpdateProfileEmailController', () => {
   });
 
   it('should return 409 if UpdateUserEmailUseCase throws UserAlreadyExistsWithThisEmailError', async () => {
-    const error = new UserAlreadyExistsWithThisEmailError();
+    const error = new UserAlreadyExistsWithProvidedEmailError();
 
     jest
       .spyOn(updateUserEmailUseCaseSpy, 'execute')
