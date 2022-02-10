@@ -1,3 +1,5 @@
+import { IUser } from '@domain/models/User';
+
 interface IUpdateUserPasswordUseCase {
   execute(
     data: IUpdateUserPasswordUseCase.Input
@@ -11,7 +13,7 @@ namespace IUpdateUserPasswordUseCase {
     new_password: string;
   };
 
-  export type Output = void;
+  export type Output = IUser;
 }
 
 export { IUpdateUserPasswordUseCase };

@@ -41,10 +41,13 @@ export class UpdateUserPasswordUseCase implements IUpdateUserPasswordUseCase {
       throw new WrongPasswordError();
     }
 
-    user.password_hash = await this.generateHashProvider.hash({
+    const newPasswordHash = await this.generateHashProvider.hash({
       value: new_password,
     });
 
-    await this.updateUserRepository.update(user);
+    return this.updateUserRepository.update({
+      ...user,
+      password_hash: newPasswordHash,
+    });
   }
 }

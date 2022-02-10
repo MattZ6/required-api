@@ -1,17 +1,18 @@
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 
 import {
   WrongPasswordError,
   UserNotFoundWithProvidedIdError,
 } from '@domain/errors';
-import { IUser } from '@domain/models/User';
 
 import { UpdateUserPasswordUseCase } from '@data/usecases/user/UpdateUserPassword';
 
+import { makeErrorMock, makeUserMock } from '../../domain';
 import {
   CompareHashProviderSpy,
   FindUserByIdRepositorySpy,
   GenerateHashProviderSpy,
+  makeUpdateUserPasswordUseCaseInputMock,
   UpdateUserRepositorySpy,
 } from '../mocks';
 
@@ -37,207 +38,161 @@ describe('UpdateUserPasswordUseCase', () => {
     );
   });
 
-  it('should call FindUserByIdRepository with correct data', async () => {
+  it('should call FindUserByIdRepository once with correct values', async () => {
     const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
 
-    const user_id = faker.datatype.uuid();
+    const input = makeUpdateUserPasswordUseCaseInputMock();
 
-    await updateUserPasswordUseCase.execute({
-      user_id,
-      old_password: faker.internet.password(),
-      new_password: faker.internet.password(),
-    });
+    await updateUserPasswordUseCase.execute(input);
 
-    expect(findByIdSpy).toHaveBeenCalledWith(user_id);
+    expect(findByIdSpy).toHaveBeenCalledTimes(1);
+    expect(findByIdSpy).toHaveBeenCalledWith({ id: input.user_id });
   });
 
   it('should throw if FindUserByIdRepository throws', async () => {
-    jest
-      .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockRejectedValueOnce(new Error());
-
-    const promise = updateUserPasswordUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      old_password: faker.internet.password(),
-      new_password: faker.internet.password(),
-    });
-
-    await expect(promise).rejects.toThrow();
-  });
-
-  it('should call CompareHashProvider with correct data', async () => {
-    const userPassword = faker.internet.password();
-
-    jest.spyOn(findUserByIdRepositorySpy, 'findById').mockReturnValueOnce(
-      Promise.resolve({
-        id: faker.datatype.uuid(),
-        name: faker.name.findName(),
-        email: faker.internet.email(),
-        password_hash: userPassword,
-        created_at: faker.datatype.datetime(),
-        updated_at: faker.datatype.datetime(),
-      })
-    );
-
-    const compareSpy = jest.spyOn(compareHashProviderSpy, 'compare');
-
-    const old_password = faker.internet.password();
-
-    await updateUserPasswordUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      old_password,
-      new_password: faker.internet.password(),
-    });
-
-    expect(compareSpy).toHaveBeenCalledWith(old_password, userPassword);
-  });
-
-  it('should throw if CompareHashProvider throws', async () => {
-    jest
-      .spyOn(compareHashProviderSpy, 'compare')
-      .mockRejectedValueOnce(new Error());
-
-    const promise = updateUserPasswordUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      old_password: faker.internet.password(),
-      new_password: faker.internet.password(),
-    });
-
-    await expect(promise).rejects.toThrow();
-  });
-
-  it('should call GenerateHashProvider with correct data', async () => {
-    const hashSpy = jest.spyOn(generateHashProviderSpy, 'hash');
-
-    const new_password = faker.internet.password();
-
-    await updateUserPasswordUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      old_password: faker.internet.password(),
-      new_password,
-    });
-
-    expect(hashSpy).toHaveBeenCalledWith(new_password);
-  });
-
-  it('should throw if GenerateHashProvider throws', async () => {
-    jest
-      .spyOn(generateHashProviderSpy, 'hash')
-      .mockRejectedValueOnce(new Error());
-
-    const promise = updateUserPasswordUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      old_password: faker.internet.password(),
-      new_password: faker.internet.password(),
-    });
-
-    await expect(promise).rejects.toThrow();
-  });
-
-  it('should call UpdateUserRepository with correct data', async () => {
-    const user: IUser = {
-      id: faker.datatype.uuid(),
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      password_hash: faker.internet.password(),
-      created_at: faker.datatype.datetime(),
-      updated_at: faker.datatype.datetime(),
-    };
+    const errorMock = makeErrorMock();
 
     jest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockReturnValueOnce(Promise.resolve(user));
+      .mockRejectedValueOnce(errorMock);
 
-    const hashedPassword = faker.internet.password();
+    const input = makeUpdateUserPasswordUseCaseInputMock();
 
-    jest
-      .spyOn(generateHashProviderSpy, 'hash')
-      .mockReturnValueOnce(Promise.resolve(hashedPassword));
+    const promise = updateUserPasswordUseCase.execute(input);
 
-    const updateSpy = jest.spyOn(updateUserRepositorySpy, 'update');
-
-    await updateUserPasswordUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      old_password: faker.internet.password(),
-      new_password: faker.internet.password(),
-    });
-
-    expect(updateSpy).toHaveBeenCalledWith({
-      ...user,
-      password_hash: hashedPassword,
-    });
+    await expect(promise).rejects.toThrowError(errorMock);
   });
 
-  it('should throw if UpdateUserRepository throws', async () => {
-    jest
-      .spyOn(updateUserRepositorySpy, 'update')
-      .mockRejectedValueOnce(new Error());
-
-    const promise = updateUserPasswordUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      old_password: faker.internet.password(),
-      new_password: faker.internet.password(),
-    });
-
-    await expect(promise).rejects.toThrow();
-  });
-
-  it('should not be able to update password of a non-existing user', async () => {
+  it('should throw UserNotFoundWithProvidedIdError if FindUserByIdRepository returns undefined', async () => {
     jest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockReturnValueOnce(Promise.resolve(undefined));
+      .mockResolvedValueOnce(undefined);
 
-    const promise = updateUserPasswordUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      old_password: faker.internet.password(),
-      new_password: faker.internet.password(),
-    });
+    const input = makeUpdateUserPasswordUseCaseInputMock();
+
+    const promise = updateUserPasswordUseCase.execute(input);
 
     await expect(promise).rejects.toBeInstanceOf(
       UserNotFoundWithProvidedIdError
     );
   });
 
-  it('should not be able to update password with wrong old password', async () => {
+  it('should call CompareHashProvider once with correct values', async () => {
+    const userMock = makeUserMock();
+
+    jest
+      .spyOn(findUserByIdRepositorySpy, 'findById')
+      .mockResolvedValueOnce(userMock);
+
+    const compareSpy = jest.spyOn(compareHashProviderSpy, 'compare');
+
+    const input = makeUpdateUserPasswordUseCaseInputMock();
+
+    await updateUserPasswordUseCase.execute(input);
+
+    expect(compareSpy).toHaveBeenCalledTimes(1);
+    expect(compareSpy).toHaveBeenCalledWith({
+      value: input.old_password,
+      hashed_value: userMock.password_hash,
+    });
+  });
+
+  it('should throw if CompareHashProvider throws', async () => {
+    const errorMock = makeErrorMock();
+
     jest
       .spyOn(compareHashProviderSpy, 'compare')
-      .mockReturnValueOnce(Promise.resolve(false));
+      .mockRejectedValueOnce(errorMock);
 
-    const promise = updateUserPasswordUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      old_password: faker.internet.password(),
-      new_password: faker.internet.password(),
-    });
+    const input = makeUpdateUserPasswordUseCaseInputMock();
+
+    const promise = updateUserPasswordUseCase.execute(input);
+
+    await expect(promise).rejects.toThrowError(errorMock);
+  });
+
+  it('should throw WrongPasswordError if CompareHashProvider returns false', async () => {
+    jest.spyOn(compareHashProviderSpy, 'compare').mockResolvedValueOnce(false);
+
+    const input = makeUpdateUserPasswordUseCaseInputMock();
+
+    const promise = updateUserPasswordUseCase.execute(input);
 
     await expect(promise).rejects.toBeInstanceOf(WrongPasswordError);
   });
 
-  it('should be able to update user password', async () => {
-    const newPasswordHash = 'new-password-hash';
+  it('should call GenerateHashProvider once with correct values', async () => {
+    const hashSpy = jest.spyOn(generateHashProviderSpy, 'hash');
 
-    const user: IUser = {
-      id: faker.datatype.uuid(),
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      password_hash: faker.internet.password(),
-      created_at: faker.datatype.datetime(),
-      updated_at: faker.datatype.datetime(),
-    };
+    const input = makeUpdateUserPasswordUseCaseInputMock();
+
+    await updateUserPasswordUseCase.execute(input);
+
+    expect(hashSpy).toHaveBeenCalledTimes(1);
+    expect(hashSpy).toHaveBeenCalledWith({ value: input.new_password });
+  });
+
+  it('should throw if GenerateHashProvider throws', async () => {
+    const error = makeErrorMock();
+
+    jest.spyOn(generateHashProviderSpy, 'hash').mockRejectedValueOnce(error);
+
+    const input = makeUpdateUserPasswordUseCaseInputMock();
+
+    const promise = updateUserPasswordUseCase.execute(input);
+
+    await expect(promise).rejects.toThrowError(error);
+  });
+
+  it('should call UpdateUserRepository once with correct values', async () => {
+    const userMock = makeUserMock();
 
     jest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockReturnValueOnce(Promise.resolve(user));
+      .mockResolvedValueOnce(userMock);
+
+    const hashedPassword = faker.internet.password();
 
     jest
       .spyOn(generateHashProviderSpy, 'hash')
-      .mockReturnValueOnce(Promise.resolve(newPasswordHash));
+      .mockResolvedValueOnce(hashedPassword);
 
-    await updateUserPasswordUseCase.execute({
-      user_id: faker.datatype.uuid(),
-      old_password: faker.internet.password(),
-      new_password: faker.internet.password(),
+    const updateSpy = jest.spyOn(updateUserRepositorySpy, 'update');
+
+    const input = makeUpdateUserPasswordUseCaseInputMock();
+
+    await updateUserPasswordUseCase.execute(input);
+
+    expect(updateSpy).toHaveBeenCalledTimes(1);
+    expect(updateSpy).toHaveBeenCalledWith({
+      ...userMock,
+      password_hash: hashedPassword,
     });
+  });
 
-    expect(user.password_hash).toBe(newPasswordHash);
+  it('should throw if UpdateUserRepository throws', async () => {
+    const error = makeErrorMock();
+
+    jest.spyOn(updateUserRepositorySpy, 'update').mockRejectedValueOnce(error);
+
+    const input = makeUpdateUserPasswordUseCaseInputMock();
+
+    const promise = updateUserPasswordUseCase.execute(input);
+
+    await expect(promise).rejects.toThrowError(error);
+  });
+
+  it('should return a user on success', async () => {
+    const userMock = makeUserMock();
+
+    jest
+      .spyOn(updateUserRepositorySpy, 'update')
+      .mockResolvedValueOnce(userMock);
+
+    const input = makeUpdateUserPasswordUseCaseInputMock();
+
+    const output = await updateUserPasswordUseCase.execute(input);
+
+    expect(output).toEqual(userMock);
   });
 });
