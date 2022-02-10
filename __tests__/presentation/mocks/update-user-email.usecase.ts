@@ -1,10 +1,11 @@
-import {
-  IUpdateUserEmailUseCase,
-  UpdateUserEmailDTO,
-} from '@domain/usecases/user/UpdateUserEmail';
+import { IUpdateUserEmailUseCase } from '@domain/usecases/user/UpdateUserEmail';
+
+import { makeUserMock } from '../../domain';
 
 export class UpdateUserEmailUseCaseSpy implements IUpdateUserEmailUseCase {
-  async execute(_: UpdateUserEmailDTO): Promise<void> {
-    // That's all folks 🤷‍♀️
+  async execute(
+    _: IUpdateUserEmailUseCase.Input
+  ): Promise<IUpdateUserEmailUseCase.Output> {
+    return makeUserMock();
   }
 }
