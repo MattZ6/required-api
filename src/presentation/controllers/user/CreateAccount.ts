@@ -1,7 +1,7 @@
 import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
 import { ICreateUserUseCase } from '@domain/usecases/user/CreateUser';
 
-import { created, unprocessableEntity } from '@presentation/helpers/http/http';
+import { conflict, created } from '@presentation/helpers/http/http';
 import {
   IController,
   IHttpRequest,
@@ -26,7 +26,7 @@ class CreateAccountController implements IController {
       return created<void>();
     } catch (error) {
       if (error instanceof UserAlreadyExistsWithProvidedEmailError) {
-        return unprocessableEntity(error);
+        return conflict(error);
       }
 
       throw error;

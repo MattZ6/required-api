@@ -58,7 +58,7 @@ describe('AuthenticateUserController', () => {
     await expect(promise).rejects.toThrowError(error);
   });
 
-  it('should return 404 (no found) if AuthenticateUserUseCase throws UserNotFoundWithProvidedEmailError', async () => {
+  it('should return no found (404) if AuthenticateUserUseCase throws UserNotFoundWithProvidedEmailError', async () => {
     const error = new UserNotFoundWithProvidedEmailError();
 
     jest
@@ -72,7 +72,7 @@ describe('AuthenticateUserController', () => {
     expect(response).toEqual(notFound(error));
   });
 
-  it('should return 422 (unprocessable entity) if AuthenticateUserUseCase throws WrongPasswordError', async () => {
+  it('should return unprocessable entity (422) if AuthenticateUserUseCase throws WrongPasswordError', async () => {
     const error = new WrongPasswordError();
 
     jest
@@ -86,7 +86,7 @@ describe('AuthenticateUserController', () => {
     expect(response).toEqual(unprocessableEntity(error));
   });
 
-  it('should return 200 (ok) with authentication data on success', async () => {
+  it('should return ok (200) with authentication data on success', async () => {
     const outputMock = makeAuthenticateUserUseCaseOutputMock();
 
     jest
