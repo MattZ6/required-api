@@ -10,21 +10,21 @@ import {
   makeGetUserProfileUseCaseOutputMock,
 } from '../mocks';
 
-let getProfileUseCaseSpy: GetUserProfileUseCaseSpy;
+let getUserProfileUseCaseSpy: GetUserProfileUseCaseSpy;
 
 let getUserProfileController: GetUserProfileController;
 
 describe('GetUserProfileController', () => {
   beforeEach(() => {
-    getProfileUseCaseSpy = new GetUserProfileUseCaseSpy();
+    getUserProfileUseCaseSpy = new GetUserProfileUseCaseSpy();
 
     getUserProfileController = new GetUserProfileController(
-      getProfileUseCaseSpy
+      getUserProfileUseCaseSpy
     );
   });
 
   it('should call GetUserProfileController once with correct values', async () => {
-    const executeSpy = jest.spyOn(getProfileUseCaseSpy, 'execute');
+    const executeSpy = jest.spyOn(getUserProfileUseCaseSpy, 'execute');
 
     const request = makeGetUserProfileControllerRequestMock();
 
@@ -38,7 +38,7 @@ describe('GetUserProfileController', () => {
     const errorMock = makeErrorMock();
 
     jest
-      .spyOn(getProfileUseCaseSpy, 'execute')
+      .spyOn(getUserProfileUseCaseSpy, 'execute')
       .mockRejectedValueOnce(errorMock);
 
     const request = makeGetUserProfileControllerRequestMock();
@@ -51,7 +51,9 @@ describe('GetUserProfileController', () => {
   it('should return not found (404) if CreateUserUseCase throws UserNotFoundWithProvidedIdError', async () => {
     const error = new UserNotFoundWithProvidedIdError();
 
-    jest.spyOn(getProfileUseCaseSpy, 'execute').mockRejectedValueOnce(error);
+    jest
+      .spyOn(getUserProfileUseCaseSpy, 'execute')
+      .mockRejectedValueOnce(error);
 
     const request = makeGetUserProfileControllerRequestMock();
 
@@ -64,7 +66,7 @@ describe('GetUserProfileController', () => {
     const outputMock = makeGetUserProfileUseCaseOutputMock();
 
     jest
-      .spyOn(getProfileUseCaseSpy, 'execute')
+      .spyOn(getUserProfileUseCaseSpy, 'execute')
       .mockResolvedValueOnce(outputMock);
 
     const requet = makeGetUserProfileControllerRequestMock();
