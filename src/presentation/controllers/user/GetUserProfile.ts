@@ -8,12 +8,12 @@ import {
   IHttpResponse,
 } from '@presentation/protocols';
 
-class GetProfileController implements IController {
+class GetUserProfileController implements IController {
   constructor(private readonly getProfileUseCase: IGetUserProfileUseCase) {}
 
   async handle(
-    request: GetProfileController.Request
-  ): Promise<GetProfileController.Response> {
+    request: GetUserProfileController.Request
+  ): Promise<GetUserProfileController.Response> {
     try {
       const { user_id } = request;
 
@@ -30,10 +30,10 @@ class GetProfileController implements IController {
   }
 }
 
-namespace GetProfileController {
-  export type Request = IHttpRequest;
+namespace GetUserProfileController {
+  export type Request = IHttpRequest<void>;
 
   export type Response = IHttpResponse;
 }
 
-export { GetProfileController };
+export { GetUserProfileController };
