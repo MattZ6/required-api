@@ -1,6 +1,6 @@
 import { IUpdateUserEmailUseCase } from '@domain/usecases/user/UpdateUserEmail';
 
-import { makeUserMock } from '../../domain';
+import { makeUserMock } from '../../../domain';
 
 export class UpdateUserEmailUseCaseSpy implements IUpdateUserEmailUseCase {
   async execute(
