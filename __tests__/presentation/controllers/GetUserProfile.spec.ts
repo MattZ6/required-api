@@ -1,6 +1,7 @@
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 
 import { GetUserProfileController } from '@presentation/controllers/user/GetUserProfile';
+import { UserMapper } from '@presentation/dtos';
 import { notFound, ok } from '@presentation/helpers/http/http';
 
 import { makeErrorMock } from '../../domain';
@@ -62,7 +63,7 @@ describe('GetUserProfileController', () => {
     expect(response).toEqual(notFound(error));
   });
 
-  it('should return 200 on success', async () => {
+  it('should return ok (200) with user profile on success', async () => {
     const outputMock = makeGetUserProfileUseCaseOutputMock();
 
     jest
@@ -73,6 +74,6 @@ describe('GetUserProfileController', () => {
 
     const response = await getUserProfileController.handle(requet);
 
-    expect(response).toEqual(ok(outputMock));
+    expect(response).toEqual(ok(UserMapper.toProfileDTO(outputMock)));
   });
 });

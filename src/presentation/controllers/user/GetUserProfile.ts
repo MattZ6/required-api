@@ -1,6 +1,7 @@
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 import { IGetUserProfileUseCase } from '@domain/usecases/user/GetUserProfile';
 
+import { UserMapper } from '@presentation/dtos';
 import { notFound, ok } from '@presentation/helpers/http/http';
 import {
   IController,
@@ -19,7 +20,7 @@ class GetUserProfileController implements IController {
 
       const user = await this.getProfileUseCase.execute({ user_id });
 
-      return ok(user);
+      return ok(UserMapper.toProfileDTO(user));
     } catch (error) {
       if (error instanceof UserNotFoundWithProvidedIdError) {
         return notFound(error);
