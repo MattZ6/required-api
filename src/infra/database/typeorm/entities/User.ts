@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import {
   Column,
   CreateDateColumn,
@@ -5,7 +6,6 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { v4 as generateUuid } from 'uuid';
 
 import { IUser } from '@domain/models/User';
 
@@ -33,7 +33,7 @@ export class User implements IUser {
 
   constructor() {
     if (!this.id) {
-      this.id = generateUuid();
+      this.id = randomUUID();
     }
   }
 }
