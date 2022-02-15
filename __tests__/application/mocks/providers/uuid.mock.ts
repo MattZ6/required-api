@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { IGenerateUuidProvider } from '@data/protocols/providers/uuid';
+import { IGenerateUuidProvider } from '@application/protocols/providers/uuid';
 
 export function makeGenerateUuidProviderOutputMock(): IGenerateUuidProvider.Output {
   return faker.datatype.uuid();

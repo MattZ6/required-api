@@ -3,7 +3,7 @@ import {
   UserNotFoundWithProvidedIdError,
 } from '@domain/errors';
 
-import { UpdateUserEmailUseCase } from '@data/usecases/user/UpdateUserEmail';
+import { UpdateUserEmailUseCase } from '@application/usecases/user/UpdateUserEmail';
 
 import { makeErrorMock, makeUserMock } from '../../domain';
 import {

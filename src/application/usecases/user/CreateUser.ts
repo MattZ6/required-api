@@ -1,11 +1,11 @@
 import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
 import { ICreateUserUseCase } from '@domain/usecases/user/CreateUser';
 
-import { IGenerateHashProvider } from '@data/protocols/providers/cryptography/hash';
+import { IGenerateHashProvider } from '@application/protocols/providers/cryptography/hash';
 import {
   ICheckIfUserExistsByEmailRepository,
   ICreateUserRepository,
-} from '@data/protocols/repositories/user';
+} from '@application/protocols/repositories/user';
 
 export class CreateUserUseCase implements ICreateUserUseCase {
   constructor(

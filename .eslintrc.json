@@ -64,7 +64,7 @@
         "groups": [
           "module",
           "/^@domain/",
-          "/^@data/",
+          "/^@application/",
           "/^@infra/",
           "/^@presentation/",
           "/^@main/",

@@ -4,13 +4,13 @@ import {
 } from '@domain/errors';
 import { IRefreshUserAccessTokenUseCase } from '@domain/usecases/user/RefreshUserAccessToken';
 
-import { IEncryptProvider } from '@data/protocols/providers/cryptography/cryptography';
-import { IGenerateUuidProvider } from '@data/protocols/providers/uuid';
+import { IEncryptProvider } from '@application/protocols/providers/cryptography/cryptography';
+import { IGenerateUuidProvider } from '@application/protocols/providers/uuid';
 import {
   ICreateUserTokenRepository,
   IDeleteUserTokenByIdRepository,
   IFindUserTokenByTokenRepository,
-} from '@data/protocols/repositories/user-token';
+} from '@application/protocols/repositories/user-token';
 
 export class RefreshUserAccessTokenUseCase
   implements IRefreshUserAccessTokenUseCase

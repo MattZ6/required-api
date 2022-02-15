@@ -5,7 +5,7 @@ import {
   UserNotFoundWithProvidedEmailError,
 } from '@domain/errors';
 
-import { AuthenticateUserUseCase } from '@data/usecases/user/AuthenticateUser';
+import { AuthenticateUserUseCase } from '@application/usecases/user/AuthenticateUser';
 
 import { makeErrorMock, makeUserMock } from '../../domain';
 import {

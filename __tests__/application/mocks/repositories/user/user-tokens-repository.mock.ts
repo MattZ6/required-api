@@ -2,7 +2,7 @@ import {
   ICreateUserTokenRepository,
   IDeleteUserTokenByIdRepository,
   IFindUserTokenByTokenRepository,
-} from '@data/protocols/repositories/user-token';
+} from '@application/protocols/repositories/user-token';
 
 import { makeUserTokenMock } from '../../../../domain/models/user-token.mock';
 

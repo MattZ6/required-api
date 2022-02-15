@@ -1,7 +1,7 @@
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 import { IGetUserProfileUseCase } from '@domain/usecases/user/GetUserProfile';
 
-import { IFindUserByIdRepository } from '@data/protocols/repositories/user';
+import { IFindUserByIdRepository } from '@application/protocols/repositories/user';
 
 export class GetUserProfileUseCase implements IGetUserProfileUseCase {
   constructor(

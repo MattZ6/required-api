@@ -1,4 +1,4 @@
-import { AuthenticateUserUseCase } from '@data/usecases/user/AuthenticateUser';
+import { AuthenticateUserUseCase } from '@application/usecases/user/AuthenticateUser';
 
 import { makeBcryptjsHashProvider } from '@main/factories/providers/cryptography/BcryptjsHashProviderFactory';
 import { makeJWTCryptographyProvider } from '@main/factories/providers/cryptography/JWTCryptographyProviderFactory';

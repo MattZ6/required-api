@@ -6,7 +6,7 @@ import {
   IFindUserByEmailRepository,
   IFindUserByIdRepository,
   IUpdateUserRepository,
-} from '@data/protocols/repositories/user';
+} from '@application/protocols/repositories/user';
 
 import { User } from '@infra/database/typeorm/entities/User';
 

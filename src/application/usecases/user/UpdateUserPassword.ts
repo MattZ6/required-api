@@ -7,11 +7,11 @@ import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdateUserPass
 import {
   ICompareHashProvider,
   IGenerateHashProvider,
-} from '@data/protocols/providers/cryptography/hash';
+} from '@application/protocols/providers/cryptography/hash';
 import {
   IFindUserByIdRepository,
   IUpdateUserRepository,
-} from '@data/protocols/repositories/user';
+} from '@application/protocols/repositories/user';
 
 export class UpdateUserPasswordUseCase implements IUpdateUserPasswordUseCase {
   constructor(

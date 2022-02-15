@@ -5,7 +5,7 @@ import {
   UserNotFoundWithProvidedIdError,
 } from '@domain/errors';
 
-import { UpdateUserPasswordUseCase } from '@data/usecases/user/UpdateUserPassword';
+import { UpdateUserPasswordUseCase } from '@application/usecases/user/UpdateUserPassword';
 
 import { makeErrorMock, makeUserMock } from '../../domain';
 import {

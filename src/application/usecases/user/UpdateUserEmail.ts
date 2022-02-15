@@ -8,7 +8,7 @@ import {
   ICheckIfUserExistsByEmailRepository,
   IFindUserByIdRepository,
   IUpdateUserRepository,
-} from '@data/protocols/repositories/user';
+} from '@application/protocols/repositories/user';
 
 export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
   constructor(

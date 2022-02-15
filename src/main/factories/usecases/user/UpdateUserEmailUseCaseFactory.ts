@@ -1,4 +1,4 @@
-import { UpdateUserEmailUseCase } from '@data/usecases/user/UpdateUserEmail';
+import { UpdateUserEmailUseCase } from '@application/usecases/user/UpdateUserEmail';
 
 import { makePostgresUsersRepository } from '@main/factories/repositories/user/PostgresUsersRepositoryFactory';
 

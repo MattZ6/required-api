@@ -4,9 +4,9 @@ import {
 } from '@domain/errors';
 import { IAuthenticateUserUseCase } from '@domain/usecases/user/AuthenticateUser';
 
-import { IEncryptProvider } from '@data/protocols/providers/cryptography/cryptography';
-import { ICompareHashProvider } from '@data/protocols/providers/cryptography/hash';
-import { IFindUserByEmailRepository } from '@data/protocols/repositories/user';
+import { IEncryptProvider } from '@application/protocols/providers/cryptography/cryptography';
+import { ICompareHashProvider } from '@application/protocols/providers/cryptography/hash';
+import { IFindUserByEmailRepository } from '@application/protocols/repositories/user';
 
 export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
   constructor(

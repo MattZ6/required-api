@@ -5,7 +5,7 @@ import {
   UserTokenNotFoundWithProvidedTokenError,
 } from '@domain/errors';
 
-import { RefreshUserAccessTokenUseCase } from '@data/usecases/user/RefreshUserAccessToken';
+import { RefreshUserAccessTokenUseCase } from '@application/usecases/user/RefreshUserAccessToken';
 
 import { makeErrorMock } from '../../domain';
 import { makeUserTokenMock } from '../../domain/models/user-token.mock';

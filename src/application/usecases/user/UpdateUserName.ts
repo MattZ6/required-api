@@ -4,7 +4,7 @@ import { IUpdateUserNameUseCase } from '@domain/usecases/user/UpdateUserName';
 import {
   IFindUserByIdRepository,
   IUpdateUserRepository,
-} from '@data/protocols/repositories/user';
+} from '@application/protocols/repositories/user';
 
 export class UpdateUserNameUseCase implements IUpdateUserNameUseCase {
   constructor(
