@@ -7,7 +7,7 @@ export function makeUserTokenMock(): IUserToken {
     id: faker.datatype.uuid(),
     user_id: faker.datatype.uuid(),
     token: faker.datatype.uuid(),
-    expires_in: faker.datatype.datetime(),
+    expires_in: faker.date.soon(),
     created_at: faker.datatype.datetime(),
     updated_at: faker.datatype.datetime(),
   };
