@@ -8,16 +8,25 @@ import {
 import { AuthenticateUserUseCase } from '@application/usecases/user/AuthenticateUser';
 
 import { makeErrorMock, makeUserMock } from '../../domain';
+import { makeUserTokenMock } from '../../domain/models/user-token.mock';
 import {
   CompareHashProviderSpy,
+  CreateUserTokenRepositorySpy,
   EncryptProviderSpy,
   FindUserByEmailRepositorySpy,
+  GenerateUuidProviderSpy,
+  makeAuthenticateUserRefreshTokenExpiresTimeInMillissecondsMock,
   makeAuthenticateUserUseCaseInputMock,
+  makeEncryptProviderOutputMock,
+  makeGenerateUuidProviderOutputMock,
 } from '../mocks';
 
 let findUserByEmailRepositorySpy: FindUserByEmailRepositorySpy;
 let compareHashProviderSpy: CompareHashProviderSpy;
 let encryptProviderSpy: EncryptProviderSpy;
+let generateUuidProviderSpy: GenerateUuidProviderSpy;
+let authenticateUserRefreshTokenExpiresTimeInMillissecondsMock: number;
+let createUserTokenRepositorySpy: CreateUserTokenRepositorySpy;
 
 let authenticateUserUseCase: AuthenticateUserUseCase;
 
@@ -26,11 +35,18 @@ describe('AuthenticateUserUseCase', () => {
     findUserByEmailRepositorySpy = new FindUserByEmailRepositorySpy();
     compareHashProviderSpy = new CompareHashProviderSpy();
     encryptProviderSpy = new EncryptProviderSpy();
+    generateUuidProviderSpy = new GenerateUuidProviderSpy();
+    authenticateUserRefreshTokenExpiresTimeInMillissecondsMock =
+      makeAuthenticateUserRefreshTokenExpiresTimeInMillissecondsMock();
+    createUserTokenRepositorySpy = new CreateUserTokenRepositorySpy();
 
     authenticateUserUseCase = new AuthenticateUserUseCase(
       findUserByEmailRepositorySpy,
       compareHashProviderSpy,
-      encryptProviderSpy
+      encryptProviderSpy,
+      generateUuidProviderSpy,
+      authenticateUserRefreshTokenExpiresTimeInMillissecondsMock,
+      createUserTokenRepositorySpy
     );
   });
 
@@ -151,19 +167,99 @@ describe('AuthenticateUserUseCase', () => {
     await expect(promise).rejects.toThrowError(error);
   });
 
+  it('should call GenerateUuidProvider once', async () => {
+    const generateSpy = jest.spyOn(generateUuidProviderSpy, 'generate');
+
+    const input = makeAuthenticateUserUseCaseInputMock();
+
+    await authenticateUserUseCase.execute(input);
+
+    expect(generateSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should throw it GenerateUuidProvider throws', async () => {
+    const errorMock = makeErrorMock();
+
+    jest
+      .spyOn(generateUuidProviderSpy, 'generate')
+      .mockRejectedValueOnce(errorMock);
+
+    const input = makeAuthenticateUserUseCaseInputMock();
+
+    const promise = authenticateUserUseCase.execute(input);
+
+    await expect(promise).rejects.toThrowError(errorMock);
+  });
+
+  it('should call CreateUserTokenRepository once with correct values', async () => {
+    const userMock = makeUserMock();
+
+    jest
+      .spyOn(findUserByEmailRepositorySpy, 'findByEmail')
+      .mockResolvedValueOnce(userMock);
+
+    const token = makeGenerateUuidProviderOutputMock();
+
+    jest
+      .spyOn(generateUuidProviderSpy, 'generate')
+      .mockResolvedValueOnce(token);
+
+    const now = faker.datatype.datetime();
+
+    jest.spyOn(Date, 'now').mockReturnValueOnce(now.getTime());
+
+    const expiresIn = new Date(
+      now.getTime() + authenticateUserRefreshTokenExpiresTimeInMillissecondsMock
+    );
+
+    const createSpy = jest.spyOn(createUserTokenRepositorySpy, 'create');
+
+    const input = makeAuthenticateUserUseCaseInputMock();
+
+    await authenticateUserUseCase.execute(input);
+
+    expect(createSpy).toHaveBeenCalledTimes(1);
+    expect(createSpy).toHaveBeenCalledWith({
+      token,
+      user_id: userMock.id,
+      expires_in: expiresIn,
+    });
+  });
+
+  it('should throw if CreateUserTokenRepository throws', async () => {
+    const errorMock = makeErrorMock();
+
+    jest
+      .spyOn(createUserTokenRepositorySpy, 'create')
+      .mockRejectedValueOnce(errorMock);
+
+    const input = makeAuthenticateUserUseCaseInputMock();
+
+    const promise = authenticateUserUseCase.execute(input);
+
+    await expect(promise).rejects.toThrowError(errorMock);
+  });
+
   it('should return authentication data on success', async () => {
-    const accessToken = faker.datatype.string();
+    const accessTokenMock = makeEncryptProviderOutputMock();
 
     jest
       .spyOn(encryptProviderSpy, 'encrypt')
-      .mockResolvedValueOnce(accessToken);
+      .mockResolvedValueOnce(accessTokenMock);
+
+    const userTokenMock = makeUserTokenMock();
+
+    jest
+      .spyOn(createUserTokenRepositorySpy, 'create')
+      .mockResolvedValueOnce(userTokenMock);
 
     const input = makeAuthenticateUserUseCaseInputMock();
 
     const output = await authenticateUserUseCase.execute(input);
 
     expect(output).toEqual({
-      access_token: accessToken,
+      access_token: accessTokenMock,
+      refresh_token: userTokenMock.token,
     });
   });
 });

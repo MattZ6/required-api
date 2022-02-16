@@ -4,6 +4,7 @@ import {
 } from '@domain/errors';
 import { IAuthenticateUserUseCase } from '@domain/usecases/user/AuthenticateUser';
 
+import { AuthenticationMapper } from '@presentation/dtos';
 import {
   notFound,
   ok,
@@ -26,12 +27,12 @@ class AuthenticateUserController implements IController {
     try {
       const { email, password } = request.body;
 
-      const response = await this.authenticateUserUseCase.execute({
+      const output = await this.authenticateUserUseCase.execute({
         email,
         password,
       });
 
-      return ok(response);
+      return ok(AuthenticationMapper.toDTO(output));
     } catch (error) {
       if (error instanceof UserNotFoundWithProvidedEmailError) {
         return notFound(error);

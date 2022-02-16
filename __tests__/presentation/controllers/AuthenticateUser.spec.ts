@@ -4,6 +4,7 @@ import {
 } from '@domain/errors';
 
 import { AuthenticateUserController } from '@presentation/controllers/user/AuthenticateUser';
+import { AuthenticationMapper } from '@presentation/dtos';
 import {
   notFound,
   ok,
@@ -97,6 +98,6 @@ describe('AuthenticateUserController', () => {
 
     const response = await authenticateUserController.handle(request);
 
-    expect(response).toEqual(ok({ access_token: outputMock.access_token }));
+    expect(response).toEqual(ok(AuthenticationMapper.toDTO(outputMock)));
   });
 });

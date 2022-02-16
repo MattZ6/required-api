@@ -12,6 +12,7 @@ namespace IAuthenticateUserUseCase {
 
   export type Output = {
     access_token: string;
+    refresh_token: string;
   };
 }
 

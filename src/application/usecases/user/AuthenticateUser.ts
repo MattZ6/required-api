@@ -6,13 +6,18 @@ import { IAuthenticateUserUseCase } from '@domain/usecases/user/AuthenticateUser
 
 import { IEncryptProvider } from '@application/protocols/providers/cryptography/cryptography';
 import { ICompareHashProvider } from '@application/protocols/providers/cryptography/hash';
+import { IGenerateUuidProvider } from '@application/protocols/providers/uuid';
 import { IFindUserByEmailRepository } from '@application/protocols/repositories/user';
+import { ICreateUserTokenRepository } from '@application/protocols/repositories/user-token';
 
 export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
   constructor(
     private readonly findUserByEmailRepository: IFindUserByEmailRepository,
     private readonly compareHashProvider: ICompareHashProvider,
-    private readonly encryptProvider: IEncryptProvider
+    private readonly encryptProvider: IEncryptProvider,
+    private readonly generateUuidProvider: IGenerateUuidProvider,
+    private readonly refreshTokenExpiresTimeInMillisseconds: number,
+    private readonly createUserTokenRepository: ICreateUserTokenRepository
   ) {}
 
   async execute(
@@ -35,10 +40,25 @@ export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
       throw new WrongPasswordError();
     }
 
-    const token = await this.encryptProvider.encrypt({
+    const accessToken = await this.encryptProvider.encrypt({
       value: user.id,
     });
 
-    return { access_token: token };
+    const refreshToken = await this.generateUuidProvider.generate();
+
+    const expiresDate = new Date(
+      Date.now() + this.refreshTokenExpiresTimeInMillisseconds
+    );
+
+    const userToken = await this.createUserTokenRepository.create({
+      user_id: user.id,
+      token: refreshToken,
+      expires_in: expiresDate,
+    });
+
+    return {
+      access_token: accessToken,
+      refresh_token: userToken.token,
+    };
   }
 }
