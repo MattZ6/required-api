@@ -822,7 +822,7 @@
   resolved "https://registry.yarnpkg.com/@swc/core-win32-x64-msvc/-/core-win32-x64-msvc-1.2.139.tgz#d028873939e677c0ed86471e15aeff8d4288c39b"
   integrity sha512-N1zvgp/xlSEgi6msYI2zkyY/B9RlIuLjuyUu5VmFY6dylCwwukCHu6Vi6kYYKEtNoZCGWvSCgKbg87TMydetxQ==
 
-"@swc/core@^1.2.139":
+"@swc/core@1.2.139":
   version "1.2.139"
   resolved "https://registry.yarnpkg.com/@swc/core/-/core-1.2.139.tgz#b7e042eaf102bebdfaf56a0c11196e2caa4ecf89"
   integrity sha512-VlISQI7H6kIJT0Hhl6UVEOAb1HcuqWCnsoMHxVGdEQZlxt8g+ggyrY7F4AZoTvfgnSEayeIdpV8Xq52Zg+zjYw==
@@ -841,7 +841,7 @@
     "@swc/core-win32-ia32-msvc" "1.2.139"
     "@swc/core-win32-x64-msvc" "1.2.139"
 
-"@swc/jest@^0.2.17":
+"@swc/jest@0.2.17":
   version "0.2.17"
   resolved "https://registry.yarnpkg.com/@swc/jest/-/jest-0.2.17.tgz#0a36083cf5bca39c3c03323cdfc84b61fd670ac2"
   integrity sha512-n/g989+O8xxMcTZnP0phDrrgezGZBQBf7cX4QuzEsn07QkWbqmMsfaCxdF0kzajXublXWJ8yk5vRe3VNk1tczA==
@@ -1493,7 +1493,7 @@ caniuse-lite@^1.0.30001280:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001285.tgz#fe1e52229187e11d6670590790d669b9e03315b7"
   integrity sha512-KAOkuUtcQ901MtmvxfKD+ODHH9YVDYnBt+TGYSz2KIfnq22CiArbUxXPN9067gNbgMlnNYRSwho8OPXZPALB9Q==
 
-chalk@^2.0.0:
+chalk@^2.0.0, chalk@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
   integrity sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==
@@ -1775,6 +1775,14 @@ detect-newline@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-3.1.0.tgz#576f5dfc63ae1a192ff192d8ad3af6308991b651"
   integrity sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==
+
+did-you-mean@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/did-you-mean/-/did-you-mean-0.0.1.tgz#8851ce82407903cb62c12cb6ad4f676921ccdec3"
+  integrity sha1-iFHOgkB5A8tiwSy2rU9naSHM3sM=
+  dependencies:
+    levenshtein "*"
+    underscore "*"
 
 diff-sequences@^27.4.0:
   version "27.4.0"
@@ -2383,6 +2391,15 @@ get-symbol-description@^1.0.0:
   dependencies:
     call-bind "^1.0.2"
     get-intrinsic "^1.1.1"
+
+git-commit-msg-linter@4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/git-commit-msg-linter/-/git-commit-msg-linter-4.0.7.tgz#072d9a0868cbfe2bdcd1df1e1ed87ca8b1b5e8e7"
+  integrity sha512-GuFVO2DFYKCfjU/HWUMwTZ/0ehjgt4cjhw7bwS539yY3Z0KzIwkMk5QnKwdCb6xzzpI5UYLkCQgZv3WDljOrtA==
+  dependencies:
+    chalk "^2.4.2"
+    did-you-mean "^0.0.1"
+    supports-color "^8.1.1"
 
 glob-parent@^5.1.2, glob-parent@~5.1.2:
   version "5.1.2"
@@ -3371,6 +3388,11 @@ leven@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/leven/-/leven-3.1.0.tgz#77891de834064cccba82ae7842bb6b14a13ed7f2"
   integrity sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==
+
+levenshtein@*:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/levenshtein/-/levenshtein-1.0.5.tgz#3911737a9cb56da345d008f55782c6f138979ba3"
+  integrity sha1-ORFzepy1baNF0Aj1V4LG8TiXm6M=
 
 levn@^0.4.1:
   version "0.4.1"
@@ -4383,7 +4405,7 @@ supports-color@^7.0.0, supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-supports-color@^8.0.0:
+supports-color@^8.0.0, supports-color@^8.1.1:
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-8.1.1.tgz#cd6fc17e28500cff56c1b86c0a7fd4a54a73005c"
   integrity sha512-MpUEN2OodtUzxvKQl72cUF7RQ5EiHsGvSsVG0ia9c5RbWGL2CI4C7EpPS8UTBIplnlzZiNuV56w+FuNxy3ty2Q==
@@ -4655,6 +4677,11 @@ unbox-primitive@^1.0.1:
     has-bigints "^1.0.1"
     has-symbols "^1.0.2"
     which-boxed-primitive "^1.0.2"
+
+underscore@*:
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.2.tgz#276cea1e8b9722a8dbed0100a407dda572125881"
+  integrity sha512-ekY1NhRzq0B08g4bGuX4wd2jZx5GnKz6mKSqFL4nqBlfyMGiG10gDFhDTMEfYmDL6Jy0FUIZp7wiRB+0BP7J2g==
 
 universalify@^0.1.2:
   version "0.1.2"
