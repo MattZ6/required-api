@@ -1,7 +1,7 @@
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 import { IUpdateUserNameUseCase } from '@domain/usecases/user/UpdateUserName';
 
-import { noContent, notFound } from '@presentation/helpers/http/http';
+import { noContent, notFound } from '@presentation/helpers/http';
 import {
   IController,
   IHttpRequest,

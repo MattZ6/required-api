@@ -20,6 +20,13 @@ export function noContent(): IHttpResponse<void> {
   };
 }
 
+export function unauthorized(error: Error): IHttpResponse<Error> {
+  return {
+    statusCode: 401,
+    body: error,
+  };
+}
+
 export function notFound(error: Error): IHttpResponse<Error> {
   return {
     statusCode: 404,

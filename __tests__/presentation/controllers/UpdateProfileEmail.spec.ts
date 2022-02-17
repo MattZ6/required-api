@@ -4,7 +4,7 @@ import {
 } from '@domain/errors';
 
 import { UpdateProfileEmailController } from '@presentation/controllers/user/UpdateProfileEmail';
-import { conflict, noContent, notFound } from '@presentation/helpers/http/http';
+import { conflict, noContent, notFound } from '@presentation/helpers/http';
 
 import { makeErrorMock } from '../../domain';
 import {

@@ -1,7 +1,7 @@
 import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
 
 import { CreateAccountController } from '@presentation/controllers/user/CreateAccount';
-import { created, conflict } from '@presentation/helpers/http/http';
+import { created, conflict } from '@presentation/helpers/http';
 
 import { makeErrorMock } from '../../domain';
 import {

@@ -2,7 +2,7 @@ import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 
 import { GetUserProfileController } from '@presentation/controllers/user/GetUserProfile';
 import { UserMapper } from '@presentation/dtos';
-import { notFound, ok } from '@presentation/helpers/http/http';
+import { notFound, ok } from '@presentation/helpers/http';
 
 import { makeErrorMock } from '../../domain';
 import {

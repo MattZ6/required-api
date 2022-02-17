@@ -5,11 +5,7 @@ import {
 import { IAuthenticateUserUseCase } from '@domain/usecases/user/AuthenticateUser';
 
 import { AuthenticationMapper } from '@presentation/dtos';
-import {
-  notFound,
-  ok,
-  unprocessableEntity,
-} from '@presentation/helpers/http/http';
+import { notFound, ok, unprocessableEntity } from '@presentation/helpers/http';
 import {
   IController,
   IHttpRequest,

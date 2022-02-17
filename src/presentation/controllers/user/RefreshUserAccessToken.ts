@@ -5,11 +5,7 @@ import {
 import { IRefreshUserAccessTokenUseCase } from '@domain/usecases/user/RefreshUserAccessToken';
 
 import { AuthenticationMapper } from '@presentation/dtos';
-import {
-  notFound,
-  ok,
-  unprocessableEntity,
-} from '@presentation/helpers/http/http';
+import { notFound, ok, unprocessableEntity } from '@presentation/helpers/http';
 import {
   IController,
   IHttpRequest,

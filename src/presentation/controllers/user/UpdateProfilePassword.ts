@@ -8,7 +8,7 @@ import {
   noContent,
   notFound,
   unprocessableEntity,
-} from '@presentation/helpers/http/http';
+} from '@presentation/helpers/http';
 import {
   IController,
   IHttpRequest,

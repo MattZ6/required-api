@@ -5,11 +5,7 @@ import {
 
 import { RefreshUserAccessTokenController } from '@presentation/controllers/user/RefreshUserAccessToken';
 import { AuthenticationMapper } from '@presentation/dtos';
-import {
-  notFound,
-  ok,
-  unprocessableEntity,
-} from '@presentation/helpers/http/http';
+import { notFound, ok, unprocessableEntity } from '@presentation/helpers/http';
 
 import { makeErrorMock } from '../../domain';
 import {

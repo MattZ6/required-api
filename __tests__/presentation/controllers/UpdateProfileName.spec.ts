@@ -1,7 +1,7 @@
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 
 import { UpdateProfileNameController } from '@presentation/controllers/user/UpdateProfileName';
-import { noContent, notFound } from '@presentation/helpers/http/http';
+import { noContent, notFound } from '@presentation/helpers/http';
 
 import { makeErrorMock } from '../../domain';
 import {
