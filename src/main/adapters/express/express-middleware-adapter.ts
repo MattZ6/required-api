@@ -4,32 +4,23 @@ import { IMiddleware } from '@presentation/protocols';
 
 export function adaptMiddleware(middleware: IMiddleware) {
   return async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const middlewareResponse = await middleware.handle({
-        body: request?.body ?? {},
-        query: request?.query ?? {},
-        params: request?.params ?? {},
-        headers: request?.headers ?? {},
-      });
+    const { statusCode, body } = await middleware.handle({
+      body: request?.body ?? {},
+      query: request?.query ?? {},
+      params: request?.params ?? {},
+      headers: request?.headers ?? {},
+      original_url: request.originalUrl,
+      method: request.method,
+    });
 
-      const isSuccessful =
-        middlewareResponse.statusCode >= 200 &&
-        middlewareResponse.statusCode <= 299;
+    const isSuccessful = statusCode >= 200 && statusCode <= 299;
 
-      if (!isSuccessful) {
-        return response
-          .status(middlewareResponse.statusCode)
-          .json(middlewareResponse.body);
-      }
-
-      Object.assign(request, middlewareResponse.body);
+    if (isSuccessful) {
+      Object.assign(request, body);
 
       return next();
-    } catch (error) {
-      console.log(error);
-
-      // TODO: Retornar um internal server error
-      return response.status(500).json();
     }
+
+    return response.status(statusCode).json(body);
   };
 }

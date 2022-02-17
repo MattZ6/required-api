@@ -23,6 +23,7 @@ export default {
     '<rootDir>/src/application/usecases/**/*.ts',
     '<rootDir>/src/presentation/controllers/**/*.ts',
     '<rootDir>/src/presentation/middlewares/**/*.ts',
+    '<rootDir>/src/main/decorators/**/*.ts',
   ],
 
   // The directory where Jest should output its coverage files

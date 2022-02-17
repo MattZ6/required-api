@@ -1,4 +1,4 @@
-export interface IHttpResponse<B = any> {
+export interface IHttpResponse<B = unknown> {
   statusCode: number;
   body?: B;
 }
@@ -14,4 +14,6 @@ export interface IHttpRequest<
   params?: P;
   query?: Q;
   headers?: H;
+  original_url: string;
+  method: string;
 }
