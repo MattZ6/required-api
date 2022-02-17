@@ -1,35 +1,36 @@
 import { Router } from 'express';
 
+import { adaptMiddleware } from '@main/adapters/express/express-middleware-adapter';
 import { adaptRoute } from '@main/adapters/express/express-route-adapter';
-import { authenticationMiddleware } from '@main/config/middlewares/authentication';
 import { makeGetUserProfileController } from '@main/factories/controllers/user/GetUserProfileControllerFactory';
 import { makeUpdateProfileEmailController } from '@main/factories/controllers/user/UpdateProfileEmailControllerFactory';
 import { makeUpdateProfileNameController } from '@main/factories/controllers/user/UpdateProfileNameControllerFactory';
 import { makeUpdateProfilePasswordController } from '@main/factories/controllers/user/UpdateProfilePasswordController';
+import { makeAuthenticationMiddleware } from '@main/factories/middlewares/AuthenticationMiddlewareFactory';
 
 const profileRoutes = Router();
 
 profileRoutes.get(
   '/',
-  authenticationMiddleware,
+  adaptMiddleware(makeAuthenticationMiddleware()),
   adaptRoute(makeGetUserProfileController())
 );
 
 profileRoutes.patch(
   '/name',
-  authenticationMiddleware,
+  adaptMiddleware(makeAuthenticationMiddleware()),
   adaptRoute(makeUpdateProfileNameController())
 );
 
 profileRoutes.patch(
   '/email',
-  authenticationMiddleware,
+  adaptMiddleware(makeAuthenticationMiddleware()),
   adaptRoute(makeUpdateProfileEmailController())
 );
 
 profileRoutes.patch(
   '/password',
-  authenticationMiddleware,
+  adaptMiddleware(makeAuthenticationMiddleware()),
   adaptRoute(makeUpdateProfilePasswordController())
 );
 
