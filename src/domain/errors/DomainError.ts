@@ -1,7 +1,7 @@
-export class DomainError extends Error {
-  constructor(message: string) {
-    super(message);
+import { ApplicationError } from './ApplicationError';
 
-    super.name = this.constructor.name;
+export class DomainError extends ApplicationError {
+  constructor(message: string, code: string) {
+    super(message, code);
   }
 }

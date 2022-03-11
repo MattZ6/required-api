@@ -1,7 +1,7 @@
-export class PresentationError extends Error {
-  constructor(message: string) {
-    super(message);
+import { ApplicationError } from '@domain/errors';
 
-    super.name = this.constructor.name;
+export class PresentationError extends ApplicationError {
+  constructor(message: string, code: string) {
+    super(message, code);
   }
 }

@@ -1,4 +1,24 @@
+import { ApplicationError } from '@domain/errors';
+
 import { IHttpResponse } from '@presentation/protocols/Http';
+
+type ErrorDTO = {
+  code: string;
+  message: string;
+};
+
+function toErrorDTO(error: ApplicationError | Error): ErrorDTO {
+  let code = 'internal';
+
+  if (error instanceof ApplicationError) {
+    code = error.code;
+  }
+
+  return {
+    code,
+    message: error.message,
+  };
+}
 
 export function ok<T = any>(data: T): IHttpResponse<T> {
   return {
@@ -20,37 +40,40 @@ export function noContent(): IHttpResponse<void> {
   };
 }
 
-export function unauthorized(error: Error): IHttpResponse<Error> {
+export function unauthorized(error: Error): IHttpResponse<ErrorDTO> {
   return {
     statusCode: 401,
-    body: error,
+    body: toErrorDTO(error),
   };
 }
 
-export function notFound(error: Error): IHttpResponse<Error> {
+export function notFound(error: Error): IHttpResponse<ErrorDTO> {
   return {
     statusCode: 404,
-    body: error,
+    body: toErrorDTO(error),
   };
 }
 
-export function conflict(error: Error): IHttpResponse<Error> {
+export function conflict(error: Error): IHttpResponse<ErrorDTO> {
   return {
     statusCode: 409,
-    body: error,
+    body: toErrorDTO(error),
   };
 }
 
-export function unprocessableEntity(error: Error): IHttpResponse<Error> {
+export function unprocessableEntity(error: Error): IHttpResponse<ErrorDTO> {
   return {
     statusCode: 422,
-    body: error,
+    body: toErrorDTO(error),
   };
 }
 
-export function internalServerError(error: Error): IHttpResponse<Error> {
+export function internalServerError(_: Error): IHttpResponse<ErrorDTO> {
   return {
     statusCode: 500,
-    body: error,
+    body: {
+      code: 'internal',
+      message: 'Internal server error',
+    },
   };
 }
