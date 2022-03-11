@@ -8,17 +8,17 @@ import { makeRefreshUserAccessTokenController } from '@main/factories/controller
 const authenticationRoutes = Router();
 
 authenticationRoutes.post(
-  '/account',
+  '/sign/up',
   adaptRoute(makeCreateAccountController())
 );
 
 authenticationRoutes.post(
-  '/login',
+  '/sign/in',
   adaptRoute(makeAuthenticateUserController())
 );
 
 authenticationRoutes.post(
-  '/refresh_token',
+  '/refresh',
   adaptRoute(makeRefreshUserAccessTokenController())
 );
 

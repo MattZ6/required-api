@@ -6,7 +6,7 @@ export const authConfig = {
 
   /** Refresh token */
 
-  REFRESH_TOKEN_EXPIRES_IN_MILLISSECONDS: 5 * 24 * 60 * 60 * 1000, // 👈 5 days
+  REFRESH_TOKEN_EXPIRES_IN_MILLISSECONDS: 2 * 24 * 60 * 60 * 1000, // 👈 2 days
 
   /** Hash provider */
 
