@@ -1,27 +1,38 @@
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 import { IUpdateUserNameUseCase } from '@domain/usecases/user/UpdateUserName';
 
-import { noContent, notFound } from '@presentation/helpers/http';
+import { badRequest, noContent, notFound } from '@presentation/helpers/http';
 import {
   IController,
   IHttpRequest,
   IHttpResponse,
+  IValidation,
 } from '@presentation/protocols';
+import { ValidationError } from '@presentation/validations/errors';
 
 class UpdateProfileNameController implements IController {
-  constructor(private readonly updateUserNameUseCase: IUpdateUserNameUseCase) {}
+  constructor(
+    private readonly validation: IValidation,
+    private readonly updateUserNameUseCase: IUpdateUserNameUseCase
+  ) {}
 
   async handle(
     request: UpdateProfileNameController.Request
   ): Promise<UpdateProfileNameController.Response> {
-    const { user_id } = request;
-    const { name } = request.body;
-
     try {
+      this.validation.validate(request.body);
+
+      const { user_id } = request;
+      const { name } = request.body;
+
       await this.updateUserNameUseCase.execute({ user_id, name });
 
       return noContent();
     } catch (error) {
+      if (error instanceof ValidationError) {
+        return badRequest(error);
+      }
+
       if (error instanceof UserNotFoundWithProvidedIdError) {
         return notFound(error);
       }
