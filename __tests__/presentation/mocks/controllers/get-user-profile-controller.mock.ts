@@ -4,6 +4,8 @@ import { GetUserProfileController } from '@presentation/controllers/user/GetUser
 
 export function makeGetUserProfileControllerRequestMock(): GetUserProfileController.Request {
   return {
+    method: faker.internet.httpMethod(),
+    original_url: faker.internet.url(),
     user_id: faker.datatype.uuid(),
   };
 }

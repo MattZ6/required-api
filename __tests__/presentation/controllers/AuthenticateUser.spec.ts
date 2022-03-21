@@ -5,26 +5,75 @@ import {
 
 import { AuthenticateUserController } from '@presentation/controllers/user/AuthenticateUser';
 import { AuthenticationMapper } from '@presentation/dtos';
-import { notFound, ok, unprocessableEntity } from '@presentation/helpers/http';
+import {
+  notFound,
+  ok,
+  unprocessableEntity,
+  badRequest,
+} from '@presentation/helpers/http';
 
 import { makeErrorMock } from '../../domain';
 import {
   AuthenticateUserUseCaseSpy,
   makeAuthenticateUserUseCaseOutputMock,
+  makeValidationErrorMock,
+  ValidationSpy,
 } from '../mocks';
 import { makeAuthenticateUserControllerRequestMock } from '../mocks/controllers';
 
+let validation: ValidationSpy;
 let authenticateUserUseCaseSpy: AuthenticateUserUseCaseSpy;
 
 let authenticateUserController: AuthenticateUserController;
 
 describe('AuthenticateUserController', () => {
   beforeEach(() => {
+    validation = new ValidationSpy();
     authenticateUserUseCaseSpy = new AuthenticateUserUseCaseSpy();
 
     authenticateUserController = new AuthenticateUserController(
+      validation,
       authenticateUserUseCaseSpy
     );
+  });
+
+  it('should call Validation with correct values', async () => {
+    const validateSpy = jest.spyOn(validation, 'validate');
+
+    const request = makeAuthenticateUserControllerRequestMock();
+
+    await authenticateUserController.handle(request);
+
+    expect(validateSpy).toHaveBeenCalledTimes(1);
+    expect(validateSpy).toHaveBeenCalledWith(request.body);
+  });
+
+  it('should throw if Validation throws', async () => {
+    const error = makeErrorMock();
+
+    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+      throw error;
+    });
+
+    const request = makeAuthenticateUserControllerRequestMock();
+
+    const promise = authenticateUserController.handle(request);
+
+    await expect(promise).rejects.toThrowError(error);
+  });
+
+  it('should return bad request (400) if Validation throws ValidationError', async () => {
+    const error = makeValidationErrorMock();
+
+    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+      throw error;
+    });
+
+    const request = makeAuthenticateUserControllerRequestMock();
+
+    const response = await authenticateUserController.handle(request);
+
+    expect(response).toEqual(badRequest(error));
   });
 
   it('should call AuthenticateUserUseCase once with correct values', async () => {

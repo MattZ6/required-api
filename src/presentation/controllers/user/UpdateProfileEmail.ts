@@ -4,29 +4,43 @@ import {
 } from '@domain/errors';
 import { IUpdateUserEmailUseCase } from '@domain/usecases/user/UpdateUserEmail';
 
-import { conflict, noContent, notFound } from '@presentation/helpers/http';
+import {
+  badRequest,
+  conflict,
+  noContent,
+  notFound,
+} from '@presentation/helpers/http';
 import {
   IController,
   IHttpRequest,
   IHttpResponse,
+  IValidation,
 } from '@presentation/protocols';
+import { ValidationError } from '@presentation/validations/errors';
 
 class UpdateProfileEmailController implements IController {
   constructor(
+    private readonly validation: IValidation,
     private readonly updateUserEmailUseCase: IUpdateUserEmailUseCase
   ) {}
 
   async handle(
     request: UpdateProfileEmailController.Request
   ): Promise<UpdateProfileEmailController.Response> {
-    const { user_id } = request;
-    const { email } = request.body;
-
     try {
+      this.validation.validate(request.body);
+
+      const { user_id } = request;
+      const { email } = request.body;
+
       await this.updateUserEmailUseCase.execute({ user_id, email });
 
       return noContent();
     } catch (error) {
+      if (error instanceof ValidationError) {
+        return badRequest(error);
+      }
+
       if (error instanceof UserNotFoundWithProvidedIdError) {
         return notFound(error);
       }

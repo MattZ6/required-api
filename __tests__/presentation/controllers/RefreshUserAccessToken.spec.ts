@@ -5,26 +5,75 @@ import {
 
 import { RefreshUserAccessTokenController } from '@presentation/controllers/user/RefreshUserAccessToken';
 import { AuthenticationMapper } from '@presentation/dtos';
-import { notFound, ok, unprocessableEntity } from '@presentation/helpers/http';
+import {
+  badRequest,
+  notFound,
+  ok,
+  unprocessableEntity,
+} from '@presentation/helpers/http';
 
 import { makeErrorMock } from '../../domain';
 import {
   makeRefreshUserAccessTokenControllerRequestMock,
   makeRefreshUserAccessTokenUseCaseOutputMock,
+  makeValidationErrorMock,
   RefreshUserAccessTokenUseCaseSpy,
+  ValidationSpy,
 } from '../mocks';
 
+let validation: ValidationSpy;
 let refreshUserAccessTokenUseCaseSpy: RefreshUserAccessTokenUseCaseSpy;
 
 let refreshUserAccessTokenController: RefreshUserAccessTokenController;
 
 describe('RefreshUserAccessTokenController', () => {
   beforeEach(() => {
+    validation = new ValidationSpy();
     refreshUserAccessTokenUseCaseSpy = new RefreshUserAccessTokenUseCaseSpy();
 
     refreshUserAccessTokenController = new RefreshUserAccessTokenController(
+      validation,
       refreshUserAccessTokenUseCaseSpy
     );
+  });
+
+  it('should call Validation with correct values', async () => {
+    const validateSpy = jest.spyOn(validation, 'validate');
+
+    const request = makeRefreshUserAccessTokenControllerRequestMock();
+
+    await refreshUserAccessTokenController.handle(request);
+
+    expect(validateSpy).toHaveBeenCalledTimes(1);
+    expect(validateSpy).toHaveBeenCalledWith(request.body);
+  });
+
+  it('should throw if Validation throws', async () => {
+    const error = makeErrorMock();
+
+    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+      throw error;
+    });
+
+    const request = makeRefreshUserAccessTokenControllerRequestMock();
+
+    const promise = refreshUserAccessTokenController.handle(request);
+
+    await expect(promise).rejects.toThrowError(error);
+  });
+
+  it('should return bad request (400) if Validation throws ValidationError', async () => {
+    const error = makeValidationErrorMock();
+
+    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+      throw error;
+    });
+
+    const request = makeRefreshUserAccessTokenControllerRequestMock();
+
+    const response = await refreshUserAccessTokenController.handle(request);
+
+    expect(response).toEqual(badRequest(error));
   });
 
   it('should call RefreshUserAccessTokenUseCase once with correct values', async () => {

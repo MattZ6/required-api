@@ -5,15 +5,23 @@ import {
 import { IAuthenticateUserUseCase } from '@domain/usecases/user/AuthenticateUser';
 
 import { AuthenticationMapper } from '@presentation/dtos';
-import { notFound, ok, unprocessableEntity } from '@presentation/helpers/http';
+import {
+  badRequest,
+  notFound,
+  ok,
+  unprocessableEntity,
+} from '@presentation/helpers/http';
 import {
   IController,
   IHttpRequest,
   IHttpResponse,
+  IValidation,
 } from '@presentation/protocols';
+import { ValidationError } from '@presentation/validations/errors';
 
 class AuthenticateUserController implements IController {
   constructor(
+    private readonly validation: IValidation,
     private readonly authenticateUserUseCase: IAuthenticateUserUseCase
   ) {}
 
@@ -21,6 +29,8 @@ class AuthenticateUserController implements IController {
     request: AuthenticateUserController.Request
   ): Promise<AuthenticateUserController.Response> {
     try {
+      this.validation.validate(request.body);
+
       const { email, password } = request.body;
 
       const output = await this.authenticateUserUseCase.execute({
@@ -30,6 +40,10 @@ class AuthenticateUserController implements IController {
 
       return ok(AuthenticationMapper.toDTO(output));
     } catch (error) {
+      if (error instanceof ValidationError) {
+        return badRequest(error);
+      }
+
       if (error instanceof UserNotFoundWithProvidedEmailError) {
         return notFound(error);
       }

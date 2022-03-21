@@ -1,23 +1,69 @@
 import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
 
 import { CreateAccountController } from '@presentation/controllers/user/CreateAccount';
-import { created, conflict } from '@presentation/helpers/http';
+import { created, conflict, badRequest } from '@presentation/helpers/http';
 
 import { makeErrorMock } from '../../domain';
 import {
   CreateUserUseCaseSpy,
   makeCreateAccountControllerRequestMock,
+  makeValidationErrorMock,
+  ValidationSpy,
 } from '../mocks';
 
+let validation: ValidationSpy;
 let createUserUseCaseSpy: CreateUserUseCaseSpy;
 
 let createAccountController: CreateAccountController;
 
 describe('CreateAccountController', () => {
   beforeEach(() => {
+    validation = new ValidationSpy();
     createUserUseCaseSpy = new CreateUserUseCaseSpy();
 
-    createAccountController = new CreateAccountController(createUserUseCaseSpy);
+    createAccountController = new CreateAccountController(
+      validation,
+      createUserUseCaseSpy
+    );
+  });
+
+  it('should call Validation with correct values', async () => {
+    const validateSpy = jest.spyOn(validation, 'validate');
+
+    const request = makeCreateAccountControllerRequestMock();
+
+    await createAccountController.handle(request);
+
+    expect(validateSpy).toHaveBeenCalledTimes(1);
+    expect(validateSpy).toHaveBeenCalledWith(request.body);
+  });
+
+  it('should throw if Validation throws', async () => {
+    const error = makeErrorMock();
+
+    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+      throw error;
+    });
+
+    const request = makeCreateAccountControllerRequestMock();
+
+    const promise = createAccountController.handle(request);
+
+    await expect(promise).rejects.toThrowError(error);
+  });
+
+  it('should return bad request (400) if Validation throws ValidationError', async () => {
+    const error = makeValidationErrorMock();
+
+    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+      throw error;
+    });
+
+    const request = makeCreateAccountControllerRequestMock();
+
+    const response = await createAccountController.handle(request);
+
+    expect(response).toEqual(badRequest(error));
   });
 
   it('should call CreateUserUseCase once with correct values', async () => {
