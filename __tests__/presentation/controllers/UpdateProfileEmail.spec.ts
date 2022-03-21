@@ -4,25 +4,74 @@ import {
 } from '@domain/errors';
 
 import { UpdateProfileEmailController } from '@presentation/controllers/user/UpdateProfileEmail';
-import { conflict, noContent, notFound } from '@presentation/helpers/http';
+import {
+  badRequest,
+  conflict,
+  noContent,
+  notFound,
+} from '@presentation/helpers/http';
 
 import { makeErrorMock } from '../../domain';
 import {
   makeUpdateProfileEmailControllerRequestMock,
+  makeValidationErrorMock,
   UpdateUserEmailUseCaseSpy,
+  ValidationSpy,
 } from '../mocks';
 
+let validation: ValidationSpy;
 let updateUserEmailUseCaseSpy: UpdateUserEmailUseCaseSpy;
 
 let updateProfileEmailController: UpdateProfileEmailController;
 
 describe('UpdateProfileEmailController', () => {
   beforeEach(() => {
+    validation = new ValidationSpy();
     updateUserEmailUseCaseSpy = new UpdateUserEmailUseCaseSpy();
 
     updateProfileEmailController = new UpdateProfileEmailController(
+      validation,
       updateUserEmailUseCaseSpy
     );
+  });
+
+  it('should call Validation with correct values', async () => {
+    const validateSpy = jest.spyOn(validation, 'validate');
+
+    const request = makeUpdateProfileEmailControllerRequestMock();
+
+    await updateProfileEmailController.handle(request);
+
+    expect(validateSpy).toHaveBeenCalledTimes(1);
+    expect(validateSpy).toHaveBeenCalledWith(request.body);
+  });
+
+  it('should throw if Validation throws', async () => {
+    const error = makeErrorMock();
+
+    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+      throw error;
+    });
+
+    const request = makeUpdateProfileEmailControllerRequestMock();
+
+    const promise = updateProfileEmailController.handle(request);
+
+    await expect(promise).rejects.toThrowError(error);
+  });
+
+  it('should return bad request (400) if Validation throws ValidationError', async () => {
+    const error = makeValidationErrorMock();
+
+    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+      throw error;
+    });
+
+    const request = makeUpdateProfileEmailControllerRequestMock();
+
+    const response = await updateProfileEmailController.handle(request);
+
+    expect(response).toEqual(badRequest(error));
   });
 
   it('should call UpdateProfileEmailController once with correct values', async () => {

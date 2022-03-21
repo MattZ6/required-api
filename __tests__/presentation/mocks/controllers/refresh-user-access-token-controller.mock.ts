@@ -4,6 +4,8 @@ import { RefreshUserAccessTokenController } from '@presentation/controllers/user
 
 export function makeRefreshUserAccessTokenControllerRequestMock(): RefreshUserAccessTokenController.Request {
   return {
+    method: faker.internet.httpMethod(),
+    original_url: faker.internet.url(),
     body: {
       refresh_token: faker.datatype.string(),
     },
