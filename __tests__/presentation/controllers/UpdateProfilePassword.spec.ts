@@ -5,6 +5,7 @@ import {
 
 import { UpdateProfilePasswordController } from '@presentation/controllers/user/UpdateProfilePassword';
 import {
+  badRequest,
   noContent,
   notFound,
   unprocessableEntity,
@@ -13,20 +14,64 @@ import {
 import { makeErrorMock } from '../../domain';
 import {
   makeUpdateProfilePasswordControllerRequestMock,
+  makeValidationErrorMock,
   UpdateUserPasswordUseCaseSpy,
+  ValidationSpy,
 } from '../mocks';
 
+let validation: ValidationSpy;
 let updateUserPasswordUseCaseSpy: UpdateUserPasswordUseCaseSpy;
 
 let updateProfilePasswordController: UpdateProfilePasswordController;
 
 describe('UpdateProfilePasswordController', () => {
   beforeEach(() => {
+    validation = new ValidationSpy();
     updateUserPasswordUseCaseSpy = new UpdateUserPasswordUseCaseSpy();
 
     updateProfilePasswordController = new UpdateProfilePasswordController(
+      validation,
       updateUserPasswordUseCaseSpy
     );
+  });
+
+  it('should call Validation with correct values', async () => {
+    const validateSpy = jest.spyOn(validation, 'validate');
+
+    const request = makeUpdateProfilePasswordControllerRequestMock();
+
+    await updateProfilePasswordController.handle(request);
+
+    expect(validateSpy).toHaveBeenCalledTimes(1);
+    expect(validateSpy).toHaveBeenCalledWith(request.body);
+  });
+
+  it('should throw if Validation throws', async () => {
+    const error = makeErrorMock();
+
+    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+      throw error;
+    });
+
+    const request = makeUpdateProfilePasswordControllerRequestMock();
+
+    const promise = updateProfilePasswordController.handle(request);
+
+    await expect(promise).rejects.toThrowError(error);
+  });
+
+  it('should return bad request (400) if Validation throws ValidationError', async () => {
+    const error = makeValidationErrorMock();
+
+    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+      throw error;
+    });
+
+    const request = makeUpdateProfilePasswordControllerRequestMock();
+
+    const response = await updateProfilePasswordController.handle(request);
+
+    expect(response).toEqual(badRequest(error));
   });
 
   it('should call UpdateProfilePasswordController once with correct data', async () => {
