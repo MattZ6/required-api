@@ -1,6 +1,7 @@
 import { ApplicationError } from '@domain/errors';
 
 import { IHttpResponse } from '@presentation/protocols/Http';
+import { ValidationError } from '@presentation/validations/errors';
 
 type ErrorDTO = {
   code: string;
@@ -37,6 +38,33 @@ export function created<T = any>(data?: T): IHttpResponse<T> {
 export function noContent(): IHttpResponse<void> {
   return {
     statusCode: 204,
+  };
+}
+
+type ValidationErrorData = {
+  field?: string;
+  type?: string;
+  message: string;
+};
+
+type ValidationErrorDTO = ErrorDTO & {
+  validation: ValidationErrorData;
+};
+
+export function badRequest(
+  error: ValidationError
+): IHttpResponse<ValidationErrorDTO> {
+  return {
+    statusCode: 400,
+    body: {
+      code: 'validation',
+      message: 'Validation error',
+      validation: {
+        field: error.field,
+        type: error.type,
+        message: error.message,
+      },
+    },
   };
 }
 
