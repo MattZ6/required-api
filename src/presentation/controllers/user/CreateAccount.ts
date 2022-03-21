@@ -1,20 +1,27 @@
 import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
 import { ICreateUserUseCase } from '@domain/usecases/user/CreateUser';
 
-import { conflict, created } from '@presentation/helpers/http';
+import { badRequest, conflict, created } from '@presentation/helpers/http';
 import {
   IController,
   IHttpRequest,
   IHttpResponse,
+  IValidation,
 } from '@presentation/protocols';
+import { ValidationError } from '@presentation/validations/errors';
 
 class CreateAccountController implements IController {
-  constructor(private readonly createUserUseCase: ICreateUserUseCase) {}
+  constructor(
+    private readonly validation: IValidation,
+    private readonly createUserUseCase: ICreateUserUseCase
+  ) {}
 
   async handle(
     request: CreateAccountController.Request
   ): Promise<CreateAccountController.Response> {
     try {
+      this.validation.validate(request.body);
+
       const { name, email, password } = request.body;
 
       await this.createUserUseCase.execute({
@@ -25,6 +32,10 @@ class CreateAccountController implements IController {
 
       return created<void>();
     } catch (error) {
+      if (error instanceof ValidationError) {
+        return badRequest(error);
+      }
+
       if (error instanceof UserAlreadyExistsWithProvidedEmailError) {
         return conflict(error);
       }

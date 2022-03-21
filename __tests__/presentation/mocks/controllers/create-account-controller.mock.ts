@@ -4,6 +4,8 @@ import { CreateAccountController } from '@presentation/controllers/user/CreateAc
 
 export function makeCreateAccountControllerRequestMock(): CreateAccountController.Request {
   return {
+    method: faker.internet.httpMethod(),
+    original_url: faker.internet.url(),
     body: {
       name: faker.name.findName(),
       email: faker.internet.email(),
