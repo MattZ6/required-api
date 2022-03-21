@@ -5,6 +5,7 @@ import {
 import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdateUserPassword';
 
 import {
+  badRequest,
   noContent,
   notFound,
   unprocessableEntity,
@@ -13,20 +14,25 @@ import {
   IController,
   IHttpRequest,
   IHttpResponse,
+  IValidation,
 } from '@presentation/protocols';
+import { ValidationError } from '@presentation/validations/errors';
 
 class UpdateProfilePasswordController implements IController {
   constructor(
+    private readonly validation: IValidation,
     private readonly updateUserPasswordUseCase: IUpdateUserPasswordUseCase
   ) {}
 
   async handle(
     request: UpdateProfilePasswordController.Request
   ): Promise<UpdateProfilePasswordController.Response> {
-    const { user_id } = request;
-    const { old_password, password } = request.body;
-
     try {
+      this.validation.validate(request.body);
+
+      const { user_id } = request;
+      const { old_password, password } = request.body;
+
       await this.updateUserPasswordUseCase.execute({
         user_id,
         old_password,
@@ -35,6 +41,10 @@ class UpdateProfilePasswordController implements IController {
 
       return noContent();
     } catch (error) {
+      if (error instanceof ValidationError) {
+        return badRequest(error);
+      }
+
       if (error instanceof UserNotFoundWithProvidedIdError) {
         return notFound(error);
       }
