@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import {
   ICreateUserTokenRepository,
@@ -6,6 +6,7 @@ import {
   IFindUserTokenByTokenRepository,
 } from '@application/protocols/repositories/user-token';
 
+import { AppDataSource } from '@infra/database/typeorm';
 import { UserToken } from '@infra/database/typeorm/entities/UserToken';
 
 export class PostgresUserTokensRepository
@@ -17,7 +18,7 @@ export class PostgresUserTokensRepository
   private repository: Repository<UserToken>;
 
   constructor() {
-    this.repository = getRepository(UserToken);
+    this.repository = AppDataSource.getRepository(UserToken);
   }
 
   findByToken(
@@ -25,7 +26,7 @@ export class PostgresUserTokensRepository
   ): Promise<IFindUserTokenByTokenRepository.Output> {
     const { token } = data;
 
-    return this.repository.findOne({ where: { token } });
+    return this.repository.findOneBy({ token });
   }
 
   create(

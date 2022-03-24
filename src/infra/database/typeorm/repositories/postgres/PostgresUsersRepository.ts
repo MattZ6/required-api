@@ -1,4 +1,4 @@
-import { getRepository, Repository, Raw } from 'typeorm';
+import { Repository, Raw } from 'typeorm';
 
 import {
   ICheckIfUserExistsByEmailRepository,
@@ -8,6 +8,7 @@ import {
   IUpdateUserRepository,
 } from '@application/protocols/repositories/user';
 
+import { AppDataSource } from '@infra/database/typeorm';
 import { User } from '@infra/database/typeorm/entities/User';
 
 export class PostgresUsersRepository
@@ -21,7 +22,7 @@ export class PostgresUsersRepository
   private repository: Repository<User>;
 
   constructor() {
-    this.repository = getRepository(User);
+    this.repository = AppDataSource.getRepository(User);
   }
 
   async checkIfExistsByEmail(
@@ -29,12 +30,10 @@ export class PostgresUsersRepository
   ): Promise<ICheckIfUserExistsByEmailRepository.Output> {
     const { email } = data;
 
-    const count = await this.repository.count({
-      where: {
-        email: Raw(field => `LOWER(${field}) = LOWER(:value)`, {
-          value: email,
-        }),
-      },
+    const count = await this.repository.countBy({
+      email: Raw(field => `LOWER(${field}) = LOWER(:value)`, {
+        value: email,
+      }),
     });
 
     return count >= 1;
@@ -55,12 +54,10 @@ export class PostgresUsersRepository
   ): Promise<IFindUserByEmailRepository.Output> {
     const { email } = data;
 
-    return this.repository.findOne({
-      where: {
-        email: Raw(field => `LOWER(${field}) = LOWER(:value)`, {
-          value: email,
-        }),
-      },
+    return this.repository.findOneBy({
+      email: Raw(field => `LOWER(${field}) = LOWER(:value)`, {
+        value: email,
+      }),
     });
   }
 
@@ -69,7 +66,7 @@ export class PostgresUsersRepository
   ): Promise<IFindUserByIdRepository.Output> {
     const { id } = data;
 
-    return this.repository.findOne(id);
+    return this.repository.findOneBy({ id });
   }
 
   async update(
