@@ -1,3 +1,4 @@
+import { config } from 'dotenv';
 import { DataSource } from 'typeorm';
 
 import {
@@ -5,6 +6,8 @@ import {
   User,
   UserToken,
 } from '@infra/database/typeorm/entities';
+
+config();
 
 export const AppDataSource = new DataSource({
   applicationName: 'AuthFlow',
@@ -16,4 +19,5 @@ export const AppDataSource = new DataSource({
   database: process.env.DATABASE_NAME,
   migrations: ['./src/infra/database/typeorm/migrations/*.ts'],
   entities: [ErrorEntity, User, UserToken],
+  migrationsRun: true,
 });
