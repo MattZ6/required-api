@@ -113,11 +113,11 @@ yarn test
 
 > Contributions, issues and new features are **always welcome**! You can explore them [here](https://github.com/MattZ6/auth-flow-api/issues).
 
-Feel free to submit a new issue with a respective title and description on the the Auth Flow API repository. If you already found a solution to your problem, i would love to review your pull request! Have a look at our [contribution guidelines](https://github.com/MattZ6/auth-flow-api/issues) to find out about the coding standards.
+Feel free to submit a new issue with a respective title and description on the the Auth Flow API repository. If you already found a solution to your problem, i would love to review your pull request! Have a look at our [contribution guidelines](.github/CONTRIBUTING.md) to find out about the coding standards.
 
 ## 📜 License
 
-Released in 2022 © This project is under [MIT License](https://github.com/MattZ6/auth-flow-api/blob/main/LICENSE.md).
+Released in 2022 © This project is under [MIT License](LICENSE.md).
 
 ## 👨‍🎤 Author
 
