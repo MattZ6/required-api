@@ -23,6 +23,8 @@ export default {
     '<rootDir>/src/application/usecases/**/*.ts',
     '<rootDir>/src/presentation/controllers/**/*.ts',
     '<rootDir>/src/presentation/middlewares/**/*.ts',
+    '<rootDir>/src/presentation/validations/validators/**/*.ts',
+    '!<rootDir>/src/presentation/validations/validators/**/index.ts',
     '<rootDir>/src/main/decorators/**/*.ts',
   ],
 
