@@ -24,7 +24,7 @@
   "devDependencies": {
     "@faker-js/faker": "6.3.1",
     "@swc/core": "1.2.171",
-    "@swc/jest": "0.2.20",
+    "@swc/jest": "0.2.21",
     "@types/bcryptjs": "2.4.2",
     "@types/cors": "2.8.12",
     "@types/express": "4.17.13",
