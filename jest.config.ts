@@ -100,7 +100,7 @@ export default {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  preset: 'ts-jest',
+  // preset: 'ts-jest',
 
   // Run tests from one or more projects
   // projects: undefined,
@@ -186,7 +186,7 @@ export default {
             tsx: false,
             decorators: true,
           },
-          target: 'es2017',
+          target: 'es2020',
           keepClassNames: true,
           transform: {
             legacyDecorator: true,
@@ -194,7 +194,7 @@ export default {
           },
         },
         module: {
-          type: 'es6',
+          type: 'es2020',
           noInterop: false,
         },
       },
