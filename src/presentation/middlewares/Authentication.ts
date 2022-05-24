@@ -1,15 +1,15 @@
-import { IVerifyCriptographyProvider } from '@application/protocols/providers/cryptography/cryptography';
+import { IVerifyCriptographyProvider } from '@application/protocols/providers/cryptography';
 
 import {
-  AccessTokenExpiredError,
   AccessTokenNotProvidedError,
   InvalidAccessTokenError,
+  AccessTokenExpiredError,
 } from '@presentation/errors';
 import { ok, unauthorized } from '@presentation/helpers/http';
 import {
+  IMiddleware,
   IHttpRequest,
   IHttpResponse,
-  IMiddleware,
 } from '@presentation/protocols';
 
 class AuthenticationMiddleware implements IMiddleware {
@@ -27,11 +27,13 @@ class AuthenticationMiddleware implements IMiddleware {
         throw new AccessTokenNotProvidedError();
       }
 
-      const { payload } = await this.verifyCriptographyProvider.verify({
+      const { subject } = await this.verifyCriptographyProvider.verify({
         value: accessToken,
       });
 
-      return ok({ user_id: payload });
+      return ok<AuthenticationMiddleware.ResponseBody>({
+        user: { id: subject },
+      });
     } catch (error) {
       if (error instanceof AccessTokenNotProvidedError) {
         return unauthorized(error);
@@ -55,9 +57,15 @@ namespace AuthenticationMiddleware {
     ['x-access-token']: string;
   };
 
-  export type Request = IHttpRequest<unknown, unknown, RequestHeaders>;
+  export type Request = IHttpRequest<unknown, unknown, unknown, RequestHeaders>;
 
   export type Response = IHttpResponse;
+
+  export type ResponseBody = {
+    user: {
+      id: string;
+    };
+  };
 }
 
 export { AuthenticationMiddleware };
