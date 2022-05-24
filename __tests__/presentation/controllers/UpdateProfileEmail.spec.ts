@@ -83,7 +83,7 @@ describe('UpdateProfileEmailController', () => {
 
     expect(executeSpy).toHaveBeenCalledTimes(1);
     expect(executeSpy).toHaveBeenCalledWith({
-      user_id: request.user_id,
+      user_id: request.user.id,
       email: request.body.email,
     });
   });

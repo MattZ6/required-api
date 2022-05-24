@@ -4,7 +4,7 @@ import {
 } from '@domain/errors';
 import { IRefreshUserAccessTokenUseCase } from '@domain/usecases/user/RefreshUserAccessToken';
 
-import { IEncryptProvider } from '@application/protocols/providers/cryptography/cryptography';
+import { IEncryptProvider } from '@application/protocols/providers/cryptography';
 import { IGenerateUuidProvider } from '@application/protocols/providers/uuid';
 import {
   ICreateUserTokenRepository,
@@ -44,7 +44,7 @@ export class RefreshUserAccessTokenUseCase
     }
 
     const accessToken = await this.encryptProvider.encrypt({
-      value: userToken.user_id,
+      subject: userToken.user_id,
     });
 
     const refreshToken = await this.generateUuidProvider.generate();

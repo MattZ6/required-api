@@ -83,7 +83,7 @@ describe('UpdateProfilePasswordController', () => {
 
     expect(executeSpy).toHaveBeenCalledTimes(1);
     expect(executeSpy).toHaveBeenCalledWith({
-      user_id: request.user_id,
+      user_id: request.user.id,
       old_password: request.body.old_password,
       new_password: request.body.password,
     });

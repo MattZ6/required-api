@@ -30,11 +30,11 @@ class UpdateProfilePasswordController implements IController {
     try {
       this.validation.validate(request.body);
 
-      const { user_id } = request;
+      const { id } = request.user;
       const { old_password, password } = request.body;
 
       await this.updateUserPasswordUseCase.execute({
-        user_id,
+        user_id: id,
         old_password,
         new_password: password,
       });

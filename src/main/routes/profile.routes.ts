@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { adaptMiddleware } from '@main/adapters/express/express-middleware-adapter';
-import { adaptRoute } from '@main/adapters/express/express-route-adapter';
+import { adaptMiddleware } from '@main/adapters/express/middleware';
+import { adaptRoute } from '@main/adapters/express/route';
 import { makeGetUserProfileController } from '@main/factories/controllers/user/GetUserProfileControllerFactory';
 import { makeUpdateProfileEmailController } from '@main/factories/controllers/user/UpdateProfileEmailControllerFactory';
 import { makeUpdateProfileNameController } from '@main/factories/controllers/user/UpdateProfileNameControllerFactory';

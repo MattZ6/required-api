@@ -7,7 +7,7 @@ import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdateUserPass
 import {
   ICompareHashProvider,
   IGenerateHashProvider,
-} from '@application/protocols/providers/cryptography/hash';
+} from '@application/protocols/providers/cryptography';
 import {
   IFindUserByIdRepository,
   IUpdateUserRepository,

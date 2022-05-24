@@ -6,9 +6,14 @@ export function makeUpdateProfileNameControllerRequestMock(): UpdateProfileNameC
   return {
     method: faker.internet.httpMethod(),
     original_url: faker.internet.url(),
-    user_id: faker.datatype.uuid(),
     body: {
       name: faker.name.findName(),
+    },
+    headers: undefined,
+    params: undefined,
+    query: undefined,
+    user: {
+      id: faker.datatype.uuid(),
     },
   };
 }

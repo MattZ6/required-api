@@ -6,10 +6,15 @@ export function makeUpdateProfilePasswordControllerRequestMock(): UpdateProfileP
   return {
     method: faker.internet.httpMethod(),
     original_url: faker.internet.url(),
-    user_id: faker.datatype.uuid(),
     body: {
       old_password: faker.internet.password(),
       password: faker.internet.password(),
+    },
+    headers: undefined,
+    params: undefined,
+    query: undefined,
+    user: {
+      id: faker.datatype.uuid(),
     },
   };
 }

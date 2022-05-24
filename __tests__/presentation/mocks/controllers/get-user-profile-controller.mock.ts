@@ -6,6 +6,12 @@ export function makeGetUserProfileControllerRequestMock(): GetUserProfileControl
   return {
     method: faker.internet.httpMethod(),
     original_url: faker.internet.url(),
-    user_id: faker.datatype.uuid(),
+    headers: undefined,
+    params: undefined,
+    query: undefined,
+    body: undefined,
+    user: {
+      id: faker.datatype.uuid(),
+    },
   };
 }

@@ -1,4 +1,4 @@
-import { AuthenticationMiddleware } from '@presentation/middlewares/Authentications';
+import { AuthenticationMiddleware } from '@presentation/middlewares/Authentication';
 
 import { makeJWTCryptographyProvider } from '@main/factories/providers/cryptography/JWTCryptographyProviderFactory';
 

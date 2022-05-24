@@ -11,5 +11,8 @@ export function makeCreateAccountControllerRequestMock(): CreateAccountControlle
       email: faker.internet.email(),
       password: faker.internet.password(),
     },
+    headers: undefined,
+    params: undefined,
+    query: undefined,
   };
 }

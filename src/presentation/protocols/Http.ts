@@ -9,11 +9,13 @@ export interface IHttpRequest<
   Q = unknown,
   H = unknown
 > {
-  user_id?: string;
-  body?: B;
-  params?: P;
-  query?: Q;
-  headers?: H;
+  user?: {
+    id: string;
+  };
+  body: B;
+  params: P;
+  query: Q;
+  headers: H;
   original_url: string;
   method: string;
 }
