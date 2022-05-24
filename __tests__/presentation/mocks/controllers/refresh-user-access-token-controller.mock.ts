@@ -9,5 +9,8 @@ export function makeRefreshUserAccessTokenControllerRequestMock(): RefreshUserAc
     body: {
       refresh_token: faker.datatype.string(),
     },
+    headers: undefined,
+    params: undefined,
+    query: undefined,
   };
 }

@@ -25,7 +25,7 @@ export class MiddlewareErrorHandlerDecorator implements IMiddleware {
           exception_was_thrown_in: this.middleware.constructor.name,
           resource_url: request.original_url,
           http_method: request.method,
-          user_id: request.user_id,
+          user_id: request.user.id,
         })
         .then(() => console.log('Error successfully registered'))
         .catch(() => console.log('Fail to register the error'));

@@ -22,10 +22,10 @@ class UpdateProfileNameController implements IController {
     try {
       this.validation.validate(request.body);
 
-      const { user_id } = request;
+      const { id } = request.user;
       const { name } = request.body;
 
-      await this.updateUserNameUseCase.execute({ user_id, name });
+      await this.updateUserNameUseCase.execute({ user_id: id, name });
 
       return noContent();
     } catch (error) {

@@ -16,9 +16,9 @@ class GetUserProfileController implements IController {
     request: GetUserProfileController.Request
   ): Promise<GetUserProfileController.Response> {
     try {
-      const { user_id } = request;
+      const { id } = request.user;
 
-      const user = await this.getProfileUseCase.execute({ user_id });
+      const user = await this.getProfileUseCase.execute({ user_id: id });
 
       return ok(UserMapper.toProfileDTO(user));
     } catch (error) {

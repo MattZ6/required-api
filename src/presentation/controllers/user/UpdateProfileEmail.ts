@@ -30,10 +30,10 @@ class UpdateProfileEmailController implements IController {
     try {
       this.validation.validate(request.body);
 
-      const { user_id } = request;
+      const { id } = request.user;
       const { email } = request.body;
 
-      await this.updateUserEmailUseCase.execute({ user_id, email });
+      await this.updateUserEmailUseCase.execute({ user_id: id, email });
 
       return noContent();
     } catch (error) {
