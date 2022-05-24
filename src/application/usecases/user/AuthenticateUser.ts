@@ -4,8 +4,10 @@ import {
 } from '@domain/errors';
 import { IAuthenticateUserUseCase } from '@domain/usecases/user/AuthenticateUser';
 
-import { IEncryptProvider } from '@application/protocols/providers/cryptography/cryptography';
-import { ICompareHashProvider } from '@application/protocols/providers/cryptography/hash';
+import {
+  ICompareHashProvider,
+  IEncryptProvider,
+} from '@application/protocols/providers/cryptography';
 import { IGenerateUuidProvider } from '@application/protocols/providers/uuid';
 import { IFindUserByEmailRepository } from '@application/protocols/repositories/user';
 import { ICreateUserTokenRepository } from '@application/protocols/repositories/user-token';

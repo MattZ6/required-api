@@ -4,7 +4,7 @@ import {
 } from '@domain/errors';
 import { IRefreshUserAccessTokenUseCase } from '@domain/usecases/user/RefreshUserAccessToken';
 
-import { IEncryptProvider } from '@application/protocols/providers/cryptography/cryptography';
+import { IEncryptProvider } from '@application/protocols/providers/cryptography';
 import { IGenerateUuidProvider } from '@application/protocols/providers/uuid';
 import {
   ICreateUserTokenRepository,

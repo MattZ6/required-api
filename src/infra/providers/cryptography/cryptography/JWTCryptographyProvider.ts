@@ -9,7 +9,7 @@ import {
 import {
   IEncryptProvider,
   IVerifyCriptographyProvider,
-} from '@application/protocols/providers/cryptography/cryptography';
+} from '@application/protocols/providers/cryptography';
 
 import {
   AccessTokenExpiredError,

@@ -1,7 +1,7 @@
 import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
 import { ICreateUserUseCase } from '@domain/usecases/user/CreateUser';
 
-import { IGenerateHashProvider } from '@application/protocols/providers/cryptography/hash';
+import { IGenerateHashProvider } from '@application/protocols/providers/cryptography';
 import {
   ICheckIfUserExistsByEmailRepository,
   ICreateUserRepository,

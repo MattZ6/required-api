@@ -1,10 +1,10 @@
 import faker from '@faker-js/faker';
 
-import { IEncryptProvider } from '@application/protocols/providers/cryptography/cryptography';
 import {
-  ICompareHashProvider,
   IGenerateHashProvider,
-} from '@application/protocols/providers/cryptography/hash';
+  ICompareHashProvider,
+  IEncryptProvider,
+} from '@application/protocols/providers/cryptography';
 
 export class GenerateHashProviderSpy implements IGenerateHashProvider {
   async hash(

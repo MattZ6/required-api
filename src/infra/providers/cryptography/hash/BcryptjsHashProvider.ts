@@ -3,7 +3,7 @@ import { hash, compare } from 'bcryptjs';
 import {
   ICompareHashProvider,
   IGenerateHashProvider,
-} from '@application/protocols/providers/cryptography/hash';
+} from '@application/protocols/providers/cryptography';
 
 export class BcryptjsHashProvider
   implements IGenerateHashProvider, ICompareHashProvider
