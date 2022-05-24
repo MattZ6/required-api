@@ -135,7 +135,7 @@ describe('RefreshUserAccessTokenUseCase', () => {
 
     expect(encryptSpy).toHaveBeenCalledTimes(1);
     expect(encryptSpy).toHaveBeenCalledWith({
-      value: userTokenMock.user_id,
+      subject: userTokenMock.user_id,
     });
   });
 
