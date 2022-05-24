@@ -7,9 +7,9 @@ export function adaptRoute(controller: IController) {
     const { statusCode, body } = await controller.handle({
       body: request.body ?? {},
       params: request.params ?? {},
-      query: request?.query ?? {},
+      query: request.query ?? {},
       headers: request.headers ?? {},
-      user_id: request.user_id,
+      user: request.user,
       original_url: request.originalUrl,
       method: request.method,
     });
