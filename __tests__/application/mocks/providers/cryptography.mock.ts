@@ -27,7 +27,9 @@ export function makeEncryptProviderOutputMock(): IEncryptProvider.Output {
 }
 
 export class EncryptProviderSpy implements IEncryptProvider {
-  async encrypt(_: IEncryptProvider.Input): Promise<IEncryptProvider.Output> {
+  async encrypt(
+    _: IEncryptProvider.Input<unknown>
+  ): Promise<IEncryptProvider.Output> {
     return makeEncryptProviderOutputMock();
   }
 }

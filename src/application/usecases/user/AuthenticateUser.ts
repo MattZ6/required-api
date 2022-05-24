@@ -43,7 +43,7 @@ export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
     }
 
     const accessToken = await this.encryptProvider.encrypt({
-      value: user.id,
+      subject: user.id,
     });
 
     const refreshToken = await this.generateUuidProvider.generate();

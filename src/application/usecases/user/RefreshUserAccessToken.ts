@@ -44,7 +44,7 @@ export class RefreshUserAccessTokenUseCase
     }
 
     const accessToken = await this.encryptProvider.encrypt({
-      value: userToken.user_id,
+      subject: userToken.user_id,
     });
 
     const refreshToken = await this.generateUuidProvider.generate();
