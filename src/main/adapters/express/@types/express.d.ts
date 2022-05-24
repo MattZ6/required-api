@@ -2,9 +2,11 @@ declare namespace Express {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   export interface Request {
     /**
-     * Id of the authenticated user.
+     * The authenticated user.
      * Get by access token.
      */
-    user_id: string;
+    user?: {
+      id: string;
+    };
   }
 }
