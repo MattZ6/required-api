@@ -1,15 +1,15 @@
 import {
-  JwtPayload,
-  TokenExpiredError,
   JsonWebTokenError,
+  JwtPayload,
   sign,
+  TokenExpiredError as JWTTokenExpiredError,
   verify,
 } from 'jsonwebtoken';
 
 import {
   IEncryptProvider,
   IVerifyCriptographyProvider,
-} from '@application/protocols/providers/cryptography';
+} from '@application/protocols/providers/cryptography/cryptography';
 
 import {
   AccessTokenExpiredError,
@@ -35,17 +35,21 @@ export class JWTCryptographyProvider
     });
   }
 
-  async verify(
+  async verify<T = unknown>(
     data: IVerifyCriptographyProvider.Input
-  ): Promise<IVerifyCriptographyProvider.Output> {
+  ): Promise<IVerifyCriptographyProvider.Output<T>> {
     const { value } = data;
 
     try {
-      const { sub } = verify(value, this.secret) as JwtPayload;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { sub, aud, exp, iat, iss, jti, nbf, ...rest } = verify(
+        value,
+        this.secret
+      ) as JwtPayload;
 
-      return { payload: sub };
+      return { subject: sub, payload: rest as T };
     } catch (error) {
-      if (error instanceof TokenExpiredError) {
+      if (error instanceof JWTTokenExpiredError) {
         throw new AccessTokenExpiredError();
       }
 

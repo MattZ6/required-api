@@ -1,7 +1,7 @@
 interface IVerifyCriptographyProvider {
-  verify(
+  verify<T = unknown>(
     data: IVerifyCriptographyProvider.Input
-  ): Promise<IVerifyCriptographyProvider.Output>;
+  ): Promise<IVerifyCriptographyProvider.Output<T>>;
 }
 
 namespace IVerifyCriptographyProvider {
@@ -9,8 +9,9 @@ namespace IVerifyCriptographyProvider {
     value: string;
   };
 
-  export type Output = {
-    payload: string;
+  export type Output<P = unknown> = {
+    subject: string;
+    payload: P;
   };
 }
 
