@@ -16,8 +16,8 @@
   "scripts": {
     "dev": "tsnd -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/main/server.ts",
     "typeorm": "tsnd -r tsconfig-paths/register ./node_modules/typeorm/cli",
-    "test": "jest",
-    "test:cov": "jest --coverage",
+    "test": "jest --passWithNoTests",
+    "test:cov": "yarn test --coverage",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down"
   },
