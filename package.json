@@ -15,6 +15,9 @@
   "bugs": "https://github.com/MattZ6/auth-flow-api/issues",
   "scripts": {
     "dev": "tsnd -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/main/server.ts",
+    "type-check": "tsc",
+    "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js)\"",
+    "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js)\" --write",
     "typeorm": "tsnd -r tsconfig-paths/register ./node_modules/typeorm/cli",
     "test": "jest --passWithNoTests",
     "test:cov": "yarn test --coverage",
