@@ -19,7 +19,6 @@
     "type-check": "tsc",
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js)\"",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js)\" --write",
-    "typeorm": "tsnd -r tsconfig-paths/register ./node_modules/typeorm/cli",
     "test": "jest --passWithNoTests",
     "test:cov": "yarn test --coverage",
     "docker:up": "docker-compose up -d",
@@ -64,9 +63,6 @@
     "dotenv": "16.0.1",
     "express": "4.18.1",
     "joi": "17.6.0",
-    "jsonwebtoken": "8.5.1",
-    "pg": "8.7.3",
-    "reflect-metadata": "0.1.13",
-    "typeorm": "0.3.6"
+    "jsonwebtoken": "8.5.1"
   }
 }
