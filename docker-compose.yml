@@ -15,20 +15,30 @@ services:
       - POSTGRES_DB=${DATABASE_NAME}
     volumes:
       - pgdata:/data/postgres
+    networks:
+      - net
 
   # Application
   auth_flow_api:
     build: .
     container_name: auth_flow_api
     restart: always
+    env_file:
+      - .env
     ports:
       - ${API_PORT}:${API_PORT}
     volumes:
-      - .:/usr/app
+      - .:/node/app
     depends_on:
       - auth_flow_database
     links:
       - auth_flow_database
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge
 
 volumes:
   pgdata:

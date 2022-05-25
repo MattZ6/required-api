@@ -29,7 +29,7 @@ export class JWTCryptographyProvider
   ): Promise<IEncryptProvider.Output> {
     const { subject, payload } = data;
 
-    return sign(payload, this.secret, {
+    return sign(payload ?? {}, this.secret, {
       subject,
       expiresIn: this.expiresInSeconds,
     });
