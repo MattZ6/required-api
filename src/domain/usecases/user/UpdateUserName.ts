@@ -7,9 +7,8 @@ interface IUpdateUserNameUseCase {
 }
 
 namespace IUpdateUserNameUseCase {
-  export type Input = {
+  export type Input = Pick<User, 'name'> & {
     user_id: string;
-    name: string;
   };
 
   export type Output = User;

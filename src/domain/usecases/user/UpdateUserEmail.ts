@@ -7,9 +7,8 @@ interface IUpdateUserEmailUseCase {
 }
 
 namespace IUpdateUserEmailUseCase {
-  export type Input = {
+  export type Input = Pick<User, 'email'> & {
     user_id: string;
-    email: string;
   };
 
   export type Output = User;
