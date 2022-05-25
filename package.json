@@ -23,7 +23,9 @@
     "test:cov": "yarn test --coverage",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "prisma": "cross-env DATABASE_HOST=localhost prisma"
+    "prisma": "cross-env DATABASE_HOST=localhost prisma",
+    "db:migrate": "yarn prisma migrate deploy",
+    "db:config": "yarn db:migrate"
   },
   "prisma": {
     "schema": "src/infra/database/prisma/schema.prisma"
