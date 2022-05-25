@@ -2,7 +2,7 @@ import { internalServerError } from '@presentation/helpers/http';
 
 import { ControllerErrorHandlerDecorator } from '@main/decorators/ControllerErrorHandler';
 
-import { SaveErrorRepositorySpy } from '../../application/mocks';
+import { CreateErrorRepositorySpy } from '../../application/mocks';
 import { makeErrorMock } from '../../domain';
 import {
   ControllerSpy,
@@ -11,18 +11,18 @@ import {
 } from '../mocks';
 
 let controllerSpy: ControllerSpy;
-let saveErrorRepositorySpy: SaveErrorRepositorySpy;
+let createErrorRepositorySpy: CreateErrorRepositorySpy;
 
 let controllerErrorHandlerDecorator: ControllerErrorHandlerDecorator;
 
 describe('ControllerErrorHandlerDecorator', () => {
   beforeEach(() => {
     controllerSpy = new ControllerSpy();
-    saveErrorRepositorySpy = new SaveErrorRepositorySpy();
+    createErrorRepositorySpy = new CreateErrorRepositorySpy();
 
     controllerErrorHandlerDecorator = new ControllerErrorHandlerDecorator(
       controllerSpy,
-      saveErrorRepositorySpy
+      createErrorRepositorySpy
     );
   });
 
@@ -37,19 +37,19 @@ describe('ControllerErrorHandlerDecorator', () => {
     expect(handleSpy).toHaveBeenCalledWith(request);
   });
 
-  it('should call SaveErrorRepository once with correct values on error', async () => {
+  it('should call CreateErrorRepository once with correct values on error', async () => {
     const errorMock = makeErrorMock();
 
     jest.spyOn(controllerSpy, 'handle').mockRejectedValueOnce(errorMock);
 
-    const saveSpy = jest.spyOn(saveErrorRepositorySpy, 'save');
+    const createSpy = jest.spyOn(createErrorRepositorySpy, 'create');
 
     const request = makeControllerHttpRequestMock();
 
     await controllerErrorHandlerDecorator.handle(request);
 
-    expect(saveSpy).toHaveBeenCalledTimes(1);
-    expect(saveSpy).toHaveBeenCalledWith({
+    expect(createSpy).toHaveBeenCalledTimes(1);
+    expect(createSpy).toHaveBeenCalledWith({
       stack: errorMock.stack,
       exception_was_thrown_in: controllerSpy.constructor.name,
       resource_url: request.original_url,
@@ -58,21 +58,21 @@ describe('ControllerErrorHandlerDecorator', () => {
     });
   });
 
-  it('should call SaveErrorRepository with default stack if error not have a stack', async () => {
+  it('should call CreateErrorRepository with default stack if error not have a stack', async () => {
     const errorMock = makeErrorMock();
 
     errorMock.stack = undefined;
 
     jest.spyOn(controllerSpy, 'handle').mockRejectedValueOnce(errorMock);
 
-    const saveSpy = jest.spyOn(saveErrorRepositorySpy, 'save');
+    const createSpy = jest.spyOn(createErrorRepositorySpy, 'create');
 
     const request = makeControllerHttpRequestMock();
 
     await controllerErrorHandlerDecorator.handle(request);
 
-    expect(saveSpy).toHaveBeenCalledTimes(1);
-    expect(saveSpy).toHaveBeenCalledWith({
+    expect(createSpy).toHaveBeenCalledTimes(1);
+    expect(createSpy).toHaveBeenCalledWith({
       stack: 'NO STACK PROVIDED',
       exception_was_thrown_in: controllerSpy.constructor.name,
       resource_url: request.original_url,

@@ -1,5 +1,7 @@
-export * from './CheckIfUserExistsByEmail';
-export * from './CreateUserRepository';
-export * from './FindUserByEmailRepository';
-export * from './FindUserByIdRepository';
-export * from './UpdateUserRepository';
+export * from './CheckIfExistsByEmail';
+export * from './Create';
+export * from './FindByEmail';
+export * from './FindById';
+export * from './Update';
+
+export * from './token';

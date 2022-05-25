@@ -2,11 +2,11 @@ import { Router } from 'express';
 
 import { adaptMiddleware } from '@main/adapters/express/middleware';
 import { adaptRoute } from '@main/adapters/express/route';
-import { makeGetUserProfileController } from '@main/factories/controllers/user/GetUserProfileControllerFactory';
-import { makeUpdateProfileEmailController } from '@main/factories/controllers/user/UpdateProfileEmailControllerFactory';
-import { makeUpdateProfileNameController } from '@main/factories/controllers/user/UpdateProfileNameControllerFactory';
-import { makeUpdateProfilePasswordController } from '@main/factories/controllers/user/UpdateProfilePasswordController';
-import { makeAuthenticationMiddleware } from '@main/factories/middlewares/AuthenticationMiddlewareFactory';
+import { makeGetUserProfileController } from '@main/factories/controllers/user/GetProfile';
+import { makeUpdateProfileEmailController } from '@main/factories/controllers/user/UpdateProfileEmail';
+import { makeUpdateProfileNameController } from '@main/factories/controllers/user/UpdateProfileName';
+import { makeUpdateProfilePasswordController } from '@main/factories/controllers/user/UpdateProfilePassword';
+import { makeAuthenticationMiddleware } from '@main/factories/middlewares/Authentication';
 
 const profileRoutes = Router();
 

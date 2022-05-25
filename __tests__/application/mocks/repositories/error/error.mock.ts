@@ -1,9 +1,11 @@
-import { ISaveErrorRepository } from '@application/protocols/repositories/error';
+import { ICreateErrorRepository } from '@application/protocols/repositories/error';
 
-export class SaveErrorRepositorySpy implements ISaveErrorRepository {
-  async save(
-    _: ISaveErrorRepository.Input
-  ): Promise<ISaveErrorRepository.Output> {
-    //
+import { makeErrorEntityMock } from '../../../../domain';
+
+export class CreateErrorRepositorySpy implements ICreateErrorRepository {
+  async create(
+    _: ICreateErrorRepository.Input
+  ): Promise<ICreateErrorRepository.Output> {
+    return makeErrorEntityMock();
   }
 }

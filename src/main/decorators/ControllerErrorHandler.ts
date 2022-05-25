@@ -1,4 +1,4 @@
-import { ISaveErrorRepository } from '@application/protocols/repositories/error';
+import { ICreateErrorRepository } from '@application/protocols/repositories/error';
 
 import { internalServerError } from '@presentation/helpers/http';
 import {
@@ -10,7 +10,7 @@ import {
 export class ControllerErrorHandlerDecorator implements IController {
   constructor(
     private readonly controller: IController,
-    private readonly saveErrorRepository: ISaveErrorRepository
+    private readonly createErrorRepository: ICreateErrorRepository
   ) {}
 
   async handle(request: IHttpRequest): Promise<IHttpResponse> {
@@ -19,8 +19,8 @@ export class ControllerErrorHandlerDecorator implements IController {
 
       return response;
     } catch (error) {
-      this.saveErrorRepository
-        .save({
+      this.createErrorRepository
+        .create({
           stack: error?.stack ?? 'NO STACK PROVIDED',
           exception_was_thrown_in: this.controller.constructor.name,
           resource_url: request.original_url,

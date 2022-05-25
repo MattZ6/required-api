@@ -1,12 +1,12 @@
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
-import { IUpdateUserNameUseCase } from '@domain/usecases/user/UpdateUserName';
+import { IUpdateUserNameUseCase } from '@domain/usecases/user/UpdateName';
 
-import { badRequest, noContent, notFound } from '@presentation/helpers/http';
+import { noContent, badRequest, notFound } from '@presentation/helpers/http';
 import {
   IController,
+  IValidation,
   IHttpRequest,
   IHttpResponse,
-  IValidation,
 } from '@presentation/protocols';
 import { ValidationError } from '@presentation/validations/errors';
 
@@ -43,9 +43,7 @@ class UpdateProfileNameController implements IController {
 }
 
 namespace UpdateProfileNameController {
-  type RequestBody = {
-    name: string;
-  };
+  export type RequestBody = Pick<IUpdateUserNameUseCase.Input, 'name'>;
 
   export type Request = IHttpRequest<RequestBody, void, void, void>;
 

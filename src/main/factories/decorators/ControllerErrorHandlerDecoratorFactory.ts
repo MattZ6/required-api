@@ -2,10 +2,10 @@ import { IController } from '@presentation/protocols';
 
 import { ControllerErrorHandlerDecorator } from '@main/decorators/ControllerErrorHandler';
 
-import { makePostgresErrorsRepository } from '../repositories/error/PostgresErrorsRepositoryFactory';
+import { makeErrorsRepository } from '../repositories/Error';
 
 export function makeControllerErrorHandlerDecorator(controller: IController) {
-  const errorsRepository = makePostgresErrorsRepository();
+  const errorsRepository = makeErrorsRepository();
 
   return new ControllerErrorHandlerDecorator(controller, errorsRepository);
 }
