@@ -1,4 +1,4 @@
-import { IError } from '@domain/models/Error';
+import { Error } from '@domain/models/Error';
 
 interface ISaveErrorRepository {
   save(data: ISaveErrorRepository.Input): Promise<ISaveErrorRepository.Output>;
@@ -6,7 +6,7 @@ interface ISaveErrorRepository {
 
 namespace ISaveErrorRepository {
   export type Input = Pick<
-    IError,
+    Error,
     | 'user_id'
     | 'stack'
     | 'exception_was_thrown_in'

@@ -1,8 +1,8 @@
 import faker from '@faker-js/faker';
 
-import { IUser } from '@domain/models/User';
+import { User } from '@domain/models/User';
 
-export function makeUserMock(): IUser {
+export function makeUserMock(): User {
   return {
     id: faker.datatype.uuid(),
     name: faker.name.findName(),

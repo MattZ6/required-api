@@ -1,4 +1,4 @@
-import { IUserToken } from '@domain/models/UserToken';
+import { UserToken } from '@domain/models/UserToken';
 
 interface ICreateUserTokenRepository {
   create(
@@ -13,7 +13,7 @@ namespace ICreateUserTokenRepository {
     expires_in: Date;
   };
 
-  export type Output = IUserToken;
+  export type Output = UserToken;
 }
 
 export { ICreateUserTokenRepository };

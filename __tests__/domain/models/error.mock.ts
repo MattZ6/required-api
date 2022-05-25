@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 
-import { IError } from '@domain/models/Error';
+import { Error } from '@domain/models/Error';
 
-export function makeErrorEntityMock(): IError {
+export function makeErrorEntityMock(): Error {
   return {
     user_id: faker.datatype.uuid(),
     stack: faker.datatype.string(),

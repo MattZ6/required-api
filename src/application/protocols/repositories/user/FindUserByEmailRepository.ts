@@ -1,4 +1,4 @@
-import { IUser } from '@domain/models/User';
+import { User } from '@domain/models/User';
 
 interface IFindUserByEmailRepository {
   findByEmail(
@@ -11,7 +11,7 @@ namespace IFindUserByEmailRepository {
     email: string;
   };
 
-  export type Output = IUser | undefined;
+  export type Output = User | undefined;
 }
 
 export { IFindUserByEmailRepository };

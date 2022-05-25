@@ -1,4 +1,4 @@
-import { IUser } from '@domain/models/User';
+import { User } from '@domain/models/User';
 
 interface ICreateUserUseCase {
   execute(data: ICreateUserUseCase.Input): Promise<ICreateUserUseCase.Output>;
@@ -11,7 +11,7 @@ namespace ICreateUserUseCase {
     password: string;
   };
 
-  export type Output = IUser;
+  export type Output = User;
 }
 
 export { ICreateUserUseCase };

@@ -1,4 +1,4 @@
-import { IUser } from '@domain/models/User';
+import { User } from '@domain/models/User';
 
 interface IUpdateUserEmailUseCase {
   execute(
@@ -12,7 +12,7 @@ namespace IUpdateUserEmailUseCase {
     email: string;
   };
 
-  export type Output = IUser;
+  export type Output = User;
 }
 
 export { IUpdateUserEmailUseCase };

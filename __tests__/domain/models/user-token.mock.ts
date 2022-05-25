@@ -1,8 +1,8 @@
 import faker from '@faker-js/faker';
 
-import { IUserToken } from '@domain/models/UserToken';
+import { UserToken } from '@domain/models/UserToken';
 
-export function makeUserTokenMock(): IUserToken {
+export function makeUserTokenMock(): UserToken {
   return {
     id: faker.datatype.uuid(),
     user_id: faker.datatype.uuid(),

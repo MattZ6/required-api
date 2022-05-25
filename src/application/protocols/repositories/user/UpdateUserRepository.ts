@@ -1,4 +1,4 @@
-import { IUser } from '@domain/models/User';
+import { User } from '@domain/models/User';
 
 interface IUpdateUserRepository {
   update(
@@ -7,9 +7,9 @@ interface IUpdateUserRepository {
 }
 
 namespace IUpdateUserRepository {
-  export type Input = IUser;
+  export type Input = User;
 
-  export type Output = IUser;
+  export type Output = User;
 }
 
 export { IUpdateUserRepository };

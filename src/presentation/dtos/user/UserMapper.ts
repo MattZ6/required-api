@@ -1,4 +1,4 @@
-import { IUser } from '@domain/models/User';
+import { User } from '@domain/models/User';
 
 export namespace UserMapper {
   type UserProfileDTO = {
@@ -7,7 +7,7 @@ export namespace UserMapper {
     email: string;
   };
 
-  export function toProfileDTO(data: IUser): UserProfileDTO {
+  export function toProfileDTO(data: User): UserProfileDTO {
     return {
       id: data.id,
       name: data.name,

@@ -1,4 +1,4 @@
-import { IUserToken } from '@domain/models/UserToken';
+import { UserToken } from '@domain/models/UserToken';
 
 interface IFindUserTokenByTokenRepository {
   findByToken(
@@ -11,7 +11,7 @@ namespace IFindUserTokenByTokenRepository {
     token: string;
   };
 
-  export type Output = IUserToken | undefined;
+  export type Output = UserToken | undefined;
 }
 
 export { IFindUserTokenByTokenRepository };
