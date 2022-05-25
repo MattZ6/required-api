@@ -1,11 +1,5 @@
-import { PostgresUsersRepository } from '@infra/database/typeorm/repositories/postgres/PostgresUsersRepository';
-
-let postgresUsersRepository: PostgresUsersRepository;
+import { PrismaUsersRepository } from '@infra/database/prisma/repositories/User';
 
 export function makeUsersRepository() {
-  if (!postgresUsersRepository) {
-    postgresUsersRepository = new PostgresUsersRepository();
-  }
-
-  return postgresUsersRepository;
+  return new PrismaUsersRepository();
 }
