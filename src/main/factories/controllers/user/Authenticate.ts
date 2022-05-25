@@ -1,9 +1,9 @@
 import { AuthenticateUserController } from '@presentation/controllers/user/Authenticate';
-import { IController } from '@presentation/protocols/Controller';
+import { IController } from '@presentation/protocols';
 
 import { makeControllerErrorHandlerDecorator } from '@main/factories/decorators/ControllerErrorHandlerDecoratorFactory';
-import { makeAuthenticateUserUseCase } from '@main/factories/usecases/user/AuthenticateUserUseCaseFactory';
-import { makeAuthenticateUserControllerValidation } from '@main/factories/validators/controllers/user/AuthenticateUserControllerValidationFactory';
+import { makeAuthenticateUserUseCase } from '@main/factories/usecases/user/Authenticate';
+import { makeAuthenticateUserControllerValidation } from '@main/factories/validators/controllers/user/Authenticate';
 
 export function makeAuthenticateUserController(): IController {
   const validation = makeAuthenticateUserControllerValidation();

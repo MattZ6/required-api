@@ -2,7 +2,7 @@ import { PostgresErrorsRepository } from '@infra/database/typeorm/repositories/p
 
 let postgresErrorsRepository: PostgresErrorsRepository;
 
-export function makePostgresErrorsRepository() {
+export function makeErrorsRepository() {
   if (!postgresErrorsRepository) {
     postgresErrorsRepository = new PostgresErrorsRepository();
   }

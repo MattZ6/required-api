@@ -1,9 +1,9 @@
 import { CreateAccountController } from '@presentation/controllers/user/CreateAccount';
-import { IController } from '@presentation/protocols/Controller';
+import { IController } from '@presentation/protocols';
 
 import { makeControllerErrorHandlerDecorator } from '@main/factories/decorators/ControllerErrorHandlerDecoratorFactory';
-import { makeCreateUserUseCase } from '@main/factories/usecases/user/CreateUserUseCaseFactory';
-import { makeCreateAccountControllerValidation } from '@main/factories/validators/controllers/user/CreateAccountControllerValidationFactory';
+import { makeCreateUserUseCase } from '@main/factories/usecases/user/Create';
+import { makeCreateAccountControllerValidation } from '@main/factories/validators/controllers/user/CreateAccount';
 
 export function makeCreateAccountController(): IController {
   const validation = makeCreateAccountControllerValidation();

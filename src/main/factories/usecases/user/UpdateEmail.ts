@@ -1,9 +1,9 @@
 import { UpdateUserEmailUseCase } from '@application/usecases/user/UpdateEmail';
 
-import { makePostgresUsersRepository } from '@main/factories/repositories/user/PostgresUsersRepositoryFactory';
+import { makeUsersRepository } from '@main/factories/repositories/User';
 
 export function makeUpdateUserEmailUseCase() {
-  const usersRepository = makePostgresUsersRepository();
+  const usersRepository = makeUsersRepository();
 
   return new UpdateUserEmailUseCase(
     usersRepository,

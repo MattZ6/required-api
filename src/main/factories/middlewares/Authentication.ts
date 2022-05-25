@@ -1,11 +1,10 @@
 import { AuthenticationMiddleware } from '@presentation/middlewares/Authentication';
 
-import { makeJWTCryptographyProvider } from '@main/factories/providers/cryptography/JWTCryptographyProviderFactory';
-
 import { makeMiddlewareErrorHandlerDecorator } from '../decorators/MiddlewareErrorHandlerDecoratorFactory';
+import { makeCryptographyProvider } from '../providers/cryptography/Cryptography';
 
 export function makeAuthenticationMiddleware() {
-  const cryptographyProvider = makeJWTCryptographyProvider();
+  const cryptographyProvider = makeCryptographyProvider();
 
   const middleware = new AuthenticationMiddleware(cryptographyProvider);
 

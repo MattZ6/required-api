@@ -1,14 +1,14 @@
 import { RefreshUserAccessTokenUseCase } from '@application/usecases/user/RefreshAccessToken';
 
 import { authConfig } from '@main/config/env/auth';
-import { makeJWTCryptographyProvider } from '@main/factories/providers/cryptography/JWTCryptographyProviderFactory';
-import { makeUuidProvider } from '@main/factories/providers/uuid/UuidProviderFactory';
-import { makePostgresUserTokensRepository } from '@main/factories/repositories/user/token/PostgresUserTokensRepositoryFactory';
+import { makeCryptographyProvider } from '@main/factories/providers/cryptography/Cryptography';
+import { makeUuidProvider } from '@main/factories/providers/uuid/Uuid';
+import { makeUserTokensRepository } from '@main/factories/repositories/UserToken';
 
 export function makeRefreshUserAccessTokenUseCase() {
-  const userTokensRepository = makePostgresUserTokensRepository();
+  const userTokensRepository = makeUserTokensRepository();
 
-  const cryptographyProvider = makeJWTCryptographyProvider();
+  const cryptographyProvider = makeCryptographyProvider();
   const uuidProvider = makeUuidProvider();
 
   return new RefreshUserAccessTokenUseCase(

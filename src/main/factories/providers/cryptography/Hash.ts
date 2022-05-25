@@ -2,6 +2,6 @@ import { BcryptjsHashProvider } from '@infra/providers/cryptography/hash/Bcryptj
 
 import { authConfig } from '@main/config/env/auth';
 
-export function makeBcryptjsHashProvider() {
+export function makeHashProvider() {
   return new BcryptjsHashProvider(authConfig.HASH_SALT);
 }

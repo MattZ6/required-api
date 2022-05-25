@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
 import { adaptRoute } from '@main/adapters/express/route';
-import { makeAuthenticateUserController } from '@main/factories/controllers/user/AuthenticateUserControllerFactory';
-import { makeCreateAccountController } from '@main/factories/controllers/user/CreateAccountControllerFactory';
-import { makeRefreshUserAccessTokenController } from '@main/factories/controllers/user/RefreshUserAccessTokenControllerFactory';
+import { makeAuthenticateUserController } from '@main/factories/controllers/user/Authenticate';
+import { makeCreateAccountController } from '@main/factories/controllers/user/CreateAccount';
+import { makeRefreshUserAccessTokenController } from '@main/factories/controllers/user/RefreshAccessToken';
 
 const authenticationRoutes = Router();
 

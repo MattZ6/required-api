@@ -2,7 +2,7 @@ import { PostgresUsersRepository } from '@infra/database/typeorm/repositories/po
 
 let postgresUsersRepository: PostgresUsersRepository;
 
-export function makePostgresUsersRepository() {
+export function makeUsersRepository() {
   if (!postgresUsersRepository) {
     postgresUsersRepository = new PostgresUsersRepository();
   }

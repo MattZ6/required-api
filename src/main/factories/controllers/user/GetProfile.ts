@@ -1,8 +1,8 @@
 import { GetUserProfileController } from '@presentation/controllers/user/GetProfile';
-import { IController } from '@presentation/protocols/Controller';
+import { IController } from '@presentation/protocols';
 
 import { makeControllerErrorHandlerDecorator } from '@main/factories/decorators/ControllerErrorHandlerDecoratorFactory';
-import { makeGetUserProfileUseCase } from '@main/factories/usecases/user/GetUserProfileUseCaseFactory';
+import { makeGetUserProfileUseCase } from '@main/factories/usecases/user/GetProfile';
 
 export function makeGetUserProfileController(): IController {
   const getUserProfileUseCase = makeGetUserProfileUseCase();

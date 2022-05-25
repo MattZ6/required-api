@@ -2,7 +2,7 @@ import { PostgresUserTokensRepository } from '@infra/database/typeorm/repositori
 
 let postgresUserTokensRepository: PostgresUserTokensRepository;
 
-export function makePostgresUserTokensRepository() {
+export function makeUserTokensRepository() {
   if (!postgresUserTokensRepository) {
     postgresUserTokensRepository = new PostgresUserTokensRepository();
   }

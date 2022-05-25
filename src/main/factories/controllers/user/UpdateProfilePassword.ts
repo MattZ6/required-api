@@ -1,9 +1,9 @@
 import { UpdateProfilePasswordController } from '@presentation/controllers/user/UpdateProfilePassword';
-import { IController } from '@presentation/protocols/Controller';
+import { IController } from '@presentation/protocols';
 
 import { makeControllerErrorHandlerDecorator } from '@main/factories/decorators/ControllerErrorHandlerDecoratorFactory';
-import { makeUpdateUserPasswordUseCase } from '@main/factories/usecases/user/UpdateUserPasswordUseCaseFactory';
-import { makeUpdateProfilePasswordControllerValidation } from '@main/factories/validators/controllers/user/UpdateProfilePasswordControllerValidationFactory';
+import { makeUpdateUserPasswordUseCase } from '@main/factories/usecases/user/UpdatePassword';
+import { makeUpdateProfilePasswordControllerValidation } from '@main/factories/validators/controllers/user/UpdateProfilePassword';
 
 export function makeUpdateProfilePasswordController(): IController {
   const validation = makeUpdateProfilePasswordControllerValidation();
