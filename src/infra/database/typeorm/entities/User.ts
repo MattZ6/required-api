@@ -7,12 +7,12 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { User } from '@domain/entities/User';
+import { User as UserEntity } from '@domain/entities/User';
 
 import { tableNames } from '../constants';
 
 @Entity(tableNames.USERS)
-export class User implements User {
+export class User implements UserEntity {
   @PrimaryColumn()
   id: string;
 

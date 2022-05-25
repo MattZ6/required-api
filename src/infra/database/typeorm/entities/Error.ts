@@ -1,12 +1,12 @@
 import { randomUUID } from 'crypto';
 import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
 
-import { Error } from '@domain/entities/Error';
+import { Error as ErrorEntity } from '@domain/entities/Error';
 
 import { tableNames } from '../constants';
 
 @Entity(tableNames.ERRORS)
-export class Error implements Error {
+export class Error implements ErrorEntity {
   @PrimaryColumn()
   id: string;
 

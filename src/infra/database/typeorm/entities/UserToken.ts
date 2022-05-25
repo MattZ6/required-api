@@ -7,12 +7,12 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { UserToken } from '@domain/entities/UserToken';
+import { UserToken as UserTOkenEntity } from '@domain/entities/UserToken';
 
 import { tableNames } from '../constants';
 
 @Entity(tableNames.USER_TOKENS)
-export class UserToken implements UserToken {
+export class UserToken implements UserTOkenEntity {
   @PrimaryColumn()
   id: string;
 
