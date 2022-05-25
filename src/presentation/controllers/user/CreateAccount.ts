@@ -1,12 +1,12 @@
 import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
 import { ICreateUserUseCase } from '@domain/usecases/user/Create';
 
-import { badRequest, conflict, created } from '@presentation/helpers/http';
+import { created, badRequest, conflict } from '@presentation/helpers/http';
 import {
   IController,
+  IValidation,
   IHttpRequest,
   IHttpResponse,
-  IValidation,
 } from '@presentation/protocols';
 import { ValidationError } from '@presentation/validations/errors';
 
@@ -46,11 +46,7 @@ class CreateAccountController implements IController {
 }
 
 namespace CreateAccountController {
-  type RequestBody = {
-    name: string;
-    email: string;
-    password: string;
-  };
+  export type RequestBody = ICreateUserUseCase.Input;
 
   export type Request = IHttpRequest<RequestBody, void, void, void>;
 

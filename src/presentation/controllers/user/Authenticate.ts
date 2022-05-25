@@ -1,21 +1,21 @@
 import {
-  WrongPasswordError,
   UserNotFoundWithProvidedEmailError,
+  WrongPasswordError,
 } from '@domain/errors';
 import { IAuthenticateUserUseCase } from '@domain/usecases/user/Authenticate';
 
 import { AuthenticationMapper } from '@presentation/dtos';
 import {
+  ok,
   badRequest,
   notFound,
-  ok,
   unprocessableEntity,
 } from '@presentation/helpers/http';
 import {
   IController,
+  IValidation,
   IHttpRequest,
   IHttpResponse,
-  IValidation,
 } from '@presentation/protocols';
 import { ValidationError } from '@presentation/validations/errors';
 
@@ -58,10 +58,7 @@ class AuthenticateUserController implements IController {
 }
 
 namespace AuthenticateUserController {
-  type RequestBody = {
-    email: string;
-    password: string;
-  };
+  export type RequestBody = IAuthenticateUserUseCase.Input;
 
   export type Request = IHttpRequest<RequestBody, void, void, void>;
 

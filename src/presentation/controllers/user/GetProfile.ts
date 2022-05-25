@@ -2,7 +2,7 @@ import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 import { IGetUserProfileUseCase } from '@domain/usecases/user/GetProfile';
 
 import { UserMapper } from '@presentation/dtos';
-import { notFound, ok } from '@presentation/helpers/http';
+import { ok, notFound } from '@presentation/helpers/http';
 import {
   IController,
   IHttpRequest,

@@ -1,15 +1,15 @@
 import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
 
 import { CreateAccountController } from '@presentation/controllers/user/CreateAccount';
-import { created, conflict, badRequest } from '@presentation/helpers/http';
+import { badRequest, conflict, created } from '@presentation/helpers/http';
 
-import { makeErrorMock } from '../../domain';
+import { makeErrorMock } from '../../../domain';
 import {
+  ValidationSpy,
   CreateUserUseCaseSpy,
   makeCreateAccountControllerRequestMock,
   makeValidationErrorMock,
-  ValidationSpy,
-} from '../mocks';
+} from '../../mocks';
 
 let validation: ValidationSpy;
 let createUserUseCaseSpy: CreateUserUseCaseSpy;

@@ -1,4 +1,4 @@
-import { GetUserProfileController } from '@presentation/controllers/user/GetUserProfile';
+import { GetUserProfileController } from '@presentation/controllers/user/GetProfile';
 import { IController } from '@presentation/protocols/Controller';
 
 import { makeControllerErrorHandlerDecorator } from '@main/factories/decorators/ControllerErrorHandlerDecoratorFactory';

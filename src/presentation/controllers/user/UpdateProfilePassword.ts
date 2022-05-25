@@ -1,20 +1,20 @@
 import {
-  WrongPasswordError,
   UserNotFoundWithProvidedIdError,
+  WrongPasswordError,
 } from '@domain/errors';
 import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdatePassword';
 
 import {
-  badRequest,
   noContent,
+  badRequest,
   notFound,
   unprocessableEntity,
 } from '@presentation/helpers/http';
 import {
   IController,
+  IValidation,
   IHttpRequest,
   IHttpResponse,
-  IValidation,
 } from '@presentation/protocols';
 import { ValidationError } from '@presentation/validations/errors';
 
@@ -31,12 +31,12 @@ class UpdateProfilePasswordController implements IController {
       this.validation.validate(request.body);
 
       const { id } = request.user;
-      const { old_password, password } = request.body;
+      const { old_password, new_password } = request.body;
 
       await this.updateUserPasswordUseCase.execute({
         user_id: id,
         old_password,
-        new_password: password,
+        new_password,
       });
 
       return noContent();
@@ -59,10 +59,10 @@ class UpdateProfilePasswordController implements IController {
 }
 
 namespace UpdateProfilePasswordController {
-  type RequestBody = {
-    old_password: string;
-    password: string;
-  };
+  export type RequestBody = Pick<
+    IUpdateUserPasswordUseCase.Input,
+    'old_password' | 'new_password'
+  >;
 
   export type Request = IHttpRequest<RequestBody, void, void, void>;
 

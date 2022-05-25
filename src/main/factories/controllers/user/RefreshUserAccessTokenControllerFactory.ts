@@ -1,4 +1,4 @@
-import { RefreshUserAccessTokenController } from '@presentation/controllers/user/RefreshUserAccessToken';
+import { RefreshUserAccessTokenController } from '@presentation/controllers/user/RefreshAccessToken';
 
 import { makeControllerErrorHandlerDecorator } from '@main/factories/decorators/ControllerErrorHandlerDecoratorFactory';
 import { makeRefreshUserAccessTokenUseCase } from '@main/factories/usecases/user/RefreshUserAccessTokenUseCaseFactory';

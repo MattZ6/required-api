@@ -8,7 +8,7 @@ export function makeUpdateProfilePasswordControllerRequestMock(): UpdateProfileP
     original_url: faker.internet.url(),
     body: {
       old_password: faker.internet.password(),
-      password: faker.internet.password(),
+      new_password: faker.internet.password(),
     },
     headers: undefined,
     params: undefined,

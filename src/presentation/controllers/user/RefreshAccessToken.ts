@@ -1,21 +1,21 @@
 import {
-  UserTokenExpiredError,
   UserTokenNotFoundWithProvidedTokenError,
+  UserTokenExpiredError,
 } from '@domain/errors';
 import { IRefreshUserAccessTokenUseCase } from '@domain/usecases/user/RefreshAccessToken';
 
 import { AuthenticationMapper } from '@presentation/dtos';
 import {
+  ok,
   badRequest,
   notFound,
-  ok,
   unprocessableEntity,
 } from '@presentation/helpers/http';
 import {
   IController,
+  IValidation,
   IHttpRequest,
   IHttpResponse,
-  IValidation,
 } from '@presentation/protocols';
 import { ValidationError } from '@presentation/validations/errors';
 
@@ -57,9 +57,7 @@ class RefreshUserAccessTokenController implements IController {
 }
 
 namespace RefreshUserAccessTokenController {
-  type RequestBody = {
-    refresh_token: string;
-  };
+  export type RequestBody = IRefreshUserAccessTokenUseCase.Input;
 
   export type Request = IHttpRequest<RequestBody, void, void, void>;
 

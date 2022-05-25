@@ -1,20 +1,20 @@
 import {
-  UserAlreadyExistsWithProvidedEmailError,
   UserNotFoundWithProvidedIdError,
+  UserAlreadyExistsWithProvidedEmailError,
 } from '@domain/errors';
 import { IUpdateUserEmailUseCase } from '@domain/usecases/user/UpdateEmail';
 
 import {
-  badRequest,
-  conflict,
   noContent,
+  badRequest,
   notFound,
+  conflict,
 } from '@presentation/helpers/http';
 import {
   IController,
+  IValidation,
   IHttpRequest,
   IHttpResponse,
-  IValidation,
 } from '@presentation/protocols';
 import { ValidationError } from '@presentation/validations/errors';
 
@@ -55,9 +55,7 @@ class UpdateProfileEmailController implements IController {
 }
 
 namespace UpdateProfileEmailController {
-  type RequestBody = {
-    email: string;
-  };
+  export type RequestBody = Pick<IUpdateUserEmailUseCase.Input, 'email'>;
 
   export type Request = IHttpRequest<RequestBody, void, void, void>;
 

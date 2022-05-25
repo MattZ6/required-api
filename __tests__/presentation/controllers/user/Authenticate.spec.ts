@@ -1,25 +1,25 @@
 import {
-  WrongPasswordError,
   UserNotFoundWithProvidedEmailError,
+  WrongPasswordError,
 } from '@domain/errors';
 
-import { AuthenticateUserController } from '@presentation/controllers/user/AuthenticateUser';
+import { AuthenticateUserController } from '@presentation/controllers/user/Authenticate';
 import { AuthenticationMapper } from '@presentation/dtos';
 import {
-  notFound,
-  ok,
-  unprocessableEntity,
   badRequest,
+  notFound,
+  unprocessableEntity,
+  ok,
 } from '@presentation/helpers/http';
 
-import { makeErrorMock } from '../../domain';
+import { makeErrorMock } from '../../../domain';
 import {
-  AuthenticateUserUseCaseSpy,
-  makeAuthenticateUserUseCaseOutputMock,
-  makeValidationErrorMock,
   ValidationSpy,
-} from '../mocks';
-import { makeAuthenticateUserControllerRequestMock } from '../mocks/controllers';
+  AuthenticateUserUseCaseSpy,
+  makeAuthenticateUserControllerRequestMock,
+  makeValidationErrorMock,
+  makeAuthenticateUserUseCaseOutputMock,
+} from '../../mocks';
 
 let validation: ValidationSpy;
 let authenticateUserUseCaseSpy: AuthenticateUserUseCaseSpy;

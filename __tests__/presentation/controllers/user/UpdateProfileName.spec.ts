@@ -1,15 +1,15 @@
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 
 import { UpdateProfileNameController } from '@presentation/controllers/user/UpdateProfileName';
-import { badRequest, noContent, notFound } from '@presentation/helpers/http';
+import { badRequest, notFound, noContent } from '@presentation/helpers/http';
 
-import { makeErrorMock } from '../../domain';
+import { makeErrorMock } from '../../../domain';
 import {
+  ValidationSpy,
+  UpdateUserNameUseCaseSpy,
   makeUpdateProfileNameControllerRequestMock,
   makeValidationErrorMock,
-  UpdateUserNameUseCaseSpy,
-  ValidationSpy,
-} from '../mocks';
+} from '../../mocks';
 
 let validation: ValidationSpy;
 let updateUserNameUseCaseSpy: UpdateUserNameUseCaseSpy;

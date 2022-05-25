@@ -1,6 +1,6 @@
 import faker from '@faker-js/faker';
 
-import { AuthenticateUserController } from '@presentation/controllers/user/AuthenticateUser';
+import { AuthenticateUserController } from '@presentation/controllers/user/Authenticate';
 
 export function makeAuthenticateUserControllerRequestMock(): AuthenticateUserController.Request {
   return {

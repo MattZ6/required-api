@@ -1,4 +1,4 @@
-import { AuthenticateUserController } from '@presentation/controllers/user/AuthenticateUser';
+import { AuthenticateUserController } from '@presentation/controllers/user/Authenticate';
 import { IController } from '@presentation/protocols/Controller';
 
 import { makeControllerErrorHandlerDecorator } from '@main/factories/decorators/ControllerErrorHandlerDecoratorFactory';

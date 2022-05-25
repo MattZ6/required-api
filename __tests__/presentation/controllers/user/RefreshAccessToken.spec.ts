@@ -1,25 +1,25 @@
 import {
-  UserTokenExpiredError,
   UserTokenNotFoundWithProvidedTokenError,
+  UserTokenExpiredError,
 } from '@domain/errors';
 
-import { RefreshUserAccessTokenController } from '@presentation/controllers/user/RefreshUserAccessToken';
+import { RefreshUserAccessTokenController } from '@presentation/controllers/user/RefreshAccessToken';
 import { AuthenticationMapper } from '@presentation/dtos';
 import {
   badRequest,
   notFound,
-  ok,
   unprocessableEntity,
+  ok,
 } from '@presentation/helpers/http';
 
-import { makeErrorMock } from '../../domain';
+import { makeErrorMock } from '../../../domain';
 import {
-  makeRefreshUserAccessTokenControllerRequestMock,
-  makeRefreshUserAccessTokenUseCaseOutputMock,
-  makeValidationErrorMock,
-  RefreshUserAccessTokenUseCaseSpy,
   ValidationSpy,
-} from '../mocks';
+  RefreshUserAccessTokenUseCaseSpy,
+  makeRefreshUserAccessTokenControllerRequestMock,
+  makeValidationErrorMock,
+  makeRefreshUserAccessTokenUseCaseOutputMock,
+} from '../../mocks';
 
 let validation: ValidationSpy;
 let refreshUserAccessTokenUseCaseSpy: RefreshUserAccessTokenUseCaseSpy;

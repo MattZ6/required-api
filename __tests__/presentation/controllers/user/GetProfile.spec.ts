@@ -1,15 +1,15 @@
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 
-import { GetUserProfileController } from '@presentation/controllers/user/GetUserProfile';
+import { GetUserProfileController } from '@presentation/controllers/user/GetProfile';
 import { UserMapper } from '@presentation/dtos';
 import { notFound, ok } from '@presentation/helpers/http';
 
-import { makeErrorMock } from '../../domain';
+import { makeErrorMock } from '../../../domain';
 import {
   GetUserProfileUseCaseSpy,
   makeGetUserProfileControllerRequestMock,
   makeGetUserProfileUseCaseOutputMock,
-} from '../mocks';
+} from '../../mocks';
 
 let getUserProfileUseCaseSpy: GetUserProfileUseCaseSpy;
 

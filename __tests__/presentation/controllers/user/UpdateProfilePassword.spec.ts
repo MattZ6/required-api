@@ -1,23 +1,23 @@
 import {
-  WrongPasswordError,
   UserNotFoundWithProvidedIdError,
+  WrongPasswordError,
 } from '@domain/errors';
 
 import { UpdateProfilePasswordController } from '@presentation/controllers/user/UpdateProfilePassword';
 import {
   badRequest,
-  noContent,
   notFound,
   unprocessableEntity,
+  noContent,
 } from '@presentation/helpers/http';
 
-import { makeErrorMock } from '../../domain';
+import { makeErrorMock } from '../../../domain';
 import {
+  ValidationSpy,
+  UpdateUserPasswordUseCaseSpy,
   makeUpdateProfilePasswordControllerRequestMock,
   makeValidationErrorMock,
-  UpdateUserPasswordUseCaseSpy,
-  ValidationSpy,
-} from '../mocks';
+} from '../../mocks';
 
 let validation: ValidationSpy;
 let updateUserPasswordUseCaseSpy: UpdateUserPasswordUseCaseSpy;
@@ -85,7 +85,7 @@ describe('UpdateProfilePasswordController', () => {
     expect(executeSpy).toHaveBeenCalledWith({
       user_id: request.user.id,
       old_password: request.body.old_password,
-      new_password: request.body.password,
+      new_password: request.body.new_password,
     });
   });
 

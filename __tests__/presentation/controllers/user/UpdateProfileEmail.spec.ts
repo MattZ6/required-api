@@ -1,23 +1,23 @@
 import {
-  UserAlreadyExistsWithProvidedEmailError,
   UserNotFoundWithProvidedIdError,
+  UserAlreadyExistsWithProvidedEmailError,
 } from '@domain/errors';
 
 import { UpdateProfileEmailController } from '@presentation/controllers/user/UpdateProfileEmail';
 import {
   badRequest,
+  notFound,
   conflict,
   noContent,
-  notFound,
 } from '@presentation/helpers/http';
 
-import { makeErrorMock } from '../../domain';
+import { makeErrorMock } from '../../../domain';
 import {
+  ValidationSpy,
+  UpdateUserEmailUseCaseSpy,
   makeUpdateProfileEmailControllerRequestMock,
   makeValidationErrorMock,
-  UpdateUserEmailUseCaseSpy,
-  ValidationSpy,
-} from '../mocks';
+} from '../../mocks';
 
 let validation: ValidationSpy;
 let updateUserEmailUseCaseSpy: UpdateUserEmailUseCaseSpy;
