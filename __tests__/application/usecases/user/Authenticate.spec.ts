@@ -1,25 +1,28 @@
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 
 import {
-  WrongPasswordError,
   UserNotFoundWithProvidedEmailError,
+  WrongPasswordError,
 } from '@domain/errors';
 
 import { AuthenticateUserUseCase } from '@application/usecases/user/AuthenticateUser';
 
-import { makeErrorMock, makeUserMock } from '../../domain';
-import { makeUserTokenMock } from '../../domain/entities/user-token.mock';
 import {
-  CompareHashProviderSpy,
-  CreateUserTokenRepositorySpy,
-  EncryptProviderSpy,
+  makeErrorMock,
+  makeUserMock,
+  makeUserTokenMock,
+} from '../../../domain';
+import {
   FindUserByEmailRepositorySpy,
+  CompareHashProviderSpy,
+  EncryptProviderSpy,
   GenerateUuidProviderSpy,
+  CreateUserTokenRepositorySpy,
   makeAuthenticateUserRefreshTokenExpiresTimeInMillissecondsMock,
   makeAuthenticateUserUseCaseInputMock,
-  makeEncryptProviderOutputMock,
   makeGenerateUuidProviderOutputMock,
-} from '../mocks';
+  makeEncryptProviderOutputMock,
+} from '../../mocks';
 
 let findUserByEmailRepositorySpy: FindUserByEmailRepositorySpy;
 let compareHashProviderSpy: CompareHashProviderSpy;
@@ -240,7 +243,7 @@ describe('AuthenticateUserUseCase', () => {
     await expect(promise).rejects.toThrowError(errorMock);
   });
 
-  it('should return authentication data on success', async () => {
+  it('should return Authentication data on success', async () => {
     const accessTokenMock = makeEncryptProviderOutputMock();
 
     jest

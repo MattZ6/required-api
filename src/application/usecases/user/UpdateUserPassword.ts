@@ -2,7 +2,7 @@ import {
   WrongPasswordError,
   UserNotFoundWithProvidedIdError,
 } from '@domain/errors';
-import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdateUserPassword';
+import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdatePassword';
 
 import {
   ICompareHashProvider,

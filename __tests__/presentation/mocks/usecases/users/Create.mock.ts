@@ -1,6 +1,6 @@
-import { ICreateUserUseCase } from '@domain/usecases/user/CreateUser';
+import { ICreateUserUseCase } from '@domain/usecases/user/Create';
 
-import { makeUserMock } from '../../../domain';
+import { makeUserMock } from '../../../../domain';
 
 export class CreateUserUseCaseSpy implements ICreateUserUseCase {
   async execute(

@@ -2,7 +2,7 @@ import {
   UserAlreadyExistsWithProvidedEmailError,
   UserNotFoundWithProvidedIdError,
 } from '@domain/errors';
-import { IUpdateUserEmailUseCase } from '@domain/usecases/user/UpdateUserEmail';
+import { IUpdateUserEmailUseCase } from '@domain/usecases/user/UpdateEmail';
 
 import {
   ICheckIfUserExistsByEmailRepository,

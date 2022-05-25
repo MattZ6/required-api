@@ -1,12 +1,9 @@
-import { faker } from '@faker-js/faker';
+import { IAuthenticateUserUseCase } from '@domain/usecases/user/Authenticate';
 
-import { IAuthenticateUserUseCase } from '@domain/usecases/user/AuthenticateUser';
+import { makeAuthenticationMock } from '../../../../domain';
 
 export function makeAuthenticateUserUseCaseOutputMock(): IAuthenticateUserUseCase.Output {
-  return {
-    access_token: faker.datatype.uuid(),
-    refresh_token: faker.datatype.uuid(),
-  };
+  return makeAuthenticationMock();
 }
 
 export class AuthenticateUserUseCaseSpy implements IAuthenticateUserUseCase {

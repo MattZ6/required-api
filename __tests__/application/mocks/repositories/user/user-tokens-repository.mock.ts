@@ -4,7 +4,7 @@ import {
   IFindUserTokenByTokenRepository,
 } from '@application/protocols/repositories/user-token';
 
-import { makeUserTokenMock } from '../../../../domain/entities/user-token.mock';
+import { makeUserTokenMock } from '../../../../domain/entities/UserToken.mock';
 
 export class CreateUserTokenRepositorySpy
   implements ICreateUserTokenRepository

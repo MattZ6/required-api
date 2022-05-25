@@ -1,6 +1,6 @@
 import faker from '@faker-js/faker';
 
-import { IUpdateUserEmailUseCase } from '@domain/usecases/user/UpdateUserEmail';
+import { IUpdateUserEmailUseCase } from '@domain/usecases/user/UpdateEmail';
 
 export function makeUpdateUserEmailUseCaseInputMock(): IUpdateUserEmailUseCase.Input {
   return {

@@ -1,6 +1,6 @@
-import { IGetUserProfileUseCase } from '@domain/usecases/user/GetUserProfile';
+import { IGetUserProfileUseCase } from '@domain/usecases/user/GetProfile';
 
-import { makeUserMock } from '../../../domain';
+import { makeUserMock } from '../../../../domain';
 
 export function makeGetUserProfileUseCaseOutputMock(): IGetUserProfileUseCase.Output {
   return makeUserMock();

@@ -2,12 +2,12 @@ import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 
 import { UpdateUserNameUseCase } from '@application/usecases/user/UpdateUserName';
 
-import { makeErrorMock, makeUserMock } from '../../domain';
+import { makeErrorMock, makeUserMock } from '../../../domain';
 import {
   FindUserByIdRepositorySpy,
-  makeUpdateUserNameUseCaseInputMock,
   UpdateUserRepositorySpy,
-} from '../mocks';
+  makeUpdateUserNameUseCaseInputMock,
+} from '../../mocks';
 
 let findUserByIdRepositorySpy: FindUserByIdRepositorySpy;
 let updateUserRepositorySpy: UpdateUserRepositorySpy;

@@ -1,6 +1,6 @@
 import faker from '@faker-js/faker';
 
-import { IAuthenticateUserUseCase } from '@domain/usecases/user/AuthenticateUser';
+import { IAuthenticateUserUseCase } from '@domain/usecases/user/Authenticate';
 
 export function makeAuthenticateUserRefreshTokenExpiresTimeInMillissecondsMock() {
   return faker.datatype.number({ min: 1 });

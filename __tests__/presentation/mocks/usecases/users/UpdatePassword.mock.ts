@@ -1,6 +1,6 @@
-import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdateUserPassword';
+import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdatePassword';
 
-import { makeUserMock } from '../../../domain';
+import { makeUserMock } from '../../../../domain';
 
 export class UpdateUserPasswordUseCaseSpy
   implements IUpdateUserPasswordUseCase

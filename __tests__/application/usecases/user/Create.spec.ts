@@ -1,16 +1,16 @@
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 
 import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
 
 import { CreateUserUseCase } from '@application/usecases/user/CreateUser';
 
-import { makeErrorMock, makeUserMock } from '../../domain';
+import { makeErrorMock, makeUserMock } from '../../../domain';
 import {
   CheckIfUserExistsByEmailRepositorySpy,
-  CreateUserRepositorySpy,
   GenerateHashProviderSpy,
+  CreateUserRepositorySpy,
   makeCreateUserUseCaseInputMock,
-} from '../mocks';
+} from '../../mocks';
 
 let checkIfUserExistsByEmailRepositorySpy: CheckIfUserExistsByEmailRepositorySpy;
 let generateHashProviderSpy: GenerateHashProviderSpy;

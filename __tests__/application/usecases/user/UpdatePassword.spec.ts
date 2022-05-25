@@ -1,20 +1,20 @@
 import faker from '@faker-js/faker';
 
 import {
-  WrongPasswordError,
   UserNotFoundWithProvidedIdError,
+  WrongPasswordError,
 } from '@domain/errors';
 
 import { UpdateUserPasswordUseCase } from '@application/usecases/user/UpdateUserPassword';
 
-import { makeErrorMock, makeUserMock } from '../../domain';
+import { makeErrorMock, makeUserMock } from '../../../domain';
 import {
-  CompareHashProviderSpy,
   FindUserByIdRepositorySpy,
+  CompareHashProviderSpy,
   GenerateHashProviderSpy,
-  makeUpdateUserPasswordUseCaseInputMock,
   UpdateUserRepositorySpy,
-} from '../mocks';
+  makeUpdateUserPasswordUseCaseInputMock,
+} from '../../mocks';
 
 let findUserByIdRepositorySpy: FindUserByIdRepositorySpy;
 let compareHashProviderSpy: CompareHashProviderSpy;

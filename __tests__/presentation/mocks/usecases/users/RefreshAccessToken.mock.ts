@@ -1,12 +1,9 @@
-import faker from '@faker-js/faker';
+import { IRefreshUserAccessTokenUseCase } from '@domain/usecases/user/RefreshAccessToken';
 
-import { IRefreshUserAccessTokenUseCase } from '@domain/usecases/user/RefreshUserAccessToken';
+import { makeAuthenticationMock } from '../../../../domain';
 
 export function makeRefreshUserAccessTokenUseCaseOutputMock(): IRefreshUserAccessTokenUseCase.Output {
-  return {
-    access_token: faker.datatype.string(),
-    refresh_token: faker.datatype.string(),
-  };
+  return makeAuthenticationMock();
 }
 
 export class RefreshUserAccessTokenUseCaseSpy

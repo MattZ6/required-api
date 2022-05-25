@@ -2,11 +2,11 @@ import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 
 import { GetUserProfileUseCase } from '@application/usecases/user/GetUserProfile';
 
-import { makeErrorMock, makeUserMock } from '../../domain';
+import { makeErrorMock, makeUserMock } from '../../../domain';
 import {
   FindUserByIdRepositorySpy,
   makeGetUserProfileUseCaseInputMock,
-} from '../mocks';
+} from '../../mocks';
 
 let findUserByIdRepositorySpy: FindUserByIdRepositorySpy;
 

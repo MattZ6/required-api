@@ -2,7 +2,7 @@ import {
   WrongPasswordError,
   UserNotFoundWithProvidedEmailError,
 } from '@domain/errors';
-import { IAuthenticateUserUseCase } from '@domain/usecases/user/AuthenticateUser';
+import { IAuthenticateUserUseCase } from '@domain/usecases/user/Authenticate';
 
 import { AuthenticationMapper } from '@presentation/dtos';
 import {

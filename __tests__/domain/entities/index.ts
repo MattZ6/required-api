@@ -1,3 +1,4 @@
-export * from './error.mock';
-export * from './user.mock';
-export * from './user-token.mock';
+export * from './Authentication.mock';
+export * from './Error.mock';
+export * from './User.mock';
+export * from './UserToken.mock';

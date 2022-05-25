@@ -1,25 +1,24 @@
-import { faker } from '@faker-js/faker';
+import faker from '@faker-js/faker';
 
 import {
-  UserTokenExpiredError,
   UserTokenNotFoundWithProvidedTokenError,
+  UserTokenExpiredError,
 } from '@domain/errors';
 
 import { RefreshUserAccessTokenUseCase } from '@application/usecases/user/RefreshUserAccessToken';
 
-import { makeErrorMock } from '../../domain';
-import { makeUserTokenMock } from '../../domain/entities/user-token.mock';
+import { makeUserTokenMock, makeErrorMock } from '../../../domain';
 import {
+  FindUserTokenByTokenRepositorySpy,
+  EncryptProviderSpy,
+  GenerateUuidProviderSpy,
   CreateUserTokenRepositorySpy,
   DeleteUserTokenByIdRepositorySpy,
-  EncryptProviderSpy,
-  FindUserTokenByTokenRepositorySpy,
-  GenerateUuidProviderSpy,
-  makeEncryptProviderOutputMock,
-  makeGenerateUuidProviderOutputMock,
   makeRefreshTokenExpiresTimeInMillissecondsMock,
   makeRefreshUserAccessTokenUseCaseInputMock,
-} from '../mocks';
+  makeGenerateUuidProviderOutputMock,
+  makeEncryptProviderOutputMock,
+} from '../../mocks';
 
 let findUserTokenByTokenRepositorySpy: FindUserTokenByTokenRepositorySpy;
 let encryptProviderSpy: EncryptProviderSpy;
@@ -260,7 +259,7 @@ describe('RefreshUserAccessTokenUseCase', () => {
     await expect(promise).rejects.toThrowError(errorMock);
   });
 
-  it('should return access token and refresh token on success', async () => {
+  it('should return Authentication on success', async () => {
     setValidTokenTimeMock();
 
     const userTokenMock = makeUserTokenMock();

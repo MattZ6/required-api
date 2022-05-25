@@ -1,5 +1,5 @@
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
-import { IUpdateUserNameUseCase } from '@domain/usecases/user/UpdateUserName';
+import { IUpdateUserNameUseCase } from '@domain/usecases/user/UpdateName';
 
 import {
   IFindUserByIdRepository,

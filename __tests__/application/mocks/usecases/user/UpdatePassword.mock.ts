@@ -1,6 +1,6 @@
 import faker from '@faker-js/faker';
 
-import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdateUserPassword';
+import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdatePassword';
 
 export function makeUpdateUserPasswordUseCaseInputMock(): IUpdateUserPasswordUseCase.Input {
   return {

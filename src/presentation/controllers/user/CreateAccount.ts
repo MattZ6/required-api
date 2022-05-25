@@ -1,5 +1,5 @@
 import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
-import { ICreateUserUseCase } from '@domain/usecases/user/CreateUser';
+import { ICreateUserUseCase } from '@domain/usecases/user/Create';
 
 import { badRequest, conflict, created } from '@presentation/helpers/http';
 import {

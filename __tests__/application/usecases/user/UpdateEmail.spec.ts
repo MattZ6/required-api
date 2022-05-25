@@ -1,17 +1,17 @@
 import {
-  UserAlreadyExistsWithProvidedEmailError,
   UserNotFoundWithProvidedIdError,
+  UserAlreadyExistsWithProvidedEmailError,
 } from '@domain/errors';
 
 import { UpdateUserEmailUseCase } from '@application/usecases/user/UpdateUserEmail';
 
-import { makeErrorMock, makeUserMock } from '../../domain';
+import { makeErrorMock, makeUserMock } from '../../../domain';
 import {
-  CheckIfUserExistsByEmailRepositorySpy,
   FindUserByIdRepositorySpy,
-  makeUpdateUserEmailUseCaseInputMock,
+  CheckIfUserExistsByEmailRepositorySpy,
   UpdateUserRepositorySpy,
-} from '../mocks';
+  makeUpdateUserEmailUseCaseInputMock,
+} from '../../mocks';
 
 let findUserByIdRepositorySpy: FindUserByIdRepositorySpy;
 let checkIfUserExistsByEmailRepositorySpy: CheckIfUserExistsByEmailRepositorySpy;
