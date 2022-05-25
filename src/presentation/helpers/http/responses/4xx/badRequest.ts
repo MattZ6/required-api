@@ -25,7 +25,7 @@ export function badRequest(
       validation: {
         field: error.field,
         type: error.type,
-
+        value: error.value,
         message: error.message,
       },
     },
