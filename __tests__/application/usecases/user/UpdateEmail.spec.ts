@@ -3,7 +3,7 @@ import {
   UserAlreadyExistsWithProvidedEmailError,
 } from '@domain/errors';
 
-import { UpdateUserEmailUseCase } from '@application/usecases/user/UpdateUserEmail';
+import { UpdateUserEmailUseCase } from '@application/usecases/user/UpdateEmail';
 
 import { makeErrorMock, makeUserMock } from '../../../domain';
 import {
@@ -151,7 +151,10 @@ describe('UpdateUserEmailUseCase', () => {
     await updateUserEmailUseCase.execute(input);
 
     expect(updateSpy).toBeCalledTimes(1);
-    expect(updateSpy).toHaveBeenCalledWith({ ...userMock, email: input.email });
+    expect(updateSpy).toHaveBeenCalledWith({
+      id: input.user_id,
+      email: input.email,
+    });
   });
 
   it('should throw if UpdateUserRepository throws', async () => {

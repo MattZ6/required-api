@@ -2,7 +2,7 @@ import faker from '@faker-js/faker';
 
 import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
 
-import { CreateUserUseCase } from '@application/usecases/user/CreateUser';
+import { CreateUserUseCase } from '@application/usecases/user/Create';
 
 import { makeErrorMock, makeUserMock } from '../../../domain';
 import {

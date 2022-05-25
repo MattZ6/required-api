@@ -5,7 +5,7 @@ import {
   WrongPasswordError,
 } from '@domain/errors';
 
-import { UpdateUserPasswordUseCase } from '@application/usecases/user/UpdateUserPassword';
+import { UpdateUserPasswordUseCase } from '@application/usecases/user/UpdatePassword';
 
 import { makeErrorMock, makeUserMock } from '../../../domain';
 import {
@@ -165,7 +165,7 @@ describe('UpdateUserPasswordUseCase', () => {
 
     expect(updateSpy).toHaveBeenCalledTimes(1);
     expect(updateSpy).toHaveBeenCalledWith({
-      ...userMock,
+      id: input.user_id,
       password_hash: hashedPassword,
     });
   });

@@ -1,18 +1,20 @@
 import { Repository } from 'typeorm';
 
-import { ISaveErrorRepository } from '@application/protocols/repositories/error';
+import { ICreateErrorRepository } from '@application/protocols/repositories/error';
 
 import { AppDataSource } from '@infra/database/typeorm';
 import { Error } from '@infra/database/typeorm/entities/Error';
 
-export class PostgresErrorsRepository implements ISaveErrorRepository {
+export class PostgresErrorsRepository implements ICreateErrorRepository {
   private repository: Repository<Error>;
 
   constructor() {
     this.repository = AppDataSource.getRepository(Error);
   }
 
-  async save(data: ISaveErrorRepository.Input): Promise<void> {
+  async create(
+    data: ICreateErrorRepository.Input
+  ): Promise<ICreateErrorRepository.Output> {
     const {
       user_id,
       exception_was_thrown_in,
@@ -29,6 +31,8 @@ export class PostgresErrorsRepository implements ISaveErrorRepository {
       http_method,
     });
 
-    await this.repository.save(error);
+    const errorEntity = await this.repository.save(error);
+
+    return errorEntity;
   }
 }

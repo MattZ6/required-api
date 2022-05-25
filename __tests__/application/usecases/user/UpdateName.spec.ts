@@ -1,6 +1,6 @@
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 
-import { UpdateUserNameUseCase } from '@application/usecases/user/UpdateUserName';
+import { UpdateUserNameUseCase } from '@application/usecases/user/UpdateName';
 
 import { makeErrorMock, makeUserMock } from '../../../domain';
 import {
@@ -78,7 +78,10 @@ describe('UpdateUserNameUseCase', () => {
     await updateUserNameUseCase.execute(input);
 
     expect(updateSpy).toHaveBeenCalledTimes(1);
-    expect(updateSpy).toHaveBeenCalledWith({ ...userMock, name: input.name });
+    expect(updateSpy).toHaveBeenCalledWith({
+      id: input.user_id,
+      name: input.name,
+    });
   });
 
   it('should throw if UpdateUserRepository throws', async () => {

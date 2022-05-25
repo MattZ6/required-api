@@ -7,11 +7,9 @@ interface IFindUserByEmailRepository {
 }
 
 namespace IFindUserByEmailRepository {
-  export type Input = {
-    email: string;
-  };
+  export type Input = Pick<User, 'email'>;
 
-  export type Output = User | undefined;
+  export type Output = User | null;
 }
 
 export { IFindUserByEmailRepository };

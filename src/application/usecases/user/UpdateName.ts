@@ -17,14 +17,17 @@ export class UpdateUserNameUseCase implements IUpdateUserNameUseCase {
   ): Promise<IUpdateUserNameUseCase.Output> {
     const { user_id, name } = data;
 
-    const user = await this.findUserByIdRepository.findById({ id: user_id });
+    let user = await this.findUserByIdRepository.findById({ id: user_id });
 
     if (!user) {
       throw new UserNotFoundWithProvidedIdError();
     }
 
-    user.name = name;
+    user = await this.updateUserRepository.update({
+      id: user_id,
+      name,
+    });
 
-    return this.updateUserRepository.update(user);
+    return user;
   }
 }

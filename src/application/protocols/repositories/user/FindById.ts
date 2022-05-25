@@ -7,11 +7,9 @@ interface IFindUserByIdRepository {
 }
 
 namespace IFindUserByIdRepository {
-  export type Input = {
-    id: string;
-  };
+  export type Input = Pick<User, 'id'>;
 
-  export type Output = User | undefined;
+  export type Output = User | null;
 }
 
 export { IFindUserByIdRepository };

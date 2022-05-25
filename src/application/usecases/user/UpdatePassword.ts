@@ -1,6 +1,6 @@
 import {
-  WrongPasswordError,
   UserNotFoundWithProvidedIdError,
+  WrongPasswordError,
 } from '@domain/errors';
 import { IUpdateUserPasswordUseCase } from '@domain/usecases/user/UpdatePassword';
 
@@ -26,7 +26,7 @@ export class UpdateUserPasswordUseCase implements IUpdateUserPasswordUseCase {
   ): Promise<IUpdateUserPasswordUseCase.Output> {
     const { user_id, old_password, new_password } = data;
 
-    const user = await this.findUserByIdRepository.findById({ id: user_id });
+    let user = await this.findUserByIdRepository.findById({ id: user_id });
 
     if (!user) {
       throw new UserNotFoundWithProvidedIdError();
@@ -45,9 +45,11 @@ export class UpdateUserPasswordUseCase implements IUpdateUserPasswordUseCase {
       value: new_password,
     });
 
-    return this.updateUserRepository.update({
-      ...user,
+    user = await this.updateUserRepository.update({
+      id: user_id,
       password_hash: newPasswordHash,
     });
+
+    return user;
   }
 }

@@ -5,7 +5,7 @@ import {
   UserTokenExpiredError,
 } from '@domain/errors';
 
-import { RefreshUserAccessTokenUseCase } from '@application/usecases/user/RefreshUserAccessToken';
+import { RefreshUserAccessTokenUseCase } from '@application/usecases/user/RefreshAccessToken';
 
 import { makeUserTokenMock, makeErrorMock } from '../../../domain';
 import {

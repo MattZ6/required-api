@@ -2,7 +2,7 @@ import { internalServerError } from '@presentation/helpers/http';
 
 import { MiddlewareErrorHandlerDecorator } from '@main/decorators/MiddlewareErrorHandler';
 
-import { SaveErrorRepositorySpy } from '../../application/mocks';
+import { CreateErrorRepositorySpy } from '../../application/mocks';
 import { makeErrorMock } from '../../domain';
 import {
   MiddlewareSpy,
@@ -11,18 +11,18 @@ import {
 } from '../mocks';
 
 let middlewareSpy: MiddlewareSpy;
-let saveErrorRepositorySpy: SaveErrorRepositorySpy;
+let createErrorRepositorySpy: CreateErrorRepositorySpy;
 
 let middlewareErrorHandlerDecorator: MiddlewareErrorHandlerDecorator;
 
 describe('MiddlewareErrorHandlerDecorator', () => {
   beforeEach(() => {
     middlewareSpy = new MiddlewareSpy();
-    saveErrorRepositorySpy = new SaveErrorRepositorySpy();
+    createErrorRepositorySpy = new CreateErrorRepositorySpy();
 
     middlewareErrorHandlerDecorator = new MiddlewareErrorHandlerDecorator(
       middlewareSpy,
-      saveErrorRepositorySpy
+      createErrorRepositorySpy
     );
   });
 
@@ -37,19 +37,19 @@ describe('MiddlewareErrorHandlerDecorator', () => {
     expect(handleSpy).toHaveBeenCalledWith(request);
   });
 
-  it('should call SaveErrorRepository once with correct values on error', async () => {
+  it('should call CreateErrorRepository once with correct values on error', async () => {
     const errorMock = makeErrorMock();
 
     jest.spyOn(middlewareSpy, 'handle').mockRejectedValueOnce(errorMock);
 
-    const saveSpy = jest.spyOn(saveErrorRepositorySpy, 'save');
+    const createSpy = jest.spyOn(createErrorRepositorySpy, 'create');
 
     const request = makeMiddlewareHttpRequestMock();
 
     await middlewareErrorHandlerDecorator.handle(request);
 
-    expect(saveSpy).toHaveBeenCalledTimes(1);
-    expect(saveSpy).toHaveBeenCalledWith({
+    expect(createSpy).toHaveBeenCalledTimes(1);
+    expect(createSpy).toHaveBeenCalledWith({
       stack: errorMock.stack,
       exception_was_thrown_in: middlewareSpy.constructor.name,
       resource_url: request.original_url,
@@ -58,21 +58,21 @@ describe('MiddlewareErrorHandlerDecorator', () => {
     });
   });
 
-  it('should call SaveErrorRepository with default stack if error not have a stack', async () => {
+  it('should call CreateErrorRepository with default stack if error not have a stack', async () => {
     const errorMock = makeErrorMock();
 
     errorMock.stack = undefined;
 
     jest.spyOn(middlewareSpy, 'handle').mockRejectedValueOnce(errorMock);
 
-    const saveSpy = jest.spyOn(saveErrorRepositorySpy, 'save');
+    const createSpy = jest.spyOn(createErrorRepositorySpy, 'create');
 
     const request = makeMiddlewareHttpRequestMock();
 
     await middlewareErrorHandlerDecorator.handle(request);
 
-    expect(saveSpy).toHaveBeenCalledTimes(1);
-    expect(saveSpy).toHaveBeenCalledWith({
+    expect(createSpy).toHaveBeenCalledTimes(1);
+    expect(createSpy).toHaveBeenCalledWith({
       stack: 'NO STACK PROVIDED',
       exception_was_thrown_in: middlewareSpy.constructor.name,
       resource_url: request.original_url,

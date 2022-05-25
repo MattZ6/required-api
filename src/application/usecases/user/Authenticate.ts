@@ -1,6 +1,6 @@
 import {
-  WrongPasswordError,
   UserNotFoundWithProvidedEmailError,
+  WrongPasswordError,
 } from '@domain/errors';
 import { IAuthenticateUserUseCase } from '@domain/usecases/user/Authenticate';
 
@@ -9,8 +9,10 @@ import {
   IEncryptProvider,
 } from '@application/protocols/providers/cryptography';
 import { IGenerateUuidProvider } from '@application/protocols/providers/uuid';
-import { IFindUserByEmailRepository } from '@application/protocols/repositories/user';
-import { ICreateUserTokenRepository } from '@application/protocols/repositories/user-token';
+import {
+  IFindUserByEmailRepository,
+  ICreateUserTokenRepository,
+} from '@application/protocols/repositories/user';
 
 export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
   constructor(

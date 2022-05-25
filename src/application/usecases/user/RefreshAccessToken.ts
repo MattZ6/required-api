@@ -1,16 +1,16 @@
 import {
-  UserTokenExpiredError,
   UserTokenNotFoundWithProvidedTokenError,
+  UserTokenExpiredError,
 } from '@domain/errors';
 import { IRefreshUserAccessTokenUseCase } from '@domain/usecases/user/RefreshAccessToken';
 
 import { IEncryptProvider } from '@application/protocols/providers/cryptography';
 import { IGenerateUuidProvider } from '@application/protocols/providers/uuid';
 import {
+  IFindUserTokenByTokenRepository,
   ICreateUserTokenRepository,
   IDeleteUserTokenByIdRepository,
-  IFindUserTokenByTokenRepository,
-} from '@application/protocols/repositories/user-token';
+} from '@application/protocols/repositories/user';
 
 export class RefreshUserAccessTokenUseCase
   implements IRefreshUserAccessTokenUseCase

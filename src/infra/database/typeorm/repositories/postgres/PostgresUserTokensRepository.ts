@@ -4,7 +4,7 @@ import {
   ICreateUserTokenRepository,
   IDeleteUserTokenByIdRepository,
   IFindUserTokenByTokenRepository,
-} from '@application/protocols/repositories/user-token';
+} from '@application/protocols/repositories/user';
 
 import { AppDataSource } from '@infra/database/typeorm';
 import { UserToken } from '@infra/database/typeorm/entities/UserToken';

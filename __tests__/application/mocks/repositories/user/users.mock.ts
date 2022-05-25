@@ -64,8 +64,8 @@ export class FindUserByIdRepositorySpy implements IFindUserByIdRepository {
 
 export class UpdateUserRepositorySpy implements IUpdateUserRepository {
   async update(
-    data: IUpdateUserRepository.Input
+    _: IUpdateUserRepository.Input
   ): Promise<IUpdateUserRepository.Output> {
-    return data;
+    return makeUserMock();
   }
 }

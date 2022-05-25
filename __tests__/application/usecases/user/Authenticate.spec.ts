@@ -5,7 +5,7 @@ import {
   WrongPasswordError,
 } from '@domain/errors';
 
-import { AuthenticateUserUseCase } from '@application/usecases/user/AuthenticateUser';
+import { AuthenticateUserUseCase } from '@application/usecases/user/Authenticate';
 
 import {
   makeErrorMock,

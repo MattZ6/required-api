@@ -1,3 +1,5 @@
+import { UserToken } from '@domain/entities/UserToken';
+
 interface IDeleteUserTokenByIdRepository {
   deleteById(
     data: IDeleteUserTokenByIdRepository.Input
@@ -5,9 +7,7 @@ interface IDeleteUserTokenByIdRepository {
 }
 
 namespace IDeleteUserTokenByIdRepository {
-  export type Input = {
-    id: string;
-  };
+  export type Input = Pick<UserToken, 'id'>;
 
   export type Output = void;
 }

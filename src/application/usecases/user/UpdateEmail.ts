@@ -1,12 +1,12 @@
 import {
-  UserAlreadyExistsWithProvidedEmailError,
   UserNotFoundWithProvidedIdError,
+  UserAlreadyExistsWithProvidedEmailError,
 } from '@domain/errors';
 import { IUpdateUserEmailUseCase } from '@domain/usecases/user/UpdateEmail';
 
 import {
-  ICheckIfUserExistsByEmailRepository,
   IFindUserByIdRepository,
+  ICheckIfUserExistsByEmailRepository,
   IUpdateUserRepository,
 } from '@application/protocols/repositories/user';
 
@@ -22,7 +22,7 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
   ): Promise<IUpdateUserEmailUseCase.Output> {
     const { user_id, email } = data;
 
-    const user = await this.findUserByIdRepository.findById({ id: user_id });
+    let user = await this.findUserByIdRepository.findById({ id: user_id });
 
     if (!user) {
       throw new UserNotFoundWithProvidedIdError();
@@ -40,8 +40,11 @@ export class UpdateUserEmailUseCase implements IUpdateUserEmailUseCase {
       }
     }
 
-    user.email = email;
+    user = await this.updateUserRepository.update({
+      id: user_id,
+      email,
+    });
 
-    return this.updateUserRepository.update(user);
+    return user;
   }
 }

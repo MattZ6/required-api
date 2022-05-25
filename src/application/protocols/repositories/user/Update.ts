@@ -7,7 +7,8 @@ interface IUpdateUserRepository {
 }
 
 namespace IUpdateUserRepository {
-  export type Input = User;
+  export type Input = Pick<User, 'id'> &
+    Pick<Partial<User>, 'name' | 'email' | 'password_hash'>;
 
   export type Output = User;
 }

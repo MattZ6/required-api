@@ -1,3 +1,5 @@
+import { User } from '@domain/entities/User';
+
 interface ICheckIfUserExistsByEmailRepository {
   checkIfExistsByEmail(
     data: ICheckIfUserExistsByEmailRepository.Input
@@ -5,9 +7,7 @@ interface ICheckIfUserExistsByEmailRepository {
 }
 
 namespace ICheckIfUserExistsByEmailRepository {
-  export type Input = {
-    email: string;
-  };
+  export type Input = Pick<User, 'email'>;
 
   export type Output = boolean;
 }

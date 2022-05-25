@@ -7,11 +7,7 @@ interface ICreateUserTokenRepository {
 }
 
 namespace ICreateUserTokenRepository {
-  export type Input = {
-    token: string;
-    user_id: string;
-    expires_in: Date;
-  };
+  export type Input = Pick<UserToken, 'user_id' | 'token' | 'expires_in'>;
 
   export type Output = UserToken;
 }

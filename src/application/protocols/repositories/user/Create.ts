@@ -7,11 +7,7 @@ interface ICreateUserRepository {
 }
 
 namespace ICreateUserRepository {
-  export type Input = {
-    name: string;
-    email: string;
-    password_hash: string;
-  };
+  export type Input = Pick<User, 'name' | 'email' | 'password_hash'>;
 
   export type Output = User;
 }
