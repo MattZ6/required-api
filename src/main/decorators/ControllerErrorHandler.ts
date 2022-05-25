@@ -25,7 +25,7 @@ export class ControllerErrorHandlerDecorator implements IController {
           exception_was_thrown_in: this.controller.constructor.name,
           resource_url: request.original_url,
           http_method: request.method,
-          user_id: request.user.id,
+          user_id: request.user?.id,
         })
         .then(() => console.log('Error successfully registered'))
         .catch(() => console.log('Fail to register the error'));
