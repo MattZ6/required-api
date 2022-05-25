@@ -1,0 +1,33 @@
+import { IHttpResponse } from '@presentation/protocols';
+import { ValidationError } from '@presentation/validations/errors';
+
+import { ErrorDTO } from '../errorDTO';
+
+type ValidationErrorData = {
+  field?: string;
+  type?: string;
+  value?: string | number;
+  message: string;
+};
+
+type ValidationErrorDTO = ErrorDTO & {
+  validation: ValidationErrorData;
+};
+
+export function badRequest(
+  error: ValidationError
+): IHttpResponse<ValidationErrorDTO> {
+  return {
+    statusCode: 400,
+    body: {
+      code: 'validation',
+      message: 'Validation error',
+      validation: {
+        field: error.field,
+        type: error.type,
+
+        message: error.message,
+      },
+    },
+  };
+}
