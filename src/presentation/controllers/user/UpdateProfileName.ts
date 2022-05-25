@@ -20,7 +20,11 @@ class UpdateProfileNameController implements IController {
     request: UpdateProfileNameController.Request
   ): Promise<UpdateProfileNameController.Response> {
     try {
-      this.validation.validate(request.body);
+      const validationError = this.validation.validate(request.body);
+
+      if (validationError) {
+        throw validationError;
+      }
 
       const { id } = request.user;
       const { name } = request.body;

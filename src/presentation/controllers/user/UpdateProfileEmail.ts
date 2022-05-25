@@ -28,7 +28,11 @@ class UpdateProfileEmailController implements IController {
     request: UpdateProfileEmailController.Request
   ): Promise<UpdateProfileEmailController.Response> {
     try {
-      this.validation.validate(request.body);
+      const validationError = this.validation.validate(request.body);
+
+      if (validationError) {
+        throw validationError;
+      }
 
       const { id } = request.user;
       const { email } = request.body;
