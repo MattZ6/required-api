@@ -29,7 +29,11 @@ class AuthenticateUserController implements IController {
     request: AuthenticateUserController.Request
   ): Promise<AuthenticateUserController.Response> {
     try {
-      this.validation.validate(request.body);
+      const validationError = this.validation.validate(request.body);
+
+      if (validationError) {
+        throw validationError;
+      }
 
       const { email, password } = request.body;
 

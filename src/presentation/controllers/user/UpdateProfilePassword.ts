@@ -28,7 +28,11 @@ class UpdateProfilePasswordController implements IController {
     request: UpdateProfilePasswordController.Request
   ): Promise<UpdateProfilePasswordController.Response> {
     try {
-      this.validation.validate(request.body);
+      const validationError = this.validation.validate(request.body);
+
+      if (validationError) {
+        throw validationError;
+      }
 
       const { id } = request.user;
       const { old_password, new_password } = request.body;

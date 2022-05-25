@@ -63,9 +63,7 @@ describe('UpdateProfilePasswordController', () => {
   it('should return bad request (400) if Validation throws ValidationError', async () => {
     const error = makeValidationErrorMock();
 
-    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
-      throw error;
-    });
+    jest.spyOn(validation, 'validate').mockReturnValueOnce(error);
 
     const request = makeUpdateProfilePasswordControllerRequestMock();
 

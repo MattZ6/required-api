@@ -1,16 +1,16 @@
+import { UpdateProfileEmailController } from '@presentation/controllers/user/UpdateProfileEmail';
 import {
-  EmailFieldValidation,
   RequiredFieldValidation,
   ValidationComposite,
 } from '@presentation/validations/validators';
 
-import { makeEmailValidator } from '@main/factories/adapters/EmailValidator';
+import { makeEmailFieldValidation } from '../../validators/EmailField';
 
 export function makeUpdateProfileEmailControllerValidation() {
-  const emailValidator = makeEmailValidator();
+  type Input = UpdateProfileEmailController.RequestBody;
 
-  return new ValidationComposite([
+  return new ValidationComposite<Input>([
     new RequiredFieldValidation('email'),
-    new EmailFieldValidation(emailValidator, 'email'),
+    makeEmailFieldValidation('email'),
   ]);
 }

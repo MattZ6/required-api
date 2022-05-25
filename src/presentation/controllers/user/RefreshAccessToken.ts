@@ -29,7 +29,11 @@ class RefreshUserAccessTokenController implements IController {
     request: RefreshUserAccessTokenController.Request
   ): Promise<RefreshUserAccessTokenController.Response> {
     try {
-      this.validation.validate(request.body);
+      const validationError = this.validation.validate(request.body);
+
+      if (validationError) {
+        throw validationError;
+      }
 
       const { refresh_token } = request.body;
 

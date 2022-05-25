@@ -1,3 +1,5 @@
-export interface IValidation {
-  validate(input: any): void;
+import { ValidationError } from '@presentation/validations/errors';
+
+export interface IValidation<I = unknown> {
+  validate(input: I): ValidationError | null;
 }

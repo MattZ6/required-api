@@ -20,7 +20,11 @@ class CreateAccountController implements IController {
     request: CreateAccountController.Request
   ): Promise<CreateAccountController.Response> {
     try {
-      this.validation.validate(request.body);
+      const validationError = this.validation.validate(request.body);
+
+      if (validationError) {
+        throw validationError;
+      }
 
       const { name, email, password } = request.body;
 

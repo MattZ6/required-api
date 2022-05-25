@@ -1,19 +1,21 @@
+import { AuthenticateUserController } from '@presentation/controllers/user/Authenticate';
 import {
   MinLengthFieldValidation,
   RequiredFieldValidation,
   ValidationComposite,
-  EmailFieldValidation,
 } from '@presentation/validations/validators';
 
-import { makeEmailValidator } from '@main/factories/adapters/EmailValidator';
+import { userConfig } from '@main/config/env/user';
+
+import { makeEmailFieldValidation } from '../../validators/EmailField';
 
 export function makeAuthenticateUserControllerValidation(): ValidationComposite {
-  const emailValidator = makeEmailValidator();
+  type Input = AuthenticateUserController.RequestBody;
 
-  return new ValidationComposite([
+  return new ValidationComposite<Input>([
     new RequiredFieldValidation('email'),
-    new EmailFieldValidation(emailValidator, 'email'),
+    makeEmailFieldValidation('email'),
     new RequiredFieldValidation('password'),
-    new MinLengthFieldValidation('password', 6),
+    new MinLengthFieldValidation('password', userConfig.PASSWORD_MIN_LENGTH),
   ]);
 }
