@@ -27,7 +27,7 @@ jobs:
       uses: bahmutov/npm-install@v1
 
     - name: Collect coverage
-      run: yarn test:ci
+      run: yarn test:cov
 
     - name: Report to Coveralls
       uses: coverallsapp/github-action@1.1.3
