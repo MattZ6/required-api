@@ -1,6 +1,6 @@
 {
   "name": "auth-flow-api",
-  "version": "0.1.0-beta",
+  "version": "0.2.0-beta",
   "license": "MIT",
   "private": true,
   "description": "Simple API for user authentication.",
