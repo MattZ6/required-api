@@ -8,7 +8,7 @@ import {
 import { RefreshUserAccessTokenUseCase } from '@application/usecases/user/RefreshUserAccessToken';
 
 import { makeErrorMock } from '../../domain';
-import { makeUserTokenMock } from '../../domain/models/user-token.mock';
+import { makeUserTokenMock } from '../../domain/entities/user-token.mock';
 import {
   CreateUserTokenRepositorySpy,
   DeleteUserTokenByIdRepositorySpy,

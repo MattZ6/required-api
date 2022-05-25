@@ -8,7 +8,7 @@ import {
 import { AuthenticateUserUseCase } from '@application/usecases/user/AuthenticateUser';
 
 import { makeErrorMock, makeUserMock } from '../../domain';
-import { makeUserTokenMock } from '../../domain/models/user-token.mock';
+import { makeUserTokenMock } from '../../domain/entities/user-token.mock';
 import {
   CompareHashProviderSpy,
   CreateUserTokenRepositorySpy,

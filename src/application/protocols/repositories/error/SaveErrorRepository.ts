@@ -1,4 +1,4 @@
-import { Error } from '@domain/models/Error';
+import { Error } from '@domain/entities/Error';
 
 interface ISaveErrorRepository {
   save(data: ISaveErrorRepository.Input): Promise<ISaveErrorRepository.Output>;

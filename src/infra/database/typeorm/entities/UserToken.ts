@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { UserToken } from '@domain/models/UserToken';
+import { UserToken } from '@domain/entities/UserToken';
 
 import { tableNames } from '../constants';
 

@@ -1,6 +1,6 @@
 import faker from '@faker-js/faker';
 
-import { UserToken } from '@domain/models/UserToken';
+import { UserToken } from '@domain/entities/UserToken';
 
 export function makeUserTokenMock(): UserToken {
   return {

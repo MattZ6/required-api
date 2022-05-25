@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
 import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
 
-import { Error } from '@domain/models/Error';
+import { Error } from '@domain/entities/Error';
 
 import { tableNames } from '../constants';
 

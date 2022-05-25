@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { Error } from '@domain/models/Error';
+import { Error } from '@domain/entities/Error';
 
 export function makeErrorEntityMock(): Error {
   return {

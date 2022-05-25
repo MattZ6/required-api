@@ -1,6 +1,6 @@
 import faker from '@faker-js/faker';
 
-import { User } from '@domain/models/User';
+import { User } from '@domain/entities/User';
 
 export function makeUserMock(): User {
   return {
