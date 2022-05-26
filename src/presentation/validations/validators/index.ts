@@ -1,5 +1,6 @@
 export * from './CompareFields';
+export * from './Composite';
 export * from './EmailField';
 export * from './MinLengthField';
 export * from './RequiredField';
-export * from './Composite';
+export * from './UuidField';
