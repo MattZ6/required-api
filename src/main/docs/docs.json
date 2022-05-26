@@ -153,11 +153,11 @@
     "/v1/auth/sign/up": {
       "post": {
         "tags": ["User"],
-        "summary": "Create a new user",
-        "description": "Create a new user",
+        "summary": "Create a new user.",
+        "description": "Create a new user.",
         "requestBody": {
           "required": true,
-          "description": "User's data",
+          "description": "User's data.",
           "content": {
             "application/json": {
               "example": {
@@ -317,6 +317,106 @@
           }
         }
       }
+    },
+    "/v1/auth/refresh": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Refreshes user authentication.",
+        "description": "Refreshes user authentication.",
+        "requestBody": {
+          "required": true,
+          "description": "Refresh token data.",
+          "content": {
+            "application/json": {
+              "example": {
+                "refresh_token": "..."
+              },
+              "schema": {
+                "$ref": "#/components/schemas/RefreshToken"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "example": {
+                  "access_token": "...",
+                  "refresh_token": "..."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Refresh token required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "refresh_token",
+                        "type": "required",
+                        "value": null,
+                        "message": "The refresh_token field is required."
+                      }
+                    }
+                  },
+                  "Refresh token invalid": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "refresh_token",
+                        "type": "invalid",
+                        "value": null,
+                        "message": "The refresh_token is not a valid UUID."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "user_token.not.exists",
+                  "message": "Token not found"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "user_token.expired",
+                  "message": "Token has expired"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "internal",
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -350,6 +450,14 @@
           "password_confirmation": {
             "type": "string",
             "minLength": 8
+          }
+        }
+      },
+      "RefreshToken": {
+        "type": "object",
+        "properties": {
+          "refresh_token": {
+            "type": "string"
           }
         }
       }
