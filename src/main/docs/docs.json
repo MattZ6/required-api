@@ -1,0 +1,177 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "v0.3.0-beta",
+    "title": "Auth Flow API Docs",
+    "description": "API docs for authentication application.",
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/MattZ6/auth-flow-api/blob/main/LICENSE.md"
+    },
+    "contact": {
+      "name": "Matheus",
+      "email": "matt_z6@hotmail.com",
+      "url": "https://github.com/MattZ6"
+    }
+  },
+  "externalDocs": {
+    "url": "https://github.com/MattZ6/auth-flow-api",
+    "description": "More info"
+  },
+  "tags": [
+    {
+      "name": "User",
+      "description": "Endpoints related to the Users's scope"
+    }
+  ],
+  "paths": {
+    "/v1/sign/in": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Performs user authentication.",
+        "description": "Performs user authentication.",
+        "requestBody": {
+          "required": true,
+          "description": "User's credentials",
+          "content": {
+            "application/json": {
+              "example": {
+                "email": "john.doe@authflow.com",
+                "password": "johnspassword"
+              },
+              "schema": {
+                "$ref": "#/components/schemas/Credentials"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "example": {
+                  "access_token": "...",
+                  "refresh_token": "..."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Email required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "email",
+                        "type": "required",
+                        "value": null,
+                        "message": "The email field is required."
+                      }
+                    }
+                  },
+                  "Email invalid": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "email",
+                        "type": "invalid",
+                        "value": null,
+                        "message": "The email is invalid."
+                      }
+                    }
+                  },
+                  "Password required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "password",
+                        "type": "required",
+                        "value": null,
+                        "message": "The password field is required."
+                      }
+                    }
+                  },
+                  "Password min length": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "password",
+                        "type": "minlength",
+                        "value": 8,
+                        "message": "The password must have at least 8 characters"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "user.not.exists",
+                  "message": "User not found with provided email."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "password.wrong",
+                  "message": "Wrong password."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "internal",
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Credentials": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "userAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Access-Token",
+        "description": "The user's access token"
+      }
+    }
+  }
+}
