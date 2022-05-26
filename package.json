@@ -30,6 +30,9 @@
     "db:migrate": "yarn prisma migrate deploy",
     "db:config": "yarn db:migrate"
   },
+  "engines": {
+    "node": "14.19.1"
+  },
   "prisma": {
     "schema": "src/infra/database/prisma/schema.prisma"
   },
