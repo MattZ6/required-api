@@ -8,10 +8,8 @@ async function initializeServer() {
   console.log('⏳ Starting server...');
 
   try {
-    app.listen(process.env.API_PORT, () => {
-      console.log(
-        `🚀 Server is running at ${process.env.API_HOST}:${process.env.API_PORT}\n`
-      );
+    app.listen(process.env.PORT, () => {
+      console.log(`🚀 Server is running in port ${process.env.PORT}\n`);
     });
   } catch (error) {
     printError('-----------------------------------------');
