@@ -1,0 +1,990 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "v0.3.0-beta",
+    "title": "Auth Flow API Docs",
+    "description": "API docs for authentication application.",
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/MattZ6/auth-flow-api/blob/main/LICENSE.md"
+    },
+    "contact": {
+      "name": "Matheus",
+      "email": "matt_z6@hotmail.com",
+      "url": "https://github.com/MattZ6"
+    }
+  },
+  "externalDocs": {
+    "url": "https://github.com/MattZ6/auth-flow-api",
+    "description": "More info"
+  },
+  "tags": [
+    {
+      "name": "User",
+      "description": "Endpoints related to the Users's scope"
+    }
+  ],
+  "paths": {
+    "/v1/auth/sign/in": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Performs user authentication.",
+        "description": "Performs user authentication.",
+        "requestBody": {
+          "required": true,
+          "description": "User's credentials",
+          "content": {
+            "application/json": {
+              "example": {
+                "email": "john.doe@authflow.com",
+                "password": "johnspassword"
+              },
+              "schema": {
+                "$ref": "#/components/schemas/Credentials"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "example": {
+                  "access_token": "...",
+                  "refresh_token": "..."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Email required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "email",
+                        "type": "required",
+                        "value": null,
+                        "message": "The email field is required."
+                      }
+                    }
+                  },
+                  "Email invalid": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "email",
+                        "type": "invalid",
+                        "value": null,
+                        "message": "The email is invalid."
+                      }
+                    }
+                  },
+                  "Password required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "password",
+                        "type": "required",
+                        "value": null,
+                        "message": "The password field is required."
+                      }
+                    }
+                  },
+                  "Password min length": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "password",
+                        "type": "minlength",
+                        "value": 8,
+                        "message": "The password must have at least 8 characters"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "user.not.exists",
+                  "message": "Theres no user registered user with this email."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "password.wrong",
+                  "message": "Wrong password."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "internal",
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/sign/up": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create a new user.",
+        "description": "Create a new user.",
+        "requestBody": {
+          "required": true,
+          "description": "User's data.",
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "Jane Doe",
+                "email": "jane.doe@authflow.com",
+                "password": "janespassword",
+                "password_confirmation": "janespassword"
+              },
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Name required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "name",
+                        "type": "required",
+                        "value": null,
+                        "message": "The name field is required."
+                      }
+                    }
+                  },
+                  "Name min length": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "name",
+                        "type": "minlength",
+                        "value": 3,
+                        "message": "The name must have at least 3 characters"
+                      }
+                    }
+                  },
+                  "Email required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "email",
+                        "type": "required",
+                        "value": null,
+                        "message": "The email field is required."
+                      }
+                    }
+                  },
+                  "Email invalid": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "email",
+                        "type": "invalid",
+                        "value": null,
+                        "message": "The email is invalid."
+                      }
+                    }
+                  },
+                  "Password required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "password",
+                        "type": "required",
+                        "value": null,
+                        "message": "The password field is required."
+                      }
+                    }
+                  },
+                  "Password min length": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "password",
+                        "type": "minlength",
+                        "value": 8,
+                        "message": "The password must have at least 8 characters"
+                      }
+                    }
+                  },
+                  "Password confirmation required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "password_confirmation",
+                        "type": "required",
+                        "value": null,
+                        "message": "The password_confirmation field is required."
+                      }
+                    }
+                  },
+                  "Password confirmation min length": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "password_confirmation",
+                        "type": "minlength",
+                        "value": 8,
+                        "message": "The password_confirmation must have at least 8 characters"
+                      }
+                    }
+                  },
+                  "Passwords not match": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "password_confirmation",
+                        "type": "divergent",
+                        "value": null,
+                        "message": "The value of the password_confirmation field is different from the value of the password field"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "user.email_in_use",
+                  "message": "There is already a registered user with this email"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "internal",
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/refresh": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Refreshes user authentication.",
+        "description": "Refreshes user authentication.",
+        "requestBody": {
+          "required": true,
+          "description": "Refresh token data.",
+          "content": {
+            "application/json": {
+              "example": {
+                "refresh_token": "..."
+              },
+              "schema": {
+                "$ref": "#/components/schemas/RefreshToken"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "example": {
+                  "access_token": "...",
+                  "refresh_token": "..."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Refresh token required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "refresh_token",
+                        "type": "required",
+                        "value": null,
+                        "message": "The refresh_token field is required."
+                      }
+                    }
+                  },
+                  "Refresh token invalid": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "refresh_token",
+                        "type": "invalid",
+                        "value": null,
+                        "message": "The refresh_token is not a valid UUID."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "user_token.not.exists",
+                  "message": "Token not found"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "user_token.expired",
+                  "message": "Token has expired"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "internal",
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/profile": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Gets the profile data.",
+        "description": "Gets the profile data of the authenticated user.",
+        "security": [{ "userAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "...",
+                  "name": "John Doe",
+                  "email": "john.doe@authflow.com"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Access token missing": {
+                    "value": {
+                      "code": "token.not.provided",
+                      "message": "Missing access token"
+                    }
+                  },
+                  "Access token invalid": {
+                    "value": {
+                      "code": "token.invalid",
+                      "message": "Invalid access token"
+                    }
+                  },
+                  "Access token expired": {
+                    "value": {
+                      "code": "token.expired",
+                      "message": "The access token is expired"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "user.not.exists",
+                  "message": "User not exists"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "internal",
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/profile/name": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Update name.",
+        "description": "Update name of the authenticated user.",
+        "security": [{ "userAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "description": "User's name data.",
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "Jane Doe"
+              },
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserNameData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Name required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "name",
+                        "type": "required",
+                        "value": null,
+                        "message": "The name field is required."
+                      }
+                    }
+                  },
+                  "Name min length": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "name",
+                        "type": "minlength",
+                        "value": 3,
+                        "message": "The name must have at least 3 characters"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Access token missing": {
+                    "value": {
+                      "code": "token.not.provided",
+                      "message": "Missing access token"
+                    }
+                  },
+                  "Access token invalid": {
+                    "value": {
+                      "code": "token.invalid",
+                      "message": "Invalid access token"
+                    }
+                  },
+                  "Access token expired": {
+                    "value": {
+                      "code": "token.expired",
+                      "message": "The access token is expired"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "user.not.exists",
+                  "message": "User not exists"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "internal",
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/profile/email": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Update email.",
+        "description": "Update email of the authenticated user.",
+        "security": [{ "userAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "description": "User's email data.",
+          "content": {
+            "application/json": {
+              "example": {
+                "email": "jane.doe@authflow.com.br"
+              },
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserEmailData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Email required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "email",
+                        "type": "required",
+                        "value": null,
+                        "message": "The email field is required."
+                      }
+                    }
+                  },
+                  "Email invalid": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "email",
+                        "type": "invalid",
+                        "value": null,
+                        "message": "The email is invalid."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Access token missing": {
+                    "value": {
+                      "code": "token.not.provided",
+                      "message": "Missing access token"
+                    }
+                  },
+                  "Access token invalid": {
+                    "value": {
+                      "code": "token.invalid",
+                      "message": "Invalid access token"
+                    }
+                  },
+                  "Access token expired": {
+                    "value": {
+                      "code": "token.expired",
+                      "message": "The access token is expired"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "user.not.exists",
+                  "message": "User not exists"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "user.email_in_use",
+                  "message": "There is already a registered user with this email"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "internal",
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/profile/password": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Update password.",
+        "description": "Update password of the authenticated user.",
+        "security": [{ "userAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "description": "User's password data.",
+          "content": {
+            "application/json": {
+              "example": {
+                "old_password": "janespassword",
+                "new_password": "janesamazingpassword",
+                "new_password_confirmation": "janesamazingpassword"
+              },
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserPasswordData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Old password required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "old_password",
+                        "type": "required",
+                        "value": null,
+                        "message": "The old_password field is required."
+                      }
+                    }
+                  },
+                  "Old password min length": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "old_password",
+                        "type": "minlength",
+                        "value": 8,
+                        "message": "The old_password must have at least 8 characters"
+                      }
+                    }
+                  },
+                  "New password required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "new_password",
+                        "type": "required",
+                        "value": null,
+                        "message": "The new_password field is required."
+                      }
+                    }
+                  },
+                  "New password min length": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "new_password",
+                        "type": "minlength",
+                        "value": 8,
+                        "message": "The new_password must have at least 8 characters"
+                      }
+                    }
+                  },
+                  "New password confirmation required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "new_password_confirmation",
+                        "type": "required",
+                        "value": null,
+                        "message": "The new_password_confirmation field is required."
+                      }
+                    }
+                  },
+                  "New password confirmation min length": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "new_password_confirmation",
+                        "type": "minlength",
+                        "value": 8,
+                        "message": "The new_password_confirmation must have at least 8 characters"
+                      }
+                    }
+                  },
+                  "Passwords not match": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "new_password_confirmation",
+                        "type": "divergent",
+                        "value": null,
+                        "message": "The value of the new_password_confirmation field is different from the value of the new_password field"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Access token missing": {
+                    "value": {
+                      "code": "token.not.provided",
+                      "message": "Missing access token"
+                    }
+                  },
+                  "Access token invalid": {
+                    "value": {
+                      "code": "token.invalid",
+                      "message": "Invalid access token"
+                    }
+                  },
+                  "Access token expired": {
+                    "value": {
+                      "code": "token.expired",
+                      "message": "The access token is expired"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "user.not.exists",
+                  "message": "User not exists"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "password.wrong",
+                  "message": "Wrong password"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "internal",
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Credentials": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateUserData": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 3
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8
+          },
+          "password_confirmation": {
+            "type": "string",
+            "minLength": 8
+          }
+        }
+      },
+      "RefreshToken": {
+        "type": "object",
+        "properties": {
+          "refresh_token": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateUserNameData": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 3
+          }
+        }
+      },
+      "UpdateUserEmailData": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateUserPasswordData": {
+        "type": "object",
+        "properties": {
+          "old_password": {
+            "type": "string",
+            "minLength": 8
+          },
+          "new_password": {
+            "type": "string",
+            "minLength": 8
+          },
+          "new_password_confirmation": {
+            "type": "string",
+            "minLength": 8
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "userAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Access-Token",
+        "description": "The user's access token"
+      }
+    }
+  }
+}
