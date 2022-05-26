@@ -120,7 +120,7 @@
               "application/json": {
                 "example": {
                   "code": "user.not.exists",
-                  "message": "User not found with provided email."
+                  "message": "Theres no user registered user with this email."
                 }
               }
             }
@@ -132,6 +132,174 @@
                 "example": {
                   "code": "password.wrong",
                   "message": "Wrong password."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "internal",
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sign/up": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create a new user",
+        "description": "Create a new user",
+        "requestBody": {
+          "required": true,
+          "description": "User's data",
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "Jane Doe",
+                "email": "jane.doe@authflow.com",
+                "password": "janespassword",
+                "password_confirmation": "janespassword"
+              },
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Name required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "name",
+                        "type": "required",
+                        "value": null,
+                        "message": "The name field is required."
+                      }
+                    }
+                  },
+                  "Name min length": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "name",
+                        "type": "minlength",
+                        "value": 3,
+                        "message": "The name must have at least 3 characters"
+                      }
+                    }
+                  },
+                  "Email required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "email",
+                        "type": "required",
+                        "value": null,
+                        "message": "The email field is required."
+                      }
+                    }
+                  },
+                  "Email invalid": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "email",
+                        "type": "invalid",
+                        "value": null,
+                        "message": "The email is invalid."
+                      }
+                    }
+                  },
+                  "Password required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "password",
+                        "type": "required",
+                        "value": null,
+                        "message": "The password field is required."
+                      }
+                    }
+                  },
+                  "Password min length": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "password",
+                        "type": "minlength",
+                        "value": 8,
+                        "message": "The password must have at least 8 characters"
+                      }
+                    }
+                  },
+                  "Password confirmation required": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "password_confirmation",
+                        "type": "required",
+                        "value": null,
+                        "message": "The password_confirmation field is required."
+                      }
+                    }
+                  },
+                  "Password confirmation min length": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "password_confirmation",
+                        "type": "minlength",
+                        "value": 8,
+                        "message": "The password_confirmation must have at least 8 characters"
+                      }
+                    }
+                  },
+                  "Passwords not match": {
+                    "value": {
+                      "code": "validation",
+                      "message": "Validation error",
+                      "validation": {
+                        "field": "password_confirmation",
+                        "type": "divergent",
+                        "value": null,
+                        "message": "The value of the password_confirmation field is different from the value of the password field"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "example": {
+                  "code": "user.email_in_use",
+                  "message": "There is already a registered user with this email"
                 }
               }
             }
@@ -161,6 +329,27 @@
           },
           "password": {
             "type": "string"
+          }
+        }
+      },
+      "CreateUserData": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 3
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8
+          },
+          "password_confirmation": {
+            "type": "string",
+            "minLength": 8
           }
         }
       }
