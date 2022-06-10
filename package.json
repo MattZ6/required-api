@@ -44,7 +44,7 @@
     "@babel/preset-env": "7.18.2",
     "@babel/preset-typescript": "7.17.12",
     "@faker-js/faker": "6.3.1",
-    "@swc/core": "1.2.196",
+    "@swc/core": "1.2.197",
     "@swc/jest": "0.2.21",
     "@types/bcryptjs": "2.4.2",
     "@types/cors": "2.8.12",
