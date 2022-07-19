@@ -82,6 +82,6 @@
     "helmet": "5.1.0",
     "joi": "17.6.0",
     "jsonwebtoken": "8.5.1",
-    "swagger-ui-express": "4.4.0"
+    "swagger-ui-express": "4.5.0"
   }
 }
