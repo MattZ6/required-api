@@ -37,11 +37,11 @@
     "schema": "src/infra/database/prisma/schema.prisma"
   },
   "devDependencies": {
-    "@babel/cli": "7.18.10",
-    "@babel/core": "7.19.1",
+    "@babel/cli": "7.19.3",
+    "@babel/core": "7.19.3",
     "@babel/node": "7.19.1",
     "@babel/plugin-proposal-class-properties": "7.18.6",
-    "@babel/preset-env": "7.19.1",
+    "@babel/preset-env": "7.19.3",
     "@babel/preset-typescript": "7.18.6",
     "@faker-js/faker": "6.3.1",
     "@swc/core": "1.3.4",
