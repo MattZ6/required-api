@@ -155,6 +155,10 @@ describe('AuthenticateUserUseCase', () => {
     expect(encryptSpy).toHaveBeenCalledTimes(1);
     expect(encryptSpy).toHaveBeenCalledWith({
       subject: userMock.id,
+      payload: {
+        name: userMock.name,
+        email: input.email,
+      },
     });
   });
 
