@@ -21,16 +21,16 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'yarn'
+        cache: 'pnpm'
 
     - name: Install dependencies (with cache)
       uses: bahmutov/npm-install@v1
 
     - name: Check types
-      run: yarn type-check
+      run: pnpm type-check
 
     - name: Check linting
-      run: yarn lint
+      run: pnpm lint
 
     - name: Run tests
-      run: yarn test
+      run: pnpm test
