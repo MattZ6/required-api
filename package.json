@@ -31,8 +31,7 @@
     "db:config": "pnpm run db:migrate"
   },
   "engines": {
-    "node": "14.20.0",
-    "pnpm": ">=7"
+    "node": "14.20.0"
   },
   "prisma": {
     "schema": "src/infra/database/prisma/schema.prisma"
