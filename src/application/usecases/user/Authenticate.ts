@@ -46,6 +46,10 @@ export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
 
     const accessToken = await this.encryptProvider.encrypt({
       subject: user.id,
+      payload: {
+        name: user.name,
+        email,
+      },
     });
 
     const refreshToken = await this.generateUuidProvider.generate();
