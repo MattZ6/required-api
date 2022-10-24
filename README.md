@@ -43,7 +43,7 @@ cd auth-flow-api
 Install the project dependencies:
 
 ```bash
-yarn
+pnpm
 ```
 
 ### Environment variables
@@ -78,7 +78,7 @@ DATABASE_NAME= # (database name)
 To start the services - application and database:
 
 ```bash
-yarn docker:up
+pnpm docker:up
 ```
 
 ### Run migrations
@@ -86,7 +86,7 @@ yarn docker:up
 Execute the follow command to create tables and relationships:
 
 ```bash
-yarn db:migration:create
+pnpm db:migration:create
 ```
 
 ### Stop
@@ -94,7 +94,7 @@ yarn db:migration:create
 To stop the services you can run:
 
 ```bash
-yarn docker:down
+pnpm docker:down
 ```
 
 > Remember that this will cause the services (api and database) to be removed. If you just want to "put the services to sleep", run `docker-compose stop`.
@@ -106,7 +106,7 @@ yarn docker:down
 To run the unit tests, you can execute the following command:
 
 ```bash
-yarn test
+pnpm test
 ```
 
 ## 🤝 Contributing

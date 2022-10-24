@@ -15,7 +15,8 @@
   },
   "bugs": "https://github.com/MattZ6/auth-flow-api/issues",
   "scripts": {
-    "prestart": "yarn db:migrate",
+    "prestart": "pnpm run db:migrate",
+    "postinstall": "pnpm exec prisma generate",
     "build": "rm -rf dist && babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "start": "node dist/main/server.js",
     "dev": "cross-env DATABASE_PORT=5432 tsnd -r tsconfig-paths/register --inspect --exit-child --transpile-only --ignore-watch node_modules --respawn src/main/server.ts",
@@ -23,12 +24,12 @@
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js)\"",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js)\" --write",
     "test": "jest --passWithNoTests",
-    "test:cov": "yarn test --coverage",
+    "test:cov": "pnpm run test --coverage",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "prisma:dev": "cross-env DATABASE_HOST=localhost prisma",
-    "db:migrate": "yarn prisma migrate deploy",
-    "db:config": "yarn db:migrate"
+    "db:migrate": "pnpm run prisma migrate deploy",
+    "db:config": "pnpm run db:migrate"
   },
   "engines": {
     "node": "16.18.0"
