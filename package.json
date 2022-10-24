@@ -31,7 +31,7 @@
     "db:config": "yarn db:migrate"
   },
   "engines": {
-    "node": "14.20.0"
+    "node": "16.18.0"
   },
   "prisma": {
     "schema": "src/infra/database/prisma/schema.prisma"
