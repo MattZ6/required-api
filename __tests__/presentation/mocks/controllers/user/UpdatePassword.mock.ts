@@ -1,4 +1,4 @@
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 import { UpdateProfilePasswordController } from '@presentation/controllers/user/UpdateProfilePassword';
 

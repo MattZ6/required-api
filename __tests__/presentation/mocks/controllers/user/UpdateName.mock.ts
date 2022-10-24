@@ -1,4 +1,4 @@
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 import { UpdateProfileNameController } from '@presentation/controllers/user/UpdateProfileName';
 
@@ -7,7 +7,7 @@ export function makeUpdateProfileNameControllerRequestMock(): UpdateProfileNameC
     method: faker.internet.httpMethod(),
     original_url: faker.internet.url(),
     body: {
-      name: faker.name.findName(),
+      name: faker.name.fullName(),
     },
     headers: undefined,
     params: undefined,
