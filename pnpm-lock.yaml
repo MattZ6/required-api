@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@babel/cli': 7.19.3
   '@babel/core': 7.19.6
-  '@babel/node': 7.19.1
+  '@babel/node': 7.20.0
   '@babel/plugin-proposal-class-properties': 7.18.6
   '@babel/preset-env': 7.19.4
   '@babel/preset-typescript': 7.18.6
@@ -61,7 +61,7 @@ dependencies:
 devDependencies:
   '@babel/cli': 7.19.3_@babel+core@7.19.6
   '@babel/core': 7.19.6
-  '@babel/node': 7.19.1_@babel+core@7.19.6
+  '@babel/node': 7.20.0_@babel+core@7.19.6
   '@babel/plugin-proposal-class-properties': 7.18.6_@babel+core@7.19.6
   '@babel/preset-env': 7.19.4_@babel+core@7.19.6
   '@babel/preset-typescript': 7.18.6_@babel+core@7.19.6
@@ -406,8 +406,8 @@ packages:
       js-tokens: 4.0.0
     dev: true
 
-  /@babel/node/7.19.1_@babel+core@7.19.6:
-    resolution: {integrity: sha512-gfxJNrawPso6kx7SwKfAdX1rEzVc09speJLFKrdxuZXGlve92pjbB3nJVmuwrxNN4+jvytj2zvliNXuW6uaSOw==}
+  /@babel/node/7.20.0_@babel+core@7.19.6:
+    resolution: {integrity: sha512-FEWKq7XC2I4ci05L46B9ghJVZc5mkqx1UKtxed0BUq7jaw+8HbpwjF4nsE7I5A4iolIWlMXycGRal1CcAe0PZA==}
     engines: {node: '>=6.9.0'}
     hasBin: true
     peerDependencies:
