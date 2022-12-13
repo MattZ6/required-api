@@ -34,7 +34,7 @@ specifiers:
   eslint-plugin-prettier: 4.2.1
   express: 4.18.2
   git-commit-msg-linter: 4.4.0
-  helmet: 6.0.0
+  helmet: 6.0.1
   jest: 29.3.1
   joi: 17.7.0
   jsonwebtoken: 8.5.1
@@ -53,7 +53,7 @@ dependencies:
   cross-env: 7.0.3
   dotenv: 16.0.3
   express: 4.18.2
-  helmet: 6.0.0
+  helmet: 6.0.1
   joi: 17.7.0
   jsonwebtoken: 8.5.1
   swagger-ui-express: 4.6.0_express@4.18.2
@@ -3727,8 +3727,8 @@ packages:
     dependencies:
       function-bind: 1.1.1
 
-  /helmet/6.0.0:
-    resolution: {integrity: sha512-FO9RpR1wNJepH/GbLPQVtkE2eESglXL641p7SdyoT4LngHFJcZheHMoyUcjCZF4qpuMMO1u5q6RK0l9Ux8JBcg==}
+  /helmet/6.0.1:
+    resolution: {integrity: sha512-8wo+VdQhTMVBMCITYZaGTbE4lvlthelPYSvoyNvk4RECTmrVjMerp9RfUOQXZWLvCcAn1pKj7ZRxK4lI9Alrcw==}
     engines: {node: '>=14.0.0'}
     dev: false
 
