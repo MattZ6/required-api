@@ -112,8 +112,8 @@ devDependencies:
     specifier: 4.2.1
     version: 4.2.1(eslint-config-prettier@8.7.0)(eslint@8.36.0)(prettier@2.8.4)
   git-commit-msg-linter:
-    specifier: 4.9.2
-    version: 4.9.2
+    specifier: 4.9.3
+    version: 4.9.3
   jest:
     specifier: 29.5.0
     version: 29.5.0(@types/node@18.11.2)
@@ -3835,8 +3835,8 @@ packages:
     resolution: {integrity: sha512-X8u8fREiYOE6S8hLbq99PeykTDoLVnxvF4DjWKJmz9xy2nNRdUcV8ZN9tniJFeKyTU3qnC9lL8n4Chd6LmVKHg==}
     dev: true
 
-  /git-commit-msg-linter@4.9.2:
-    resolution: {integrity: sha512-a51/JHhnMTJwrIAK0yN/RtTL967KfmQdQEX6XrsIiSuJcrUIpgOTan1fVNWW4pWBe2m7TqF06Ha319FBDVvYww==}
+  /git-commit-msg-linter@4.9.3:
+    resolution: {integrity: sha512-fJutoy/F1z8o9PqMr3mWhyT0WrCefn/TQzMQf2zpbrwY72hHHzkGJMu5qoMcaC/EG0VLPlUMPutQ/6bRsMGUyg==}
     engines: {node: '>= 8.0.0'}
     hasBin: true
     requiresBuild: true
