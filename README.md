@@ -1,9 +1,9 @@
 <div align="center">
   <h1>
-    🗝 Auth Flow API
+    🛡️ Auth Flow API
   </h1>
 
-  > Simple API for user authentication.
+  > Simple user authentication flow API.
 
   <strong>🚧 Under development... 🚧</strong>
 
@@ -43,7 +43,7 @@ cd auth-flow-api
 Install the project dependencies:
 
 ```bash
-pnpm
+pnpm i
 ```
 
 ### Environment variables
@@ -101,7 +101,7 @@ pnpm docker:down
 
 ## 🧪 Tests
 
-> 💡 At this point the application has **only unit tests**. These tests cover `use cases`, `controllers` and `middlewares`, focusing on the business rule. In the near future I plan to include end-to-end tests to shield the application in its total flow.
+> 💡 At this point the application has **only unit tests**. These tests cover `use cases`, `controllers`, `decorators` and `middlewares`, focusing on the business rule. In the near future I plan to include end-to-end tests to shield the application in its total flow.
 
 To run the unit tests, you can execute the following command:
 
