@@ -128,7 +128,7 @@ Made with ❤ by [Matheus Felipe Zanin](https://github.com/MattZ6).<br/>
 [license-url]: LICENSE.md
 [license-image]: https://img.shields.io/github/license/MattZ6/auth-flow-api?color=303030&labelColor=232320&style=for-the-badge
 
-[build-image]: https://img.shields.io/github/workflow/status/MattZ6/auth-flow-api/Coveralls/main?style=for-the-badge&labelColor=232320
+[build-image]: https://img.shields.io/github/actions/workflow/status/mattz6/auth-flow-api/coverage.yml?style=for-the-badge&labelColor=232320
 [build-url]: https://github.com/MattZ6/auth-flow-api/actions
 
 [coveralls-image]: https://img.shields.io/coveralls/github/MattZ6/auth-flow-api/main?style=for-the-badge&labelColor=232320
