@@ -20,6 +20,7 @@ export default defineConfig({
     include: ['**/*.spec.ts'],
     coverage: {
       provider: 'c8',
+      reporter: ['text', 'html', 'lcov'],
       include: [
         'src/**/*.ts',
         // '<rootDir>/src/application/usecases/**/*.ts',
