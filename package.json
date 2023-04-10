@@ -2,7 +2,7 @@
   "private": true,
   "name": "auth-flow-api",
   "description": "Simple API for user authentication.",
-  "version": "0.5.3-beta",
+  "version": "1.0.0",
   "license": "MIT",
   "author": {
     "name": "Matheus Felipe Zanin",
