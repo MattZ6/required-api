@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 
 import {
   UserNotFoundWithProvidedIdError,
@@ -39,7 +40,7 @@ describe('UpdateUserPasswordUseCase', () => {
   });
 
   it('should call FindUserByIdRepository once with correct values', async () => {
-    const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
+    const findByIdSpy = vitest.spyOn(findUserByIdRepositorySpy, 'findById');
 
     const input = makeUpdateUserPasswordUseCaseInputMock();
 
@@ -52,7 +53,7 @@ describe('UpdateUserPasswordUseCase', () => {
   it('should throw if FindUserByIdRepository throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockRejectedValueOnce(errorMock);
 
@@ -64,7 +65,7 @@ describe('UpdateUserPasswordUseCase', () => {
   });
 
   it('should throw UserNotFoundWithProvidedIdError if FindUserByIdRepository returns undefined', async () => {
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockResolvedValueOnce(undefined);
 
@@ -80,11 +81,11 @@ describe('UpdateUserPasswordUseCase', () => {
   it('should call CompareHashProvider once with correct values', async () => {
     const userMock = makeUserMock();
 
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockResolvedValueOnce(userMock);
 
-    const compareSpy = jest.spyOn(compareHashProviderSpy, 'compare');
+    const compareSpy = vitest.spyOn(compareHashProviderSpy, 'compare');
 
     const input = makeUpdateUserPasswordUseCaseInputMock();
 
@@ -100,7 +101,7 @@ describe('UpdateUserPasswordUseCase', () => {
   it('should throw if CompareHashProvider throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(compareHashProviderSpy, 'compare')
       .mockRejectedValueOnce(errorMock);
 
@@ -112,7 +113,9 @@ describe('UpdateUserPasswordUseCase', () => {
   });
 
   it('should throw WrongPasswordError if CompareHashProvider returns false', async () => {
-    jest.spyOn(compareHashProviderSpy, 'compare').mockResolvedValueOnce(false);
+    vitest
+      .spyOn(compareHashProviderSpy, 'compare')
+      .mockResolvedValueOnce(false);
 
     const input = makeUpdateUserPasswordUseCaseInputMock();
 
@@ -122,7 +125,7 @@ describe('UpdateUserPasswordUseCase', () => {
   });
 
   it('should call GenerateHashProvider once with correct values', async () => {
-    const hashSpy = jest.spyOn(generateHashProviderSpy, 'hash');
+    const hashSpy = vitest.spyOn(generateHashProviderSpy, 'hash');
 
     const input = makeUpdateUserPasswordUseCaseInputMock();
 
@@ -135,7 +138,7 @@ describe('UpdateUserPasswordUseCase', () => {
   it('should throw if GenerateHashProvider throws', async () => {
     const error = makeErrorMock();
 
-    jest.spyOn(generateHashProviderSpy, 'hash').mockRejectedValueOnce(error);
+    vitest.spyOn(generateHashProviderSpy, 'hash').mockRejectedValueOnce(error);
 
     const input = makeUpdateUserPasswordUseCaseInputMock();
 
@@ -147,17 +150,17 @@ describe('UpdateUserPasswordUseCase', () => {
   it('should call UpdateUserRepository once with correct values', async () => {
     const userMock = makeUserMock();
 
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockResolvedValueOnce(userMock);
 
     const hashedPassword = faker.internet.password();
 
-    jest
+    vitest
       .spyOn(generateHashProviderSpy, 'hash')
       .mockResolvedValueOnce(hashedPassword);
 
-    const updateSpy = jest.spyOn(updateUserRepositorySpy, 'update');
+    const updateSpy = vitest.spyOn(updateUserRepositorySpy, 'update');
 
     const input = makeUpdateUserPasswordUseCaseInputMock();
 
@@ -173,7 +176,9 @@ describe('UpdateUserPasswordUseCase', () => {
   it('should throw if UpdateUserRepository throws', async () => {
     const error = makeErrorMock();
 
-    jest.spyOn(updateUserRepositorySpy, 'update').mockRejectedValueOnce(error);
+    vitest
+      .spyOn(updateUserRepositorySpy, 'update')
+      .mockRejectedValueOnce(error);
 
     const input = makeUpdateUserPasswordUseCaseInputMock();
 
@@ -185,7 +190,7 @@ describe('UpdateUserPasswordUseCase', () => {
   it('should return a user on success', async () => {
     const userMock = makeUserMock();
 
-    jest
+    vitest
       .spyOn(updateUserRepositorySpy, 'update')
       .mockResolvedValueOnce(userMock);
 

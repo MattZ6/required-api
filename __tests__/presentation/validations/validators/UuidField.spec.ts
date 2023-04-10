@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 
 import { InvalidUuidFieldError } from '@presentation/validations/errors';
 import { UuidFieldValidation } from '@presentation/validations/validators';
@@ -27,7 +28,7 @@ describe('UuidFieldValidation', () => {
   });
 
   it('should call UuidValidator once with correct values', async () => {
-    const isValidSpy = jest.spyOn(uuidValidatorSpy, 'isValid');
+    const isValidSpy = vitest.spyOn(uuidValidatorSpy, 'isValid');
 
     const uuid = faker.datatype.uuid();
 
@@ -56,7 +57,7 @@ describe('UuidFieldValidation', () => {
   });
 
   it('should return InvalidUuidFieldError if UuidValidator returns false', async () => {
-    jest.spyOn(uuidValidatorSpy, 'isValid').mockReturnValueOnce(false);
+    vitest.spyOn(uuidValidatorSpy, 'isValid').mockReturnValueOnce(false);
 
     const output = uuidFieldValidation.validate({
       [uuidFieldValidationFieldName]: faker.datatype.uuid(),

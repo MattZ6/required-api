@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+
 import {
   UserNotFoundWithProvidedIdError,
   UserAlreadyExistsWithProvidedEmailError,
@@ -34,7 +36,7 @@ describe('UpdateUserEmailUseCase', () => {
   });
 
   it('should call FindUserByIdRepository once with correct values', async () => {
-    const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
+    const findByIdSpy = vitest.spyOn(findUserByIdRepositorySpy, 'findById');
 
     const input = makeUpdateUserEmailUseCaseInputMock();
 
@@ -47,7 +49,7 @@ describe('UpdateUserEmailUseCase', () => {
   it('should throw if FindUserByIdRepository throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockRejectedValueOnce(errorMock);
 
@@ -59,7 +61,7 @@ describe('UpdateUserEmailUseCase', () => {
   });
 
   it('should throw UserNotFoundWithProvidedIdError if FindUserByIdRepository returns undefined', async () => {
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockResolvedValueOnce(undefined);
 
@@ -73,7 +75,7 @@ describe('UpdateUserEmailUseCase', () => {
   });
 
   it('should call CheckIfUserExistsByEmailRepository once with correct values only if the email has changed', async () => {
-    const checkIfExistsByEmailSpy = jest.spyOn(
+    const checkIfExistsByEmailSpy = vitest.spyOn(
       checkIfUserExistsByEmailRepositorySpy,
       'checkIfExistsByEmail'
     );
@@ -91,11 +93,11 @@ describe('UpdateUserEmailUseCase', () => {
   it('should not call CheckIfUserExistsByEmailRepository if the email has not changed', async () => {
     const userMock = makeUserMock();
 
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockResolvedValueOnce(userMock);
 
-    const checkIfExistsByEmailSpy = jest.spyOn(
+    const checkIfExistsByEmailSpy = vitest.spyOn(
       checkIfUserExistsByEmailRepositorySpy,
       'checkIfExistsByEmail'
     );
@@ -112,7 +114,7 @@ describe('UpdateUserEmailUseCase', () => {
   it('should throw if CheckIfUserExistsByEmailRepository throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(checkIfUserExistsByEmailRepositorySpy, 'checkIfExistsByEmail')
       .mockRejectedValueOnce(errorMock);
 
@@ -124,7 +126,7 @@ describe('UpdateUserEmailUseCase', () => {
   });
 
   it('should throw UserAlreadyExistsWithProvidedEmailError if CheckIfUserExistsByEmailRepository returns true', async () => {
-    jest
+    vitest
       .spyOn(checkIfUserExistsByEmailRepositorySpy, 'checkIfExistsByEmail')
       .mockResolvedValueOnce(true);
 
@@ -140,11 +142,11 @@ describe('UpdateUserEmailUseCase', () => {
   it('should call UpdateUserRepository once with correct values', async () => {
     const userMock = makeUserMock();
 
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockResolvedValueOnce(userMock);
 
-    const updateSpy = jest.spyOn(updateUserRepositorySpy, 'update');
+    const updateSpy = vitest.spyOn(updateUserRepositorySpy, 'update');
 
     const input = makeUpdateUserEmailUseCaseInputMock();
 
@@ -160,7 +162,7 @@ describe('UpdateUserEmailUseCase', () => {
   it('should throw if UpdateUserRepository throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(updateUserRepositorySpy, 'update')
       .mockRejectedValueOnce(errorMock);
 
@@ -174,7 +176,7 @@ describe('UpdateUserEmailUseCase', () => {
   it('should return user on success', async () => {
     const userMock = makeUserMock();
 
-    jest
+    vitest
       .spyOn(updateUserRepositorySpy, 'update')
       .mockResolvedValueOnce(userMock);
 

@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+
 import {
   UserNotFoundWithProvidedIdError,
   UserAlreadyExistsWithProvidedEmailError,
@@ -36,7 +38,7 @@ describe('UpdateProfileEmailController', () => {
   });
 
   it('should call Validation with correct values', async () => {
-    const validateSpy = jest.spyOn(validation, 'validate');
+    const validateSpy = vitest.spyOn(validation, 'validate');
 
     const request = makeUpdateProfileEmailControllerRequestMock();
 
@@ -49,7 +51,7 @@ describe('UpdateProfileEmailController', () => {
   it('should throw if Validation throws', async () => {
     const error = makeErrorMock();
 
-    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+    vitest.spyOn(validation, 'validate').mockImplementationOnce(() => {
       throw error;
     });
 
@@ -63,7 +65,7 @@ describe('UpdateProfileEmailController', () => {
   it('should return bad request (400) if Validation throws ValidationError', async () => {
     const error = makeValidationErrorMock();
 
-    jest.spyOn(validation, 'validate').mockReturnValueOnce(error);
+    vitest.spyOn(validation, 'validate').mockReturnValueOnce(error);
 
     const request = makeUpdateProfileEmailControllerRequestMock();
 
@@ -73,7 +75,7 @@ describe('UpdateProfileEmailController', () => {
   });
 
   it('should call UpdateProfileEmailController once with correct values', async () => {
-    const executeSpy = jest.spyOn(updateUserEmailUseCaseSpy, 'execute');
+    const executeSpy = vitest.spyOn(updateUserEmailUseCaseSpy, 'execute');
 
     const request = makeUpdateProfileEmailControllerRequestMock();
 
@@ -89,7 +91,7 @@ describe('UpdateProfileEmailController', () => {
   it('should throw if UpdateProfileEmailController throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(updateUserEmailUseCaseSpy, 'execute')
       .mockRejectedValueOnce(errorMock);
 
@@ -103,7 +105,7 @@ describe('UpdateProfileEmailController', () => {
   it('should return not found (404) if UpdateUserEmailUseCase throws UserNotFoundWithProvidedIdError', async () => {
     const error = new UserNotFoundWithProvidedIdError();
 
-    jest
+    vitest
       .spyOn(updateUserEmailUseCaseSpy, 'execute')
       .mockRejectedValueOnce(error);
 
@@ -117,7 +119,7 @@ describe('UpdateProfileEmailController', () => {
   it('should return conflict (409) if UpdateUserEmailUseCase throws UserAlreadyExistsWithProvidedEmailError', async () => {
     const error = new UserAlreadyExistsWithProvidedEmailError();
 
-    jest
+    vitest
       .spyOn(updateUserEmailUseCaseSpy, 'execute')
       .mockRejectedValueOnce(error);
 

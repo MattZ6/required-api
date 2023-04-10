@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+
 import { internalServerError } from '@presentation/helpers/http';
 
 import { MiddlewareErrorHandlerDecorator } from '@main/decorators/MiddlewareErrorHandler';
@@ -27,7 +29,7 @@ describe('MiddlewareErrorHandlerDecorator', () => {
   });
 
   it('should call Middleware once with correct values', async () => {
-    const handleSpy = jest.spyOn(middlewareSpy, 'handle');
+    const handleSpy = vitest.spyOn(middlewareSpy, 'handle');
 
     const request = makeMiddlewareHttpRequestMock();
 
@@ -40,9 +42,9 @@ describe('MiddlewareErrorHandlerDecorator', () => {
   it('should call CreateErrorRepository once with correct values on error', async () => {
     const errorMock = makeErrorMock();
 
-    jest.spyOn(middlewareSpy, 'handle').mockRejectedValueOnce(errorMock);
+    vitest.spyOn(middlewareSpy, 'handle').mockRejectedValueOnce(errorMock);
 
-    const createSpy = jest.spyOn(createErrorRepositorySpy, 'create');
+    const createSpy = vitest.spyOn(createErrorRepositorySpy, 'create');
 
     const request = makeMiddlewareHttpRequestMock();
 
@@ -63,9 +65,9 @@ describe('MiddlewareErrorHandlerDecorator', () => {
 
     errorMock.stack = undefined;
 
-    jest.spyOn(middlewareSpy, 'handle').mockRejectedValueOnce(errorMock);
+    vitest.spyOn(middlewareSpy, 'handle').mockRejectedValueOnce(errorMock);
 
-    const createSpy = jest.spyOn(createErrorRepositorySpy, 'create');
+    const createSpy = vitest.spyOn(createErrorRepositorySpy, 'create');
 
     const request = makeMiddlewareHttpRequestMock();
 
@@ -84,7 +86,7 @@ describe('MiddlewareErrorHandlerDecorator', () => {
   it('should return internal server error (500) if Middleware throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest.spyOn(middlewareSpy, 'handle').mockRejectedValueOnce(errorMock);
+    vitest.spyOn(middlewareSpy, 'handle').mockRejectedValueOnce(errorMock);
 
     const request = makeMiddlewareHttpRequestMock();
 
@@ -96,7 +98,7 @@ describe('MiddlewareErrorHandlerDecorator', () => {
   it('should return same Middleware response on success ', async () => {
     const responseMock = makeMiddlewareHttpResponseMock();
 
-    jest.spyOn(middlewareSpy, 'handle').mockResolvedValueOnce(responseMock);
+    vitest.spyOn(middlewareSpy, 'handle').mockResolvedValueOnce(responseMock);
 
     const request = makeMiddlewareHttpRequestMock();
 

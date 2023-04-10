@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 
 import { GetUserProfileUseCase } from '@application/usecases/user/GetProfile';
@@ -22,7 +24,7 @@ describe('GetUserProfileUseCase', () => {
   });
 
   it('should call FindUserByIdRepository once with correct values', async () => {
-    const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
+    const findByIdSpy = vitest.spyOn(findUserByIdRepositorySpy, 'findById');
 
     const input = makeGetUserProfileUseCaseInputMock();
 
@@ -35,7 +37,7 @@ describe('GetUserProfileUseCase', () => {
   it('should throw if FindUserByIdRepository throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockRejectedValueOnce(errorMock);
 
@@ -47,7 +49,7 @@ describe('GetUserProfileUseCase', () => {
   });
 
   it('should UserNotFoundWithProvidedIdError if FindUserByIdRepository returns undefined', async () => {
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockResolvedValueOnce(undefined);
 
@@ -63,7 +65,7 @@ describe('GetUserProfileUseCase', () => {
   it('should return user on success', async () => {
     const userMock = makeUserMock();
 
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockResolvedValueOnce(userMock);
 

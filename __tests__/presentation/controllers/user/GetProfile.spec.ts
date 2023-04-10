@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 
 import { GetUserProfileController } from '@presentation/controllers/user/GetProfile';
@@ -25,7 +27,7 @@ describe('GetUserProfileController', () => {
   });
 
   it('should call GetUserProfileController once with correct values', async () => {
-    const executeSpy = jest.spyOn(getUserProfileUseCaseSpy, 'execute');
+    const executeSpy = vitest.spyOn(getUserProfileUseCaseSpy, 'execute');
 
     const request = makeGetUserProfileControllerRequestMock();
 
@@ -38,7 +40,7 @@ describe('GetUserProfileController', () => {
   it('should throw if GetUserProfileController throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(getUserProfileUseCaseSpy, 'execute')
       .mockRejectedValueOnce(errorMock);
 
@@ -52,7 +54,7 @@ describe('GetUserProfileController', () => {
   it('should return not found (404) if CreateUserUseCase throws UserNotFoundWithProvidedIdError', async () => {
     const error = new UserNotFoundWithProvidedIdError();
 
-    jest
+    vitest
       .spyOn(getUserProfileUseCaseSpy, 'execute')
       .mockRejectedValueOnce(error);
 
@@ -66,7 +68,7 @@ describe('GetUserProfileController', () => {
   it('should return ok (200) with user profile on success', async () => {
     const outputMock = makeGetUserProfileUseCaseOutputMock();
 
-    jest
+    vitest
       .spyOn(getUserProfileUseCaseSpy, 'execute')
       .mockResolvedValueOnce(outputMock);
 

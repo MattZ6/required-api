@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+
 import {
   UserTokenNotFoundWithProvidedTokenError,
   UserTokenExpiredError,
@@ -38,7 +40,7 @@ describe('RefreshUserAccessTokenController', () => {
   });
 
   it('should call Validation with correct values', async () => {
-    const validateSpy = jest.spyOn(validation, 'validate');
+    const validateSpy = vitest.spyOn(validation, 'validate');
 
     const request = makeRefreshUserAccessTokenControllerRequestMock();
 
@@ -51,7 +53,7 @@ describe('RefreshUserAccessTokenController', () => {
   it('should throw if Validation throws', async () => {
     const error = makeErrorMock();
 
-    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+    vitest.spyOn(validation, 'validate').mockImplementationOnce(() => {
       throw error;
     });
 
@@ -65,7 +67,7 @@ describe('RefreshUserAccessTokenController', () => {
   it('should return bad request (400) if Validation throws ValidationError', async () => {
     const error = makeValidationErrorMock();
 
-    jest.spyOn(validation, 'validate').mockReturnValueOnce(error);
+    vitest.spyOn(validation, 'validate').mockReturnValueOnce(error);
 
     const request = makeRefreshUserAccessTokenControllerRequestMock();
 
@@ -75,7 +77,10 @@ describe('RefreshUserAccessTokenController', () => {
   });
 
   it('should call RefreshUserAccessTokenUseCase once with correct values', async () => {
-    const executeSpy = jest.spyOn(refreshUserAccessTokenUseCaseSpy, 'execute');
+    const executeSpy = vitest.spyOn(
+      refreshUserAccessTokenUseCaseSpy,
+      'execute'
+    );
 
     const request = makeRefreshUserAccessTokenControllerRequestMock();
 
@@ -90,7 +95,7 @@ describe('RefreshUserAccessTokenController', () => {
   it('should throw if RefreshUserAccessTokenUseCase throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(refreshUserAccessTokenUseCaseSpy, 'execute')
       .mockRejectedValueOnce(errorMock);
 
@@ -104,7 +109,7 @@ describe('RefreshUserAccessTokenController', () => {
   it('should return not found (404) if RefreshUserAccessTokenUseCase throws UserTokenNotFoundWithProvidedTokenError', async () => {
     const error = new UserTokenNotFoundWithProvidedTokenError();
 
-    jest
+    vitest
       .spyOn(refreshUserAccessTokenUseCaseSpy, 'execute')
       .mockRejectedValueOnce(error);
 
@@ -118,7 +123,7 @@ describe('RefreshUserAccessTokenController', () => {
   it('should return unprocessable entity (422) if RefreshUserAccessTokenUseCase throws UserTokenExpiredError', async () => {
     const error = new UserTokenExpiredError();
 
-    jest
+    vitest
       .spyOn(refreshUserAccessTokenUseCaseSpy, 'execute')
       .mockRejectedValueOnce(error);
 
@@ -132,7 +137,7 @@ describe('RefreshUserAccessTokenController', () => {
   it('should return ok (200) with authentication on success', async () => {
     const output = makeRefreshUserAccessTokenUseCaseOutputMock();
 
-    jest
+    vitest
       .spyOn(refreshUserAccessTokenUseCaseSpy, 'execute')
       .mockResolvedValueOnce(output);
 

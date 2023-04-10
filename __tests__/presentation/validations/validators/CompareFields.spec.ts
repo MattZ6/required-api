@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { DivergentFieldsValuesError } from '@presentation/validations/errors';
 import { CompareFieldsValidation } from '@presentation/validations/validators';
