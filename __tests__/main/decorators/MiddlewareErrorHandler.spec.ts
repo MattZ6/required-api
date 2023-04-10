@@ -24,7 +24,8 @@ describe('MiddlewareErrorHandlerDecorator', () => {
 
     middlewareErrorHandlerDecorator = new MiddlewareErrorHandlerDecorator(
       middlewareSpy,
-      createErrorRepositorySpy
+      createErrorRepositorySpy,
+      false
     );
   });
 

@@ -7,5 +7,9 @@ import { makeErrorsRepository } from '../repositories/Error';
 export function makeMiddlewareErrorHandlerDecorator(middleware: IMiddleware) {
   const errorsRepository = makeErrorsRepository();
 
-  return new MiddlewareErrorHandlerDecorator(middleware, errorsRepository);
+  return new MiddlewareErrorHandlerDecorator(
+    middleware,
+    errorsRepository,
+    true
+  );
 }
