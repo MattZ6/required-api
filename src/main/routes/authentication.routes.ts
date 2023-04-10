@@ -1,25 +1,22 @@
-import { Router } from 'express';
+import { Router } from 'express'
 
-import { adaptRoute } from '@main/adapters/express/route';
-import { makeAuthenticateUserController } from '@main/factories/controllers/user/Authenticate';
-import { makeCreateAccountController } from '@main/factories/controllers/user/CreateAccount';
-import { makeRefreshUserAccessTokenController } from '@main/factories/controllers/user/RefreshAccessToken';
+import { adaptRoute } from '@main/adapters/express/route'
+import { makeAuthenticateUserController } from '@main/factories/controllers/user/Authenticate'
+import { makeCreateAccountController } from '@main/factories/controllers/user/CreateAccount'
+import { makeRefreshUserAccessTokenController } from '@main/factories/controllers/user/RefreshAccessToken'
 
-const authenticationRoutes = Router();
+const authenticationRoutes = Router()
 
-authenticationRoutes.post(
-  '/sign/up',
-  adaptRoute(makeCreateAccountController())
-);
+authenticationRoutes.post('/sign/up', adaptRoute(makeCreateAccountController()))
 
 authenticationRoutes.post(
   '/sign/in',
-  adaptRoute(makeAuthenticateUserController())
-);
+  adaptRoute(makeAuthenticateUserController()),
+)
 
 authenticationRoutes.post(
   '/refresh',
-  adaptRoute(makeRefreshUserAccessTokenController())
-);
+  adaptRoute(makeRefreshUserAccessTokenController()),
+)
 
-export default authenticationRoutes;
+export default authenticationRoutes

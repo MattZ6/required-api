@@ -1,23 +1,24 @@
-import { ICreateErrorRepository } from '@application/protocols/repositories/error';
+import { ICreateErrorRepository } from '@application/protocols/repositories/error'
 
-import { internalServerError } from '@presentation/helpers/http';
+import { internalServerError } from '@presentation/helpers/http'
 import {
   IHttpRequest,
   IHttpResponse,
   IMiddleware,
-} from '@presentation/protocols';
+} from '@presentation/protocols'
 
 export class MiddlewareErrorHandlerDecorator implements IMiddleware {
   constructor(
     private readonly middleware: IMiddleware,
-    private readonly createErrorRepository: ICreateErrorRepository
+    private readonly createErrorRepository: ICreateErrorRepository,
+    private readonly mustLog: boolean,
   ) {}
 
   async handle(request: IHttpRequest): Promise<IHttpResponse> {
     try {
-      const response = await this.middleware.handle(request);
+      const response = await this.middleware.handle(request)
 
-      return response;
+      return response
     } catch (error) {
       this.createErrorRepository
         .create({
@@ -27,10 +28,18 @@ export class MiddlewareErrorHandlerDecorator implements IMiddleware {
           http_method: request.method,
           user_id: request.user?.id,
         })
-        .then(() => console.log('Error successfully registered'))
-        .catch(() => console.log('Fail to register the error'));
+        .then(() => {
+          if (this.mustLog) {
+            console.log('Error successfully registered')
+          }
+        })
+        .catch(() => {
+          if (this.mustLog) {
+            console.log('Fail to register the error')
+          }
+        })
 
-      return internalServerError(error);
+      return internalServerError(error)
     }
   }
 }

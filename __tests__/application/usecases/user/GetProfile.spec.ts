@@ -1,76 +1,76 @@
-import { UserNotFoundWithProvidedIdError } from '@domain/errors';
+import { beforeEach, describe, expect, it, vitest } from 'vitest'
 
-import { GetUserProfileUseCase } from '@application/usecases/user/GetProfile';
+import { UserNotFoundWithProvidedIdError } from '@domain/errors'
 
-import { makeErrorMock, makeUserMock } from '../../../domain';
+import { GetUserProfileUseCase } from '@application/usecases/user/GetProfile'
+
+import { makeErrorMock, makeUserMock } from '../../../domain'
 import {
   FindUserByIdRepositorySpy,
   makeGetUserProfileUseCaseInputMock,
-} from '../../mocks';
+} from '../../mocks'
 
-let findUserByIdRepositorySpy: FindUserByIdRepositorySpy;
+let findUserByIdRepositorySpy: FindUserByIdRepositorySpy
 
-let getUserProfileUseCase: GetUserProfileUseCase;
+let getUserProfileUseCase: GetUserProfileUseCase
 
 describe('GetUserProfileUseCase', () => {
   beforeEach(() => {
-    findUserByIdRepositorySpy = new FindUserByIdRepositorySpy();
+    findUserByIdRepositorySpy = new FindUserByIdRepositorySpy()
 
-    getUserProfileUseCase = new GetUserProfileUseCase(
-      findUserByIdRepositorySpy
-    );
-  });
+    getUserProfileUseCase = new GetUserProfileUseCase(findUserByIdRepositorySpy)
+  })
 
   it('should call FindUserByIdRepository once with correct values', async () => {
-    const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
+    const findByIdSpy = vitest.spyOn(findUserByIdRepositorySpy, 'findById')
 
-    const input = makeGetUserProfileUseCaseInputMock();
+    const input = makeGetUserProfileUseCaseInputMock()
 
-    await getUserProfileUseCase.execute(input);
+    await getUserProfileUseCase.execute(input)
 
-    expect(findByIdSpy).toHaveBeenCalledTimes(1);
-    expect(findByIdSpy).toHaveBeenCalledWith({ id: input.user_id });
-  });
+    expect(findByIdSpy).toHaveBeenCalledTimes(1)
+    expect(findByIdSpy).toHaveBeenCalledWith({ id: input.user_id })
+  })
 
   it('should throw if FindUserByIdRepository throws', async () => {
-    const errorMock = makeErrorMock();
+    const errorMock = makeErrorMock()
 
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockRejectedValueOnce(errorMock);
+      .mockRejectedValueOnce(errorMock)
 
-    const input = makeGetUserProfileUseCaseInputMock();
+    const input = makeGetUserProfileUseCaseInputMock()
 
-    const promise = getUserProfileUseCase.execute(input);
+    const promise = getUserProfileUseCase.execute(input)
 
-    await expect(promise).rejects.toThrowError(errorMock);
-  });
+    await expect(promise).rejects.toThrowError(errorMock)
+  })
 
   it('should UserNotFoundWithProvidedIdError if FindUserByIdRepository returns undefined', async () => {
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockResolvedValueOnce(undefined);
+      .mockResolvedValueOnce(undefined)
 
-    const input = makeGetUserProfileUseCaseInputMock();
+    const input = makeGetUserProfileUseCaseInputMock()
 
-    const promise = getUserProfileUseCase.execute(input);
+    const promise = getUserProfileUseCase.execute(input)
 
     await expect(promise).rejects.toBeInstanceOf(
-      UserNotFoundWithProvidedIdError
-    );
-  });
+      UserNotFoundWithProvidedIdError,
+    )
+  })
 
   it('should return user on success', async () => {
-    const userMock = makeUserMock();
+    const userMock = makeUserMock()
 
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockResolvedValueOnce(userMock);
+      .mockResolvedValueOnce(userMock)
 
-    const input = makeGetUserProfileUseCaseInputMock();
+    const input = makeGetUserProfileUseCaseInputMock()
 
-    const output = await getUserProfileUseCase.execute(input);
+    const output = await getUserProfileUseCase.execute(input)
 
-    expect(output).toEqual(userMock);
-  });
-});
+    expect(output).toEqual(userMock)
+  })
+})

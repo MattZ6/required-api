@@ -4,31 +4,31 @@ import {
   IFindUserByEmailRepository,
   IFindUserByIdRepository,
   IUpdateUserRepository,
-} from '@application/protocols/repositories/user';
+} from '@application/protocols/repositories/user'
 
-import { makeUserMock } from '../../../../domain';
+import { makeUserMock } from '../../../../domain'
 
 export class CheckIfUserExistsByEmailRepositorySpy
   implements ICheckIfUserExistsByEmailRepository
 {
   async checkIfExistsByEmail(
-    _: ICheckIfUserExistsByEmailRepository.Input
+    _: ICheckIfUserExistsByEmailRepository.Input,
   ): Promise<ICheckIfUserExistsByEmailRepository.Output> {
-    return false;
+    return false
   }
 }
 
 export class CreateUserRepositorySpy implements ICreateUserRepository {
   async create(
-    data: ICreateUserRepository.Input
+    data: ICreateUserRepository.Input,
   ): Promise<ICreateUserRepository.Output> {
-    const { name, email, password_hash } = data;
+    const { name, email, password_hash } = data
 
-    const userMock = makeUserMock();
+    const userMock = makeUserMock()
 
-    Object.assign(userMock, { name, email, password_hash });
+    Object.assign(userMock, { name, email, password_hash })
 
-    return userMock;
+    return userMock
   }
 }
 
@@ -36,36 +36,36 @@ export class FindUserByEmailRepositorySpy
   implements IFindUserByEmailRepository
 {
   async findByEmail(
-    data: IFindUserByEmailRepository.Input
+    data: IFindUserByEmailRepository.Input,
   ): Promise<IFindUserByEmailRepository.Output> {
-    const { email } = data;
+    const { email } = data
 
-    const userMock = makeUserMock();
+    const userMock = makeUserMock()
 
-    Object.assign(userMock, { email });
+    Object.assign(userMock, { email })
 
-    return userMock;
+    return userMock
   }
 }
 
 export class FindUserByIdRepositorySpy implements IFindUserByIdRepository {
   async findById(
-    data: IFindUserByIdRepository.Input
+    data: IFindUserByIdRepository.Input,
   ): Promise<IFindUserByIdRepository.Output> {
-    const { id } = data;
+    const { id } = data
 
-    const userMock = makeUserMock();
+    const userMock = makeUserMock()
 
-    Object.assign(userMock, { id });
+    Object.assign(userMock, { id })
 
-    return userMock;
+    return userMock
   }
 }
 
 export class UpdateUserRepositorySpy implements IUpdateUserRepository {
   async update(
-    _: IUpdateUserRepository.Input
+    _: IUpdateUserRepository.Input,
   ): Promise<IUpdateUserRepository.Output> {
-    return makeUserMock();
+    return makeUserMock()
   }
 }

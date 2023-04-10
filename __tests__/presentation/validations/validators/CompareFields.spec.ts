@@ -1,54 +1,55 @@
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
+import { beforeEach, describe, expect, it } from 'vitest'
 
-import { DivergentFieldsValuesError } from '@presentation/validations/errors';
-import { CompareFieldsValidation } from '@presentation/validations/validators';
+import { DivergentFieldsValuesError } from '@presentation/validations/errors'
+import { CompareFieldsValidation } from '@presentation/validations/validators'
 
 import {
   makeCompareFieldsValidationFieldName,
   makeCompareFieldsValidationFieldToCompareName,
-} from '../../mocks';
+} from '../../mocks'
 
-let compareFieldsValidationFieldName: string;
-let compareFieldsValidationFieldToCompareName: string;
+let compareFieldsValidationFieldName: string
+let compareFieldsValidationFieldToCompareName: string
 
 let compareFieldsValidation: CompareFieldsValidation<{
-  [key: string]: string;
-}>;
+  [key: string]: string
+}>
 
 describe('CompareFieldsValidation', () => {
   beforeEach(() => {
-    compareFieldsValidationFieldName = makeCompareFieldsValidationFieldName();
+    compareFieldsValidationFieldName = makeCompareFieldsValidationFieldName()
     compareFieldsValidationFieldToCompareName =
-      makeCompareFieldsValidationFieldToCompareName();
+      makeCompareFieldsValidationFieldToCompareName()
 
     compareFieldsValidation = new CompareFieldsValidation(
       compareFieldsValidationFieldName,
-      compareFieldsValidationFieldToCompareName
-    );
-  });
+      compareFieldsValidationFieldToCompareName,
+    )
+  })
 
   it('should return DivergentFieldsValuesError if validation fails', async () => {
     const output = compareFieldsValidation.validate({
       [compareFieldsValidationFieldName]: faker.datatype.string(),
       [compareFieldsValidationFieldToCompareName]: faker.datatype.string(),
-    });
+    })
 
     expect(output).toEqual(
       new DivergentFieldsValuesError(
         compareFieldsValidationFieldName,
-        compareFieldsValidationFieldToCompareName
-      )
-    );
-  });
+        compareFieldsValidationFieldToCompareName,
+      ),
+    )
+  })
 
   it('should return null if validation succeeds', async () => {
-    const value = faker.datatype.string();
+    const value = faker.datatype.string()
 
     const output = compareFieldsValidation.validate({
       [compareFieldsValidationFieldName]: value,
       [compareFieldsValidationFieldToCompareName]: value,
-    });
+    })
 
-    expect(output).toBeNull();
-  });
-});
+    expect(output).toBeNull()
+  })
+})

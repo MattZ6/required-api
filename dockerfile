@@ -1,4 +1,6 @@
-FROM node:14.19.3-alpine
+FROM node:18.12.1-alpine
+
+RUN npm install -g pnpm
 
 # Set non-root user and expose port
 USER node
@@ -6,13 +8,13 @@ EXPOSE ${PORT}
 
 WORKDIR /home/node/app
 
-COPY --chown=node:node package.json yarn.lock ./
+COPY --chown=node:node package.json pnpm-lock.yaml ./
 
 # Install dependencies
-RUN yarn install --frozen-lockfile
+RUN pnpm i --frozen-lockfile
 
 COPY --chown=node:node . .
 
-RUN yarn prisma generate
+RUN pnpm prisma generate
 
-CMD [ "yarn", "dev" ]
+CMD [ "pnpm", "dev" ]

@@ -1,83 +1,84 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
+import { beforeEach, describe, expect, it } from 'vitest'
 
-import { MinLengthFieldError } from '@presentation/validations/errors';
-import { MinLengthFieldValidation } from '@presentation/validations/validators';
+import { MinLengthFieldError } from '@presentation/validations/errors'
+import { MinLengthFieldValidation } from '@presentation/validations/validators'
 
 import {
   makeMinLengthFieldValidationFieldName,
   makeMinLengthFieldValidationMinLength,
-} from '../../mocks';
+} from '../../mocks'
 
-let minLengthFieldValidationFieldName: string;
-let minLengthFieldValidationMinLength: number;
+let minLengthFieldValidationFieldName: string
+let minLengthFieldValidationMinLength: number
 
 let minLengthFieldValidation: MinLengthFieldValidation<{
-  [key: string]: string;
-}>;
+  [key: string]: string
+}>
 
 describe('MinLengthFieldValidation', () => {
   beforeEach(() => {
-    minLengthFieldValidationMinLength = makeMinLengthFieldValidationMinLength();
-    minLengthFieldValidationFieldName = makeMinLengthFieldValidationFieldName();
+    minLengthFieldValidationMinLength = makeMinLengthFieldValidationMinLength()
+    minLengthFieldValidationFieldName = makeMinLengthFieldValidationFieldName()
 
     minLengthFieldValidation = new MinLengthFieldValidation(
       minLengthFieldValidationFieldName,
       minLengthFieldValidationMinLength,
-      false
-    );
-  });
+      false,
+    )
+  })
 
   it('should return MinLengthFieldError if input is empty', async () => {
-    const output = minLengthFieldValidation.validate({});
+    const output = minLengthFieldValidation.validate({})
 
     expect(output).toEqual(
       new MinLengthFieldError(
         minLengthFieldValidationFieldName,
-        minLengthFieldValidationMinLength
-      )
-    );
-  });
+        minLengthFieldValidationMinLength,
+      ),
+    )
+  })
 
   it('should return MinLengthFieldError if validation fails', async () => {
     const output = minLengthFieldValidation.validate({
       [minLengthFieldValidationFieldName]: faker.datatype.string(
-        minLengthFieldValidationMinLength - 1
+        minLengthFieldValidationMinLength - 1,
       ),
-    });
+    })
 
     expect(output).toEqual(
       new MinLengthFieldError(
         minLengthFieldValidationFieldName,
-        minLengthFieldValidationMinLength
-      )
-    );
-  });
+        minLengthFieldValidationMinLength,
+      ),
+    )
+  })
 
   it('should trim value if trim flag is passed', async () => {
     minLengthFieldValidation = new MinLengthFieldValidation(
       minLengthFieldValidationFieldName,
       minLengthFieldValidationMinLength,
-      true
-    );
+      true,
+    )
 
     const value = `   ${faker.datatype.string(
-      minLengthFieldValidationMinLength
-    )}  `;
+      minLengthFieldValidationMinLength,
+    )}  `
 
     const output = minLengthFieldValidation.validate({
       [minLengthFieldValidationFieldName]: value,
-    });
+    })
 
-    expect(output).toBeNull();
-  });
+    expect(output).toBeNull()
+  })
 
   it('should return null if validation succeeds', async () => {
     const output = minLengthFieldValidation.validate({
       [minLengthFieldValidationFieldName]: faker.datatype.string(
-        minLengthFieldValidationMinLength
+        minLengthFieldValidationMinLength,
       ),
-    });
+    })
 
-    expect(output).toBeNull();
-  });
-});
+    expect(output).toBeNull()
+  })
+})

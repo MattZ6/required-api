@@ -1,6 +1,6 @@
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 
-import { UpdateProfileEmailController } from '@presentation/controllers/user/UpdateProfileEmail';
+import { UpdateProfileEmailController } from '@presentation/controllers/user/UpdateProfileEmail'
 
 export function makeUpdateProfileEmailControllerRequestMock(): UpdateProfileEmailController.Request {
   return {
@@ -15,5 +15,5 @@ export function makeUpdateProfileEmailControllerRequestMock(): UpdateProfileEmai
     user: {
       id: faker.datatype.uuid(),
     },
-  };
+  }
 }

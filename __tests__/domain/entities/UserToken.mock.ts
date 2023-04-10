@@ -1,6 +1,6 @@
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 
-import { UserToken } from '@domain/entities/UserToken';
+import { UserToken } from '@domain/entities/UserToken'
 
 export function makeUserTokenMock(): UserToken {
   return {
@@ -10,5 +10,5 @@ export function makeUserTokenMock(): UserToken {
     expires_in: faker.date.soon(),
     created_at: faker.datatype.datetime(),
     updated_at: faker.datatype.datetime(),
-  };
+  }
 }

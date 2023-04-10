@@ -1,146 +1,148 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest'
+
 import {
   UserNotFoundWithProvidedEmailError,
   WrongPasswordError,
-} from '@domain/errors';
+} from '@domain/errors'
 
-import { AuthenticateUserController } from '@presentation/controllers/user/Authenticate';
-import { AuthenticationMapper } from '@presentation/dtos';
+import { AuthenticateUserController } from '@presentation/controllers/user/Authenticate'
+import { AuthenticationMapper } from '@presentation/dtos'
 import {
   badRequest,
   notFound,
   unprocessableEntity,
   ok,
-} from '@presentation/helpers/http';
+} from '@presentation/helpers/http'
 
-import { makeErrorMock } from '../../../domain';
+import { makeErrorMock } from '../../../domain'
 import {
   ValidationSpy,
   AuthenticateUserUseCaseSpy,
   makeAuthenticateUserControllerRequestMock,
   makeValidationErrorMock,
   makeAuthenticateUserUseCaseOutputMock,
-} from '../../mocks';
+} from '../../mocks'
 
-let validation: ValidationSpy;
-let authenticateUserUseCaseSpy: AuthenticateUserUseCaseSpy;
+let validation: ValidationSpy
+let authenticateUserUseCaseSpy: AuthenticateUserUseCaseSpy
 
-let authenticateUserController: AuthenticateUserController;
+let authenticateUserController: AuthenticateUserController
 
 describe('AuthenticateUserController', () => {
   beforeEach(() => {
-    validation = new ValidationSpy();
-    authenticateUserUseCaseSpy = new AuthenticateUserUseCaseSpy();
+    validation = new ValidationSpy()
+    authenticateUserUseCaseSpy = new AuthenticateUserUseCaseSpy()
 
     authenticateUserController = new AuthenticateUserController(
       validation,
-      authenticateUserUseCaseSpy
-    );
-  });
+      authenticateUserUseCaseSpy,
+    )
+  })
 
   it('should call Validation with correct values', async () => {
-    const validateSpy = jest.spyOn(validation, 'validate');
+    const validateSpy = vitest.spyOn(validation, 'validate')
 
-    const request = makeAuthenticateUserControllerRequestMock();
+    const request = makeAuthenticateUserControllerRequestMock()
 
-    await authenticateUserController.handle(request);
+    await authenticateUserController.handle(request)
 
-    expect(validateSpy).toHaveBeenCalledTimes(1);
-    expect(validateSpy).toHaveBeenCalledWith(request.body);
-  });
+    expect(validateSpy).toHaveBeenCalledTimes(1)
+    expect(validateSpy).toHaveBeenCalledWith(request.body)
+  })
 
   it('should throw if Validation throws', async () => {
-    const error = makeErrorMock();
+    const error = makeErrorMock()
 
-    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
-      throw error;
-    });
+    vitest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+      throw error
+    })
 
-    const request = makeAuthenticateUserControllerRequestMock();
+    const request = makeAuthenticateUserControllerRequestMock()
 
-    const promise = authenticateUserController.handle(request);
+    const promise = authenticateUserController.handle(request)
 
-    await expect(promise).rejects.toThrowError(error);
-  });
+    await expect(promise).rejects.toThrowError(error)
+  })
 
   it('should return bad request (400) if Validation throws ValidationError', async () => {
-    const error = makeValidationErrorMock();
+    const error = makeValidationErrorMock()
 
-    jest.spyOn(validation, 'validate').mockReturnValueOnce(error);
+    vitest.spyOn(validation, 'validate').mockReturnValueOnce(error)
 
-    const request = makeAuthenticateUserControllerRequestMock();
+    const request = makeAuthenticateUserControllerRequestMock()
 
-    const response = await authenticateUserController.handle(request);
+    const response = await authenticateUserController.handle(request)
 
-    expect(response).toEqual(badRequest(error));
-  });
+    expect(response).toEqual(badRequest(error))
+  })
 
   it('should call AuthenticateUserUseCase once with correct values', async () => {
-    const executeSpy = jest.spyOn(authenticateUserUseCaseSpy, 'execute');
+    const executeSpy = vitest.spyOn(authenticateUserUseCaseSpy, 'execute')
 
-    const request = makeAuthenticateUserControllerRequestMock();
+    const request = makeAuthenticateUserControllerRequestMock()
 
-    await authenticateUserController.handle(request);
+    await authenticateUserController.handle(request)
 
-    expect(executeSpy).toHaveBeenCalledTimes(1);
+    expect(executeSpy).toHaveBeenCalledTimes(1)
     expect(executeSpy).toHaveBeenCalledWith({
       email: request.body.email,
       password: request.body.password,
-    });
-  });
+    })
+  })
 
   it('should throw if AuthenticateUserUseCase throws', async () => {
-    const error = makeErrorMock();
+    const error = makeErrorMock()
 
-    jest
+    vitest
       .spyOn(authenticateUserUseCaseSpy, 'execute')
-      .mockRejectedValueOnce(error);
+      .mockRejectedValueOnce(error)
 
-    const request = makeAuthenticateUserControllerRequestMock();
+    const request = makeAuthenticateUserControllerRequestMock()
 
-    const promise = authenticateUserController.handle(request);
+    const promise = authenticateUserController.handle(request)
 
-    await expect(promise).rejects.toThrowError(error);
-  });
+    await expect(promise).rejects.toThrowError(error)
+  })
 
   it('should return no found (404) if AuthenticateUserUseCase throws UserNotFoundWithProvidedEmailError', async () => {
-    const error = new UserNotFoundWithProvidedEmailError();
+    const error = new UserNotFoundWithProvidedEmailError()
 
-    jest
+    vitest
       .spyOn(authenticateUserUseCaseSpy, 'execute')
-      .mockRejectedValueOnce(error);
+      .mockRejectedValueOnce(error)
 
-    const request = makeAuthenticateUserControllerRequestMock();
+    const request = makeAuthenticateUserControllerRequestMock()
 
-    const response = await authenticateUserController.handle(request);
+    const response = await authenticateUserController.handle(request)
 
-    expect(response).toEqual(notFound(error));
-  });
+    expect(response).toEqual(notFound(error))
+  })
 
   it('should return unprocessable entity (422) if AuthenticateUserUseCase throws WrongPasswordError', async () => {
-    const error = new WrongPasswordError();
+    const error = new WrongPasswordError()
 
-    jest
+    vitest
       .spyOn(authenticateUserUseCaseSpy, 'execute')
-      .mockRejectedValueOnce(error);
+      .mockRejectedValueOnce(error)
 
-    const request = makeAuthenticateUserControllerRequestMock();
+    const request = makeAuthenticateUserControllerRequestMock()
 
-    const response = await authenticateUserController.handle(request);
+    const response = await authenticateUserController.handle(request)
 
-    expect(response).toEqual(unprocessableEntity(error));
-  });
+    expect(response).toEqual(unprocessableEntity(error))
+  })
 
   it('should return ok (200) with authentication data on success', async () => {
-    const outputMock = makeAuthenticateUserUseCaseOutputMock();
+    const outputMock = makeAuthenticateUserUseCaseOutputMock()
 
-    jest
+    vitest
       .spyOn(authenticateUserUseCaseSpy, 'execute')
-      .mockResolvedValueOnce(outputMock);
+      .mockResolvedValueOnce(outputMock)
 
-    const request = makeAuthenticateUserControllerRequestMock();
+    const request = makeAuthenticateUserControllerRequestMock()
 
-    const response = await authenticateUserController.handle(request);
+    const response = await authenticateUserController.handle(request)
 
-    expect(response).toEqual(ok(AuthenticationMapper.toDTO(outputMock)));
-  });
-});
+    expect(response).toEqual(ok(AuthenticationMapper.toDTO(outputMock)))
+  })
+})

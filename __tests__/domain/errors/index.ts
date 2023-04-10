@@ -1,1 +1,1 @@
-export * from './error.mock';
+export * from './error.mock'

@@ -1,2 +1,2 @@
-export * from './EncryptProvider';
-export * from './VerifyCriptographyProvider';
+export * from './EncryptProvider'
+export * from './VerifyCriptographyProvider'

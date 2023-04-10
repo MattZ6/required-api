@@ -1,9 +1,9 @@
 <div align="center">
   <h1>
-    🗝 Auth Flow API
+    🛡️ Auth Flow API
   </h1>
 
-  > Simple API for user authentication.
+  > Simple user authentication flow API.
 
   <strong>🚧 Under development... 🚧</strong>
 
@@ -43,7 +43,7 @@ cd auth-flow-api
 Install the project dependencies:
 
 ```bash
-yarn
+pnpm i
 ```
 
 ### Environment variables
@@ -78,7 +78,7 @@ DATABASE_NAME= # (database name)
 To start the services - application and database:
 
 ```bash
-yarn docker:up
+pnpm docker:up
 ```
 
 ### Run migrations
@@ -86,7 +86,7 @@ yarn docker:up
 Execute the follow command to create tables and relationships:
 
 ```bash
-yarn db:migration:create
+pnpm db:migration:create
 ```
 
 ### Stop
@@ -94,19 +94,19 @@ yarn db:migration:create
 To stop the services you can run:
 
 ```bash
-yarn docker:down
+pnpm docker:down
 ```
 
 > Remember that this will cause the services (api and database) to be removed. If you just want to "put the services to sleep", run `docker-compose stop`.
 
 ## 🧪 Tests
 
-> 💡 At this point the application has **only unit tests**. These tests cover `use cases`, `controllers` and `middlewares`, focusing on the business rule. In the near future I plan to include end-to-end tests to shield the application in its total flow.
+> 💡 At this point the application has **only unit tests**. These tests cover `use cases`, `controllers`, `decorators` and `middlewares`, focusing on the business rule. In the near future I plan to include end-to-end tests to shield the application in its total flow.
 
 To run the unit tests, you can execute the following command:
 
 ```bash
-yarn test
+pnpm test
 ```
 
 ## 🤝 Contributing

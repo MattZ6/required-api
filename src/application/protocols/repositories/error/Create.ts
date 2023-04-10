@@ -1,9 +1,9 @@
-import { Error } from '@domain/entities/Error';
+import { Error } from '@domain/entities/Error'
 
 interface ICreateErrorRepository {
   create(
-    data: ICreateErrorRepository.Input
-  ): Promise<ICreateErrorRepository.Output>;
+    data: ICreateErrorRepository.Input,
+  ): Promise<ICreateErrorRepository.Output>
 }
 
 namespace ICreateErrorRepository {
@@ -14,9 +14,9 @@ namespace ICreateErrorRepository {
     | 'exception_was_thrown_in'
     | 'http_method'
     | 'resource_url'
-  >;
+  >
 
-  export type Output = Error;
+  export type Output = Error
 }
 
-export { ICreateErrorRepository };
+export { ICreateErrorRepository }

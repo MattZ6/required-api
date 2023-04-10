@@ -1,28 +1,14 @@
 {
   "env": {
     "es2020": true,
-    "node": true,
-    "jest": true
+    "node": true
   },
-  "extends": [
-    "airbnb-base",
-    "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "plugin:prettier/recommended"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": 12,
-    "sourceType": "module"
-  },
-  "plugins": [
-    "@typescript-eslint",
-    "eslint-plugin-import-helpers",
-    "prettier"
-  ],
+  "extends": ["@rocketseat/eslint-config/node"],
+  "plugins": ["eslint-plugin-import-helpers"],
   "rules": {
+    "no-useless-constructor": "off",
     "camelcase": "off",
-    "import/no-unresolved": "error",
+    "no-redeclare": "off",
     "@typescript-eslint/naming-convention": [
       "error",
       {
@@ -38,23 +24,6 @@
       "error",
       {
         "argsIgnorePattern": "_"
-      }
-    ],
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-namespace": "off",
-    "max-classes-per-file": "off",
-    "class-methods-use-this": "off",
-    "import/prefer-default-export": "off",
-    "no-shadow": "off",
-    "no-console": "off",
-    "no-useless-constructor": "off",
-    "no-empty-function": "off",
-    "lines-between-class-members": "off",
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "ts": "never"
       }
     ],
     "import-helpers/order-imports": [
@@ -75,13 +44,7 @@
     ],
     "import/no-extraneous-dependencies": [
       "error",
-      { "devDependencies": ["__tests__/**/*", "jest.config.ts"] }
-    ],
-    "prettier/prettier": "error"
-  },
-  "settings": {
-    "import/resolver": {
-      "typescript": {}
-    }
+      { "devDependencies": ["__tests__/**/*.ts", "vitest.config.ts"] }
+    ]
   }
 }

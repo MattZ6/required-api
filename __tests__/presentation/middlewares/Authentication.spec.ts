@@ -1,107 +1,109 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest'
+
 import {
   AccessTokenNotProvidedError,
   InvalidAccessTokenError,
   AccessTokenExpiredError,
-} from '@presentation/errors';
-import { unauthorized, ok } from '@presentation/helpers/http';
-import { AuthenticationMiddleware } from '@presentation/middlewares/Authentication';
+} from '@presentation/errors'
+import { unauthorized, ok } from '@presentation/helpers/http'
+import { AuthenticationMiddleware } from '@presentation/middlewares/Authentication'
 
 import {
   VerifyCriptographyProviderSpy,
   makeVerifyCriptographyProviderOutputMock,
-} from '../../application/mocks';
-import { makeErrorMock } from '../../domain';
-import { makeAuthenticationMiddlewareRequestMock } from '../mocks';
+} from '../../application/mocks'
+import { makeErrorMock } from '../../domain'
+import { makeAuthenticationMiddlewareRequestMock } from '../mocks'
 
-let verifyCriptographyProviderSpy: VerifyCriptographyProviderSpy;
+let verifyCriptographyProviderSpy: VerifyCriptographyProviderSpy
 
-let authenticationMiddleware: AuthenticationMiddleware;
+let authenticationMiddleware: AuthenticationMiddleware
 
 describe('AuthenticationMiddleware', () => {
   beforeEach(() => {
-    verifyCriptographyProviderSpy = new VerifyCriptographyProviderSpy();
+    verifyCriptographyProviderSpy = new VerifyCriptographyProviderSpy()
 
     authenticationMiddleware = new AuthenticationMiddleware(
-      verifyCriptographyProviderSpy
-    );
-  });
+      verifyCriptographyProviderSpy,
+    )
+  })
 
   it('should return unauthorized (401) if AuthenticationMiddleware throws a AccessTokenNotProvidedError', async () => {
-    const request = makeAuthenticationMiddlewareRequestMock();
+    const request = makeAuthenticationMiddlewareRequestMock()
 
-    request.headers['x-access-token'] = undefined;
+    request.headers['x-access-token'] = undefined
 
-    const response = await authenticationMiddleware.handle(request);
+    const response = await authenticationMiddleware.handle(request)
 
-    expect(response).toEqual(unauthorized(new AccessTokenNotProvidedError()));
-  });
+    expect(response).toEqual(unauthorized(new AccessTokenNotProvidedError()))
+  })
 
   it('should call VerifyCriptographyProvider once with correct values', async () => {
-    const verifySpy = jest.spyOn(verifyCriptographyProviderSpy, 'verify');
+    const verifySpy = vitest.spyOn(verifyCriptographyProviderSpy, 'verify')
 
-    const request = makeAuthenticationMiddlewareRequestMock();
+    const request = makeAuthenticationMiddlewareRequestMock()
 
-    await authenticationMiddleware.handle(request);
+    await authenticationMiddleware.handle(request)
 
-    expect(verifySpy).toHaveBeenCalledTimes(1);
+    expect(verifySpy).toHaveBeenCalledTimes(1)
     expect(verifySpy).toHaveBeenCalledWith({
       value: request.headers['x-access-token'],
-    });
-  });
+    })
+  })
 
   it('should throw if VerifyCriptographyProvider throws', async () => {
-    const errorMock = makeErrorMock();
+    const errorMock = makeErrorMock()
 
-    jest
+    vitest
       .spyOn(verifyCriptographyProviderSpy, 'verify')
-      .mockRejectedValueOnce(errorMock);
+      .mockRejectedValueOnce(errorMock)
 
-    const request = makeAuthenticationMiddlewareRequestMock();
+    const request = makeAuthenticationMiddlewareRequestMock()
 
-    const promise = authenticationMiddleware.handle(request);
+    const promise = authenticationMiddleware.handle(request)
 
-    await expect(promise).rejects.toThrowError(errorMock);
-  });
+    await expect(promise).rejects.toThrowError(errorMock)
+  })
 
   it('should return unauthorized (401) if VerifyCriptographyProvider throws a InvalidAccessTokenError', async () => {
-    const errorMock = new InvalidAccessTokenError();
+    const errorMock = new InvalidAccessTokenError()
 
-    jest
+    vitest
       .spyOn(verifyCriptographyProviderSpy, 'verify')
-      .mockRejectedValueOnce(errorMock);
+      .mockRejectedValueOnce(errorMock)
 
-    const request = makeAuthenticationMiddlewareRequestMock();
+    const request = makeAuthenticationMiddlewareRequestMock()
 
-    const response = await authenticationMiddleware.handle(request);
+    const response = await authenticationMiddleware.handle(request)
 
-    expect(response).toEqual(unauthorized(errorMock));
-  });
+    expect(response).toEqual(unauthorized(errorMock))
+  })
 
   it('should return unauthorized (401) if VerifyCriptographyProvider throws a AccessTokenExpiredError', async () => {
-    const errorMock = new AccessTokenExpiredError();
+    const errorMock = new AccessTokenExpiredError()
 
-    jest
+    vitest
       .spyOn(verifyCriptographyProviderSpy, 'verify')
-      .mockRejectedValueOnce(errorMock);
+      .mockRejectedValueOnce(errorMock)
 
-    const request = makeAuthenticationMiddlewareRequestMock();
+    const request = makeAuthenticationMiddlewareRequestMock()
 
-    const response = await authenticationMiddleware.handle(request);
+    const response = await authenticationMiddleware.handle(request)
 
-    expect(response).toEqual(unauthorized(errorMock));
-  });
+    expect(response).toEqual(unauthorized(errorMock))
+  })
 
   it('should return ok (200) on success', async () => {
-    const outputMock = makeVerifyCriptographyProviderOutputMock();
+    const outputMock = makeVerifyCriptographyProviderOutputMock()
 
-    jest
+    vitest
       .spyOn(verifyCriptographyProviderSpy, 'verify')
-      .mockResolvedValueOnce(outputMock);
+      .mockResolvedValueOnce(outputMock)
 
-    const request = makeAuthenticationMiddlewareRequestMock();
+    const request = makeAuthenticationMiddlewareRequestMock()
 
-    const response = await authenticationMiddleware.handle(request);
+    const response = await authenticationMiddleware.handle(request)
 
-    expect(response).toEqual(ok({ user: { id: outputMock.subject } }));
-  });
-});
+    expect(response).toEqual(ok({ user: { id: outputMock.subject } }))
+  })
+})

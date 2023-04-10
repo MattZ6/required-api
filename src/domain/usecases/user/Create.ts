@@ -1,15 +1,15 @@
-import { User } from '@domain/entities/User';
+import { User } from '@domain/entities/User'
 
 interface ICreateUserUseCase {
-  execute(data: ICreateUserUseCase.Input): Promise<ICreateUserUseCase.Output>;
+  execute(data: ICreateUserUseCase.Input): Promise<ICreateUserUseCase.Output>
 }
 
 namespace ICreateUserUseCase {
   export type Input = Pick<User, 'name' | 'email'> & {
-    password: string;
-  };
+    password: string
+  }
 
-  export type Output = User;
+  export type Output = User
 }
 
-export { ICreateUserUseCase };
+export { ICreateUserUseCase }

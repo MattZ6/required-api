@@ -1,21 +1,21 @@
-import { IHttpResponse } from '@presentation/protocols';
-import { ValidationError } from '@presentation/validations/errors';
+import { IHttpResponse } from '@presentation/protocols'
+import { ValidationError } from '@presentation/validations/errors'
 
-import { ErrorDTO } from '../errorDTO';
+import { ErrorDTO } from '../errorDTO'
 
 type ValidationErrorData = {
-  field?: string;
-  type?: string;
-  value?: string | number;
-  message: string;
-};
+  field?: string
+  type?: string
+  value?: string | number
+  message: string
+}
 
 type ValidationErrorDTO = ErrorDTO & {
-  validation: ValidationErrorData;
-};
+  validation: ValidationErrorData
+}
 
 export function badRequest(
-  error: ValidationError
+  error: ValidationError,
 ): IHttpResponse<ValidationErrorDTO> {
   return {
     statusCode: 400,
@@ -29,5 +29,5 @@ export function badRequest(
         message: error.message,
       },
     },
-  };
+  }
 }

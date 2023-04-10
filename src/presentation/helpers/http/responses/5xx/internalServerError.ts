@@ -1,6 +1,6 @@
-import { IHttpResponse } from '@presentation/protocols';
+import { IHttpResponse } from '@presentation/protocols'
 
-import { ErrorDTO } from '../errorDTO';
+import { ErrorDTO } from '../errorDTO'
 
 export function internalServerError(_: Error): IHttpResponse<ErrorDTO> {
   return {
@@ -9,5 +9,5 @@ export function internalServerError(_: Error): IHttpResponse<ErrorDTO> {
       code: 'internal',
       message: 'Internal server error',
     },
-  };
+  }
 }

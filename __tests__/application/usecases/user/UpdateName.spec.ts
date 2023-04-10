@@ -1,114 +1,116 @@
-import { UserNotFoundWithProvidedIdError } from '@domain/errors';
+import { beforeEach, describe, expect, it, vitest } from 'vitest'
 
-import { UpdateUserNameUseCase } from '@application/usecases/user/UpdateName';
+import { UserNotFoundWithProvidedIdError } from '@domain/errors'
 
-import { makeErrorMock, makeUserMock } from '../../../domain';
+import { UpdateUserNameUseCase } from '@application/usecases/user/UpdateName'
+
+import { makeErrorMock, makeUserMock } from '../../../domain'
 import {
   FindUserByIdRepositorySpy,
   UpdateUserRepositorySpy,
   makeUpdateUserNameUseCaseInputMock,
-} from '../../mocks';
+} from '../../mocks'
 
-let findUserByIdRepositorySpy: FindUserByIdRepositorySpy;
-let updateUserRepositorySpy: UpdateUserRepositorySpy;
+let findUserByIdRepositorySpy: FindUserByIdRepositorySpy
+let updateUserRepositorySpy: UpdateUserRepositorySpy
 
-let updateUserNameUseCase: UpdateUserNameUseCase;
+let updateUserNameUseCase: UpdateUserNameUseCase
 
 describe('UpdateUserNameUseCase', () => {
   beforeEach(() => {
-    findUserByIdRepositorySpy = new FindUserByIdRepositorySpy();
-    updateUserRepositorySpy = new UpdateUserRepositorySpy();
+    findUserByIdRepositorySpy = new FindUserByIdRepositorySpy()
+    updateUserRepositorySpy = new UpdateUserRepositorySpy()
 
     updateUserNameUseCase = new UpdateUserNameUseCase(
       findUserByIdRepositorySpy,
-      updateUserRepositorySpy
-    );
-  });
+      updateUserRepositorySpy,
+    )
+  })
 
   it('should call FindUserByIdRepository once with correct values', async () => {
-    const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
+    const findByIdSpy = vitest.spyOn(findUserByIdRepositorySpy, 'findById')
 
-    const input = makeUpdateUserNameUseCaseInputMock();
+    const input = makeUpdateUserNameUseCaseInputMock()
 
-    await updateUserNameUseCase.execute(input);
+    await updateUserNameUseCase.execute(input)
 
-    expect(findByIdSpy).toHaveBeenCalledTimes(1);
-    expect(findByIdSpy).toHaveBeenCalledWith({ id: input.user_id });
-  });
+    expect(findByIdSpy).toHaveBeenCalledTimes(1)
+    expect(findByIdSpy).toHaveBeenCalledWith({ id: input.user_id })
+  })
 
   it('should throw if FindUserByIdRepository throws', async () => {
-    const errorMock = makeErrorMock();
+    const errorMock = makeErrorMock()
 
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockRejectedValueOnce(errorMock);
+      .mockRejectedValueOnce(errorMock)
 
-    const input = makeUpdateUserNameUseCaseInputMock();
+    const input = makeUpdateUserNameUseCaseInputMock()
 
-    const promise = updateUserNameUseCase.execute(input);
+    const promise = updateUserNameUseCase.execute(input)
 
-    await expect(promise).rejects.toThrowError(errorMock);
-  });
+    await expect(promise).rejects.toThrowError(errorMock)
+  })
 
   it('should throw UserNotFoundWithProvidedIdError if FindUserByIdRepository returns undefined', async () => {
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockResolvedValueOnce(undefined);
+      .mockResolvedValueOnce(undefined)
 
-    const input = makeUpdateUserNameUseCaseInputMock();
+    const input = makeUpdateUserNameUseCaseInputMock()
 
-    const promise = updateUserNameUseCase.execute(input);
+    const promise = updateUserNameUseCase.execute(input)
 
     await expect(promise).rejects.toBeInstanceOf(
-      UserNotFoundWithProvidedIdError
-    );
-  });
+      UserNotFoundWithProvidedIdError,
+    )
+  })
 
   it('should call UpdateUserRepository once with correct values', async () => {
-    const userMock = makeUserMock();
+    const userMock = makeUserMock()
 
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockResolvedValueOnce(userMock);
+      .mockResolvedValueOnce(userMock)
 
-    const updateSpy = jest.spyOn(updateUserRepositorySpy, 'update');
+    const updateSpy = vitest.spyOn(updateUserRepositorySpy, 'update')
 
-    const input = makeUpdateUserNameUseCaseInputMock();
+    const input = makeUpdateUserNameUseCaseInputMock()
 
-    await updateUserNameUseCase.execute(input);
+    await updateUserNameUseCase.execute(input)
 
-    expect(updateSpy).toHaveBeenCalledTimes(1);
+    expect(updateSpy).toHaveBeenCalledTimes(1)
     expect(updateSpy).toHaveBeenCalledWith({
       id: input.user_id,
       name: input.name,
-    });
-  });
+    })
+  })
 
   it('should throw if UpdateUserRepository throws', async () => {
-    const errorMock = makeErrorMock();
+    const errorMock = makeErrorMock()
 
-    jest
+    vitest
       .spyOn(updateUserRepositorySpy, 'update')
-      .mockRejectedValueOnce(errorMock);
+      .mockRejectedValueOnce(errorMock)
 
-    const input = makeUpdateUserNameUseCaseInputMock();
+    const input = makeUpdateUserNameUseCaseInputMock()
 
-    const promise = updateUserNameUseCase.execute(input);
+    const promise = updateUserNameUseCase.execute(input)
 
-    await expect(promise).rejects.toThrowError(errorMock);
-  });
+    await expect(promise).rejects.toThrowError(errorMock)
+  })
 
   it('should return user on success', async () => {
-    const userMock = makeUserMock();
+    const userMock = makeUserMock()
 
-    jest
+    vitest
       .spyOn(updateUserRepositorySpy, 'update')
-      .mockResolvedValueOnce(userMock);
+      .mockResolvedValueOnce(userMock)
 
-    const input = makeUpdateUserNameUseCaseInputMock();
+    const input = makeUpdateUserNameUseCaseInputMock()
 
-    const output = await updateUserNameUseCase.execute(input);
+    const output = await updateUserNameUseCase.execute(input)
 
-    expect(output).toEqual(userMock);
-  });
-});
+    expect(output).toEqual(userMock)
+  })
+})

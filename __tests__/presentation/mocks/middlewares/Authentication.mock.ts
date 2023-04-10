@@ -1,6 +1,6 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 
-import { AuthenticationMiddleware } from '@presentation/middlewares/Authentication';
+import { AuthenticationMiddleware } from '@presentation/middlewares/Authentication'
 
 export function makeAuthenticationMiddlewareRequestMock(): AuthenticationMiddleware.Request {
   return {
@@ -12,5 +12,5 @@ export function makeAuthenticationMiddlewareRequestMock(): AuthenticationMiddlew
     params: undefined,
     query: undefined,
     body: undefined,
-  };
+  }
 }

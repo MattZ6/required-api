@@ -1,9 +1,9 @@
-import { randomUUID } from 'node:crypto';
+import { randomUUID } from 'node:crypto'
 
-import { IGenerateUuidProvider } from '@application/protocols/providers/uuid';
+import { IGenerateUuidProvider } from '@application/protocols/providers/uuid'
 
 export class UuidProvider implements IGenerateUuidProvider {
   async generate(): Promise<IGenerateUuidProvider.Output> {
-    return randomUUID();
+    return randomUUID()
   }
 }

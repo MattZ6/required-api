@@ -1,15 +1,13 @@
 interface IGenerateHashProvider {
-  hash(
-    data: IGenerateHashProvider.Input
-  ): Promise<IGenerateHashProvider.Output>;
+  hash(data: IGenerateHashProvider.Input): Promise<IGenerateHashProvider.Output>
 }
 
 namespace IGenerateHashProvider {
   export type Input = {
-    value: string;
-  };
+    value: string
+  }
 
-  export type Output = string;
+  export type Output = string
 }
 
-export { IGenerateHashProvider };
+export { IGenerateHashProvider }

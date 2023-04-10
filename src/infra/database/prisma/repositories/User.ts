@@ -4,9 +4,9 @@ import {
   IFindUserByEmailRepository,
   IFindUserByIdRepository,
   IUpdateUserRepository,
-} from '@application/protocols/repositories/user';
+} from '@application/protocols/repositories/user'
 
-import { prisma } from '..';
+import { prisma } from '..'
 
 export class PrismaUsersRepository
   implements
@@ -17,9 +17,9 @@ export class PrismaUsersRepository
     IUpdateUserRepository
 {
   async update(
-    data: IUpdateUserRepository.Input
+    data: IUpdateUserRepository.Input,
   ): Promise<IUpdateUserRepository.Output> {
-    const { id, name, email, password_hash } = data;
+    const { id, name, email, password_hash } = data
 
     const user = await prisma.user.update({
       where: {
@@ -30,29 +30,29 @@ export class PrismaUsersRepository
         email,
         password_hash,
       },
-    });
+    })
 
-    return user;
+    return user
   }
 
   async findById(
-    data: IFindUserByIdRepository.Input
+    data: IFindUserByIdRepository.Input,
   ): Promise<IFindUserByIdRepository.Output> {
-    const { id } = data;
+    const { id } = data
 
     const user = await prisma.user.findUnique({
       where: {
         id,
       },
-    });
+    })
 
-    return user ?? null;
+    return user ?? null
   }
 
   async findByEmail(
-    data: IFindUserByEmailRepository.Input
+    data: IFindUserByEmailRepository.Input,
   ): Promise<IFindUserByEmailRepository.Output> {
-    const { email } = data;
+    const { email } = data
 
     const user = await prisma.user.findFirst({
       where: {
@@ -61,15 +61,15 @@ export class PrismaUsersRepository
           mode: 'insensitive',
         },
       },
-    });
+    })
 
-    return user ?? null;
+    return user ?? null
   }
 
   async create(
-    data: ICreateUserRepository.Input
+    data: ICreateUserRepository.Input,
   ): Promise<ICreateUserRepository.Output> {
-    const { name, email, password_hash } = data;
+    const { name, email, password_hash } = data
 
     const user = await prisma.user.create({
       data: {
@@ -77,15 +77,15 @@ export class PrismaUsersRepository
         email,
         password_hash,
       },
-    });
+    })
 
-    return user;
+    return user
   }
 
   async checkIfExistsByEmail(
-    data: ICheckIfUserExistsByEmailRepository.Input
+    data: ICheckIfUserExistsByEmailRepository.Input,
   ): Promise<ICheckIfUserExistsByEmailRepository.Output> {
-    const { email } = data;
+    const { email } = data
 
     const count = await prisma.user.count({
       where: {
@@ -94,8 +94,8 @@ export class PrismaUsersRepository
           mode: 'insensitive',
         },
       },
-    });
+    })
 
-    return count > 0;
+    return count > 0
   }
 }

@@ -1,17 +1,17 @@
-import { IRefreshUserAccessTokenUseCase } from '@domain/usecases/user/RefreshAccessToken';
+import { IRefreshUserAccessTokenUseCase } from '@domain/usecases/user/RefreshAccessToken'
 
-import { makeAuthenticationMock } from '../../../../domain';
+import { makeAuthenticationMock } from '../../../../domain'
 
 export function makeRefreshUserAccessTokenUseCaseOutputMock(): IRefreshUserAccessTokenUseCase.Output {
-  return makeAuthenticationMock();
+  return makeAuthenticationMock()
 }
 
 export class RefreshUserAccessTokenUseCaseSpy
   implements IRefreshUserAccessTokenUseCase
 {
   async execute(
-    _: IRefreshUserAccessTokenUseCase.Input
+    _: IRefreshUserAccessTokenUseCase.Input,
   ): Promise<IRefreshUserAccessTokenUseCase.Output> {
-    return makeRefreshUserAccessTokenUseCaseOutputMock();
+    return makeRefreshUserAccessTokenUseCaseOutputMock()
   }
 }

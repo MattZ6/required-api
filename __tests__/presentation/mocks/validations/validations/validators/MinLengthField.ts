@@ -1,9 +1,9 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 
 export function makeMinLengthFieldValidationFieldName() {
-  return faker.database.column();
+  return faker.database.column()
 }
 
 export function makeMinLengthFieldValidationMinLength() {
-  return faker.datatype.number({ min: 1 });
+  return faker.datatype.number({ min: 1 })
 }

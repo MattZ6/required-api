@@ -1,6 +1,6 @@
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 
-import { AuthenticateUserController } from '@presentation/controllers/user/Authenticate';
+import { AuthenticateUserController } from '@presentation/controllers/user/Authenticate'
 
 export function makeAuthenticateUserControllerRequestMock(): AuthenticateUserController.Request {
   return {
@@ -13,5 +13,5 @@ export function makeAuthenticateUserControllerRequestMock(): AuthenticateUserCon
     headers: undefined,
     params: undefined,
     query: undefined,
-  };
+  }
 }
