@@ -1,6 +1,6 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 
-import { CreateAccountController } from '@presentation/controllers/user/CreateAccount';
+import { CreateAccountController } from '@presentation/controllers/user/CreateAccount'
 
 export function makeCreateAccountControllerRequestMock(): CreateAccountController.Request {
   return {
@@ -14,5 +14,5 @@ export function makeCreateAccountControllerRequestMock(): CreateAccountControlle
     headers: undefined,
     params: undefined,
     query: undefined,
-  };
+  }
 }

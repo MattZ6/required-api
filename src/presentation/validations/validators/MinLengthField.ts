@@ -1,24 +1,24 @@
-import { IValidation } from '@presentation/protocols';
-import { MinLengthFieldError } from '@presentation/validations/errors';
+import { IValidation } from '@presentation/protocols'
+import { MinLengthFieldError } from '@presentation/validations/errors'
 
 export class MinLengthFieldValidation<I = unknown> implements IValidation<I> {
   constructor(
     private readonly fieldName: keyof I,
     private readonly min: number,
-    private readonly withTrim: boolean = false
+    private readonly withTrim: boolean = false,
   ) {}
 
   validate(input: I) {
-    let value = String(input[this.fieldName] ?? '');
+    let value = String(input[this.fieldName] ?? '')
 
     if (this.withTrim) {
-      value = value.trim();
+      value = value.trim()
     }
 
     if (value.length < this.min) {
-      return new MinLengthFieldError(String(this.fieldName), this.min);
+      return new MinLengthFieldError(String(this.fieldName), this.min)
     }
 
-    return null;
+    return null
   }
 }

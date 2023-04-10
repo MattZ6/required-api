@@ -1,7 +1,7 @@
-export * from './CheckIfExistsByEmail';
-export * from './Create';
-export * from './FindByEmail';
-export * from './FindById';
-export * from './Update';
+export * from './CheckIfExistsByEmail'
+export * from './Create'
+export * from './FindByEmail'
+export * from './FindById'
+export * from './Update'
 
-export * from './token';
+export * from './token'

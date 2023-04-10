@@ -1,118 +1,118 @@
-import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { beforeEach, describe, expect, it, vitest } from 'vitest'
 
-import { UserNotFoundWithProvidedIdError } from '@domain/errors';
+import { UserNotFoundWithProvidedIdError } from '@domain/errors'
 
-import { UpdateProfileNameController } from '@presentation/controllers/user/UpdateProfileName';
-import { badRequest, notFound, noContent } from '@presentation/helpers/http';
+import { UpdateProfileNameController } from '@presentation/controllers/user/UpdateProfileName'
+import { badRequest, notFound, noContent } from '@presentation/helpers/http'
 
-import { makeErrorMock } from '../../../domain';
+import { makeErrorMock } from '../../../domain'
 import {
   ValidationSpy,
   UpdateUserNameUseCaseSpy,
   makeUpdateProfileNameControllerRequestMock,
   makeValidationErrorMock,
-} from '../../mocks';
+} from '../../mocks'
 
-let validation: ValidationSpy;
-let updateUserNameUseCaseSpy: UpdateUserNameUseCaseSpy;
+let validation: ValidationSpy
+let updateUserNameUseCaseSpy: UpdateUserNameUseCaseSpy
 
-let updateProfileNameController: UpdateProfileNameController;
+let updateProfileNameController: UpdateProfileNameController
 
 describe('UpdateProfileNameController', () => {
   beforeEach(() => {
-    validation = new ValidationSpy();
-    updateUserNameUseCaseSpy = new UpdateUserNameUseCaseSpy();
+    validation = new ValidationSpy()
+    updateUserNameUseCaseSpy = new UpdateUserNameUseCaseSpy()
 
     updateProfileNameController = new UpdateProfileNameController(
       validation,
-      updateUserNameUseCaseSpy
-    );
-  });
+      updateUserNameUseCaseSpy,
+    )
+  })
 
   it('should call Validation with correct values', async () => {
-    const validateSpy = vitest.spyOn(validation, 'validate');
+    const validateSpy = vitest.spyOn(validation, 'validate')
 
-    const request = makeUpdateProfileNameControllerRequestMock();
+    const request = makeUpdateProfileNameControllerRequestMock()
 
-    await updateProfileNameController.handle(request);
+    await updateProfileNameController.handle(request)
 
-    expect(validateSpy).toHaveBeenCalledTimes(1);
-    expect(validateSpy).toHaveBeenCalledWith(request.body);
-  });
+    expect(validateSpy).toHaveBeenCalledTimes(1)
+    expect(validateSpy).toHaveBeenCalledWith(request.body)
+  })
 
   it('should throw if Validation throws', async () => {
-    const error = makeErrorMock();
+    const error = makeErrorMock()
 
     vitest.spyOn(validation, 'validate').mockImplementationOnce(() => {
-      throw error;
-    });
+      throw error
+    })
 
-    const request = makeUpdateProfileNameControllerRequestMock();
+    const request = makeUpdateProfileNameControllerRequestMock()
 
-    const promise = updateProfileNameController.handle(request);
+    const promise = updateProfileNameController.handle(request)
 
-    await expect(promise).rejects.toThrowError(error);
-  });
+    await expect(promise).rejects.toThrowError(error)
+  })
 
   it('should return bad request (400) if Validation throws ValidationError', async () => {
-    const error = makeValidationErrorMock();
+    const error = makeValidationErrorMock()
 
-    vitest.spyOn(validation, 'validate').mockReturnValueOnce(error);
+    vitest.spyOn(validation, 'validate').mockReturnValueOnce(error)
 
-    const request = makeUpdateProfileNameControllerRequestMock();
+    const request = makeUpdateProfileNameControllerRequestMock()
 
-    const response = await updateProfileNameController.handle(request);
+    const response = await updateProfileNameController.handle(request)
 
-    expect(response).toEqual(badRequest(error));
-  });
+    expect(response).toEqual(badRequest(error))
+  })
 
   it('should call UpdateProfileNameController once with correct values', async () => {
-    const executeSpy = vitest.spyOn(updateUserNameUseCaseSpy, 'execute');
+    const executeSpy = vitest.spyOn(updateUserNameUseCaseSpy, 'execute')
 
-    const request = makeUpdateProfileNameControllerRequestMock();
+    const request = makeUpdateProfileNameControllerRequestMock()
 
-    await updateProfileNameController.handle(request);
+    await updateProfileNameController.handle(request)
 
-    expect(executeSpy).toHaveBeenCalledTimes(1);
+    expect(executeSpy).toHaveBeenCalledTimes(1)
     expect(executeSpy).toHaveBeenCalledWith({
       user_id: request.user.id,
       name: request.body.name,
-    });
-  });
+    })
+  })
 
   it('should throw if UpdateProfileNameController throws', async () => {
-    const errorMock = makeErrorMock();
+    const errorMock = makeErrorMock()
 
     vitest
       .spyOn(updateUserNameUseCaseSpy, 'execute')
-      .mockRejectedValueOnce(errorMock);
+      .mockRejectedValueOnce(errorMock)
 
-    const request = makeUpdateProfileNameControllerRequestMock();
+    const request = makeUpdateProfileNameControllerRequestMock()
 
-    const promise = updateProfileNameController.handle(request);
+    const promise = updateProfileNameController.handle(request)
 
-    await expect(promise).rejects.toThrowError(errorMock);
-  });
+    await expect(promise).rejects.toThrowError(errorMock)
+  })
 
   it('should return not found (404) if UpdateUserNameUseCase throws UserNotFoundWithProvidedIdError', async () => {
-    const error = new UserNotFoundWithProvidedIdError();
+    const error = new UserNotFoundWithProvidedIdError()
 
     vitest
       .spyOn(updateUserNameUseCaseSpy, 'execute')
-      .mockRejectedValueOnce(error);
+      .mockRejectedValueOnce(error)
 
-    const request = makeUpdateProfileNameControllerRequestMock();
+    const request = makeUpdateProfileNameControllerRequestMock()
 
-    const response = await updateProfileNameController.handle(request);
+    const response = await updateProfileNameController.handle(request)
 
-    expect(response).toEqual(notFound(error));
-  });
+    expect(response).toEqual(notFound(error))
+  })
 
   it('should return no content (204) on success', async () => {
-    const request = makeUpdateProfileNameControllerRequestMock();
+    const request = makeUpdateProfileNameControllerRequestMock()
 
-    const response = await updateProfileNameController.handle(request);
+    const response = await updateProfileNameController.handle(request)
 
-    expect(response).toEqual(noContent());
-  });
-});
+    expect(response).toEqual(noContent())
+  })
+})

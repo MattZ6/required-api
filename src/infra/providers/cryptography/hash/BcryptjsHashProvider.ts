@@ -1,9 +1,9 @@
-import { hash, compare } from 'bcryptjs';
+import { hash, compare } from 'bcryptjs'
 
 import {
   ICompareHashProvider,
   IGenerateHashProvider,
-} from '@application/protocols/providers/cryptography';
+} from '@application/protocols/providers/cryptography'
 
 export class BcryptjsHashProvider
   implements IGenerateHashProvider, ICompareHashProvider
@@ -11,18 +11,18 @@ export class BcryptjsHashProvider
   constructor(private readonly salt: number) {}
 
   async hash(
-    data: IGenerateHashProvider.Input
+    data: IGenerateHashProvider.Input,
   ): Promise<IGenerateHashProvider.Output> {
-    const { value } = data;
+    const { value } = data
 
-    return hash(value, this.salt);
+    return hash(value, this.salt)
   }
 
   async compare(
-    data: ICompareHashProvider.Input
+    data: ICompareHashProvider.Input,
   ): Promise<ICompareHashProvider.Output> {
-    const { value, hashed_value } = data;
+    const { value, hashed_value } = data
 
-    return compare(value, hashed_value);
+    return compare(value, hashed_value)
   }
 }

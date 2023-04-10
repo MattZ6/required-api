@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express'
 
-import { IMiddleware } from '@presentation/protocols';
+import { IMiddleware } from '@presentation/protocols'
 
 export function adaptMiddleware(middleware: IMiddleware) {
   return async (request: Request, response: Response, next: NextFunction) => {
@@ -12,16 +12,16 @@ export function adaptMiddleware(middleware: IMiddleware) {
       original_url: request.originalUrl,
       method: request.method,
       user: request.user,
-    });
+    })
 
-    const isSuccessful = statusCode >= 200 && statusCode <= 299;
+    const isSuccessful = statusCode >= 200 && statusCode <= 299
 
     if (isSuccessful) {
-      Object.assign(request, body);
+      Object.assign(request, body)
 
-      return next();
+      return next()
     }
 
-    return response.status(statusCode).json(body);
-  };
+    return response.status(statusCode).json(body)
+  }
 }

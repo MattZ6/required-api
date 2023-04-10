@@ -1,5 +1,5 @@
-import { ValidationError } from '@presentation/validations/errors';
+import { ValidationError } from '@presentation/validations/errors'
 
 export interface IValidation<I = unknown> {
-  validate(input: I): ValidationError | null;
+  validate(input: I): ValidationError | null
 }

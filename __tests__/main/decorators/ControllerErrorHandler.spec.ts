@@ -1,110 +1,110 @@
-import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { beforeEach, describe, expect, it, vitest } from 'vitest'
 
-import { internalServerError } from '@presentation/helpers/http';
+import { internalServerError } from '@presentation/helpers/http'
 
-import { ControllerErrorHandlerDecorator } from '@main/decorators/ControllerErrorHandler';
+import { ControllerErrorHandlerDecorator } from '@main/decorators/ControllerErrorHandler'
 
-import { CreateErrorRepositorySpy } from '../../application/mocks';
-import { makeErrorMock } from '../../domain';
+import { CreateErrorRepositorySpy } from '../../application/mocks'
+import { makeErrorMock } from '../../domain'
 import {
   ControllerSpy,
   makeControllerHttpRequestMock,
   makeControllerHttpResponseMock,
-} from '../mocks';
+} from '../mocks'
 
-let controllerSpy: ControllerSpy;
-let createErrorRepositorySpy: CreateErrorRepositorySpy;
+let controllerSpy: ControllerSpy
+let createErrorRepositorySpy: CreateErrorRepositorySpy
 
-let controllerErrorHandlerDecorator: ControllerErrorHandlerDecorator;
+let controllerErrorHandlerDecorator: ControllerErrorHandlerDecorator
 
 describe('ControllerErrorHandlerDecorator', () => {
   beforeEach(() => {
-    controllerSpy = new ControllerSpy();
-    createErrorRepositorySpy = new CreateErrorRepositorySpy();
+    controllerSpy = new ControllerSpy()
+    createErrorRepositorySpy = new CreateErrorRepositorySpy()
 
     controllerErrorHandlerDecorator = new ControllerErrorHandlerDecorator(
       controllerSpy,
       createErrorRepositorySpy,
-      false
-    );
-  });
+      false,
+    )
+  })
 
   it('should call Controller once with correct values', async () => {
-    const handleSpy = vitest.spyOn(controllerSpy, 'handle');
+    const handleSpy = vitest.spyOn(controllerSpy, 'handle')
 
-    const request = makeControllerHttpRequestMock();
+    const request = makeControllerHttpRequestMock()
 
-    await controllerErrorHandlerDecorator.handle(request);
+    await controllerErrorHandlerDecorator.handle(request)
 
-    expect(handleSpy).toHaveBeenCalledTimes(1);
-    expect(handleSpy).toHaveBeenCalledWith(request);
-  });
+    expect(handleSpy).toHaveBeenCalledTimes(1)
+    expect(handleSpy).toHaveBeenCalledWith(request)
+  })
 
   it('should call CreateErrorRepository once with correct values on error', async () => {
-    const errorMock = makeErrorMock();
+    const errorMock = makeErrorMock()
 
-    vitest.spyOn(controllerSpy, 'handle').mockRejectedValueOnce(errorMock);
+    vitest.spyOn(controllerSpy, 'handle').mockRejectedValueOnce(errorMock)
 
-    const createSpy = vitest.spyOn(createErrorRepositorySpy, 'create');
+    const createSpy = vitest.spyOn(createErrorRepositorySpy, 'create')
 
-    const request = makeControllerHttpRequestMock();
+    const request = makeControllerHttpRequestMock()
 
-    await controllerErrorHandlerDecorator.handle(request);
+    await controllerErrorHandlerDecorator.handle(request)
 
-    expect(createSpy).toHaveBeenCalledTimes(1);
+    expect(createSpy).toHaveBeenCalledTimes(1)
     expect(createSpy).toHaveBeenCalledWith({
       stack: errorMock.stack,
       exception_was_thrown_in: controllerSpy.constructor.name,
       resource_url: request.original_url,
       http_method: request.method,
       user_id: request.user?.id,
-    });
-  });
+    })
+  })
 
   it('should call CreateErrorRepository with default stack if error not have a stack', async () => {
-    const errorMock = makeErrorMock();
+    const errorMock = makeErrorMock()
 
-    errorMock.stack = undefined;
+    errorMock.stack = undefined
 
-    vitest.spyOn(controllerSpy, 'handle').mockRejectedValueOnce(errorMock);
+    vitest.spyOn(controllerSpy, 'handle').mockRejectedValueOnce(errorMock)
 
-    const createSpy = vitest.spyOn(createErrorRepositorySpy, 'create');
+    const createSpy = vitest.spyOn(createErrorRepositorySpy, 'create')
 
-    const request = makeControllerHttpRequestMock();
+    const request = makeControllerHttpRequestMock()
 
-    await controllerErrorHandlerDecorator.handle(request);
+    await controllerErrorHandlerDecorator.handle(request)
 
-    expect(createSpy).toHaveBeenCalledTimes(1);
+    expect(createSpy).toHaveBeenCalledTimes(1)
     expect(createSpy).toHaveBeenCalledWith({
       stack: 'NO STACK PROVIDED',
       exception_was_thrown_in: controllerSpy.constructor.name,
       resource_url: request.original_url,
       http_method: request.method,
       user_id: request.user?.id,
-    });
-  });
+    })
+  })
 
   it('should return internal server error (500) if Controller throws', async () => {
-    const errorMock = makeErrorMock();
+    const errorMock = makeErrorMock()
 
-    vitest.spyOn(controllerSpy, 'handle').mockRejectedValueOnce(errorMock);
+    vitest.spyOn(controllerSpy, 'handle').mockRejectedValueOnce(errorMock)
 
-    const request = makeControllerHttpRequestMock();
+    const request = makeControllerHttpRequestMock()
 
-    const response = await controllerErrorHandlerDecorator.handle(request);
+    const response = await controllerErrorHandlerDecorator.handle(request)
 
-    expect(response).toEqual(internalServerError(errorMock));
-  });
+    expect(response).toEqual(internalServerError(errorMock))
+  })
 
   it('should return same Controller response on success ', async () => {
-    const responseMock = makeControllerHttpResponseMock();
+    const responseMock = makeControllerHttpResponseMock()
 
-    vitest.spyOn(controllerSpy, 'handle').mockResolvedValueOnce(responseMock);
+    vitest.spyOn(controllerSpy, 'handle').mockResolvedValueOnce(responseMock)
 
-    const request = makeControllerHttpRequestMock();
+    const request = makeControllerHttpRequestMock()
 
-    const response = await controllerErrorHandlerDecorator.handle(request);
+    const response = await controllerErrorHandlerDecorator.handle(request)
 
-    expect(response).toEqual(responseMock);
-  });
-});
+    expect(response).toEqual(responseMock)
+  })
+})

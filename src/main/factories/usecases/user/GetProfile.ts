@@ -1,9 +1,9 @@
-import { GetUserProfileUseCase } from '@application/usecases/user/GetProfile';
+import { GetUserProfileUseCase } from '@application/usecases/user/GetProfile'
 
-import { makeUsersRepository } from '@main/factories/repositories/User';
+import { makeUsersRepository } from '@main/factories/repositories/User'
 
 export function makeGetUserProfileUseCase() {
-  const usersRepository = makeUsersRepository();
+  const usersRepository = makeUsersRepository()
 
-  return new GetUserProfileUseCase(usersRepository);
+  return new GetUserProfileUseCase(usersRepository)
 }

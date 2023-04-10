@@ -1,6 +1,6 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 
-import { GetUserProfileController } from '@presentation/controllers/user/GetProfile';
+import { GetUserProfileController } from '@presentation/controllers/user/GetProfile'
 
 export function makeGetUserProfileControllerRequestMock(): GetUserProfileController.Request {
   return {
@@ -13,5 +13,5 @@ export function makeGetUserProfileControllerRequestMock(): GetUserProfileControl
     user: {
       id: faker.datatype.uuid(),
     },
-  };
+  }
 }

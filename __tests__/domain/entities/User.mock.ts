@@ -1,6 +1,6 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 
-import { User } from '@domain/entities/User';
+import { User } from '@domain/entities/User'
 
 export function makeUserMock(): User {
   return {
@@ -10,5 +10,5 @@ export function makeUserMock(): User {
     password_hash: faker.internet.password(),
     created_at: faker.datatype.datetime(),
     updated_at: faker.datatype.datetime(),
-  };
+  }
 }

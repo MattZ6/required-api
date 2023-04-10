@@ -6,7 +6,7 @@ declare namespace Express {
      * Get by access token.
      */
     user?: {
-      id: string;
-    };
+      id: string
+    }
   }
 }

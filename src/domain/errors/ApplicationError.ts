@@ -1,10 +1,10 @@
 export class ApplicationError extends Error {
-  public code: string;
+  public code: string
 
   constructor(message: string, code = 'error') {
-    super(message);
+    super(message)
 
-    super.name = this.constructor.name;
-    this.code = code;
+    super.name = this.constructor.name
+    this.code = code
   }
 }

@@ -1,5 +1,5 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 
 export function makeRequiredFieldValidationFieldName() {
-  return faker.database.column();
+  return faker.database.column()
 }

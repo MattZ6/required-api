@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
+import { Request, Response } from 'express'
 
-import { IController } from '@presentation/protocols/Controller';
+import { IController } from '@presentation/protocols/Controller'
 
 export function adaptRoute(controller: IController) {
   return async (request: Request, response: Response): Promise<Response> => {
@@ -12,8 +12,8 @@ export function adaptRoute(controller: IController) {
       user: request.user,
       original_url: request.originalUrl,
       method: request.method,
-    });
+    })
 
-    return response.status(statusCode).json(body);
-  };
+    return response.status(statusCode).json(body)
+  }
 }

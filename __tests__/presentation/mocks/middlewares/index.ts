@@ -1,1 +1,1 @@
-export * from './Authentication.mock';
+export * from './Authentication.mock'

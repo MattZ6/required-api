@@ -1,3 +1,3 @@
-export * from './token';
+export * from './token'
 
-export * from './UserMapper';
+export * from './UserMapper'

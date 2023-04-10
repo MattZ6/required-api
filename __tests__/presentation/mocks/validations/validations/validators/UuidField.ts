@@ -1,13 +1,13 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 
-import { IUuidValidator } from '@presentation/validations/protocols';
+import { IUuidValidator } from '@presentation/validations/protocols'
 
 export class UuidValidatorSpy implements IUuidValidator {
   isValid(_: IUuidValidator.Input): IUuidValidator.Output {
-    return true;
+    return true
   }
 }
 
 export function makeUuidFieldValidationFieldName() {
-  return faker.database.column();
+  return faker.database.column()
 }

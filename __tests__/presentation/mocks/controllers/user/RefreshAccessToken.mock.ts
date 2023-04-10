@@ -1,6 +1,6 @@
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker'
 
-import { RefreshUserAccessTokenController } from '@presentation/controllers/user/RefreshAccessToken';
+import { RefreshUserAccessTokenController } from '@presentation/controllers/user/RefreshAccessToken'
 
 export function makeRefreshUserAccessTokenControllerRequestMock(): RefreshUserAccessTokenController.Request {
   return {
@@ -12,5 +12,5 @@ export function makeRefreshUserAccessTokenControllerRequestMock(): RefreshUserAc
     headers: undefined,
     params: undefined,
     query: undefined,
-  };
+  }
 }
