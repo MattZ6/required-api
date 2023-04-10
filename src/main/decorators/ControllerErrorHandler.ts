@@ -10,7 +10,8 @@ import {
 export class ControllerErrorHandlerDecorator implements IController {
   constructor(
     private readonly controller: IController,
-    private readonly createErrorRepository: ICreateErrorRepository
+    private readonly createErrorRepository: ICreateErrorRepository,
+    private readonly mustLog: boolean
   ) {}
 
   async handle(request: IHttpRequest): Promise<IHttpResponse> {
@@ -27,8 +28,16 @@ export class ControllerErrorHandlerDecorator implements IController {
           http_method: request.method,
           user_id: request.user?.id,
         })
-        .then(() => console.log('Error successfully registered'))
-        .catch(() => console.log('Fail to register the error'));
+        .then(() => {
+          if (this.mustLog) {
+            console.log('Error successfully registered');
+          }
+        })
+        .catch(() => {
+          if (this.mustLog) {
+            console.log('Fail to register the error');
+          }
+        });
 
       return internalServerError(error);
     }
