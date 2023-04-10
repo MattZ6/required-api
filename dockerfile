@@ -1,4 +1,4 @@
-FROM node:16.19.0-alpine
+FROM node:18.12.1-alpine
 
 RUN npm install -g pnpm
 

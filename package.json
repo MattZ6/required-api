@@ -32,7 +32,7 @@
     "db:config": "pnpm run db:migrate"
   },
   "engines": {
-    "node": "16.19.0"
+    "node": "18.12.1"
   },
   "prisma": {
     "schema": "src/infra/database/prisma/schema.prisma"
