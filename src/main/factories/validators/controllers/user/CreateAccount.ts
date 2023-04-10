@@ -1,19 +1,19 @@
-import { CreateAccountController } from '@presentation/controllers/user/CreateAccount';
+import { CreateAccountController } from '@presentation/controllers/user/CreateAccount'
 import {
   MinLengthFieldValidation,
   RequiredFieldValidation,
   ValidationComposite,
   CompareFieldsValidation,
-} from '@presentation/validations/validators';
+} from '@presentation/validations/validators'
 
-import { userConfig } from '@main/config/env/user';
+import { userConfig } from '@main/config/env/user'
 
-import { makeEmailFieldValidation } from '../../validators/EmailField';
+import { makeEmailFieldValidation } from '../../validators/EmailField'
 
 export function makeCreateAccountControllerValidation(): ValidationComposite {
   type Input = CreateAccountController.RequestBody & {
-    password_confirmation: string;
-  };
+    password_confirmation: string
+  }
 
   return new ValidationComposite<Input>([
     new RequiredFieldValidation('name'),
@@ -25,8 +25,8 @@ export function makeCreateAccountControllerValidation(): ValidationComposite {
     new RequiredFieldValidation('password_confirmation'),
     new MinLengthFieldValidation(
       'password_confirmation',
-      userConfig.PASSWORD_MIN_LENGTH
+      userConfig.PASSWORD_MIN_LENGTH,
     ),
     new CompareFieldsValidation('password_confirmation', 'password'),
-  ]);
+  ])
 }

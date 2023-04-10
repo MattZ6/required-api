@@ -1,2 +1,2 @@
-export * from './EmailValidator';
-export * from './UuidValidator';
+export * from './EmailValidator'
+export * from './UuidValidator'

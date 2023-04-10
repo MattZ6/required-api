@@ -1,15 +1,15 @@
-import { UserToken } from '@domain/entities/UserToken';
+import { UserToken } from '@domain/entities/UserToken'
 
 interface IDeleteUserTokenByIdRepository {
   deleteById(
-    data: IDeleteUserTokenByIdRepository.Input
-  ): Promise<IDeleteUserTokenByIdRepository.Output>;
+    data: IDeleteUserTokenByIdRepository.Input,
+  ): Promise<IDeleteUserTokenByIdRepository.Output>
 }
 
 namespace IDeleteUserTokenByIdRepository {
-  export type Input = Pick<UserToken, 'id'>;
+  export type Input = Pick<UserToken, 'id'>
 
-  export type Output = void;
+  export type Output = void
 }
 
-export { IDeleteUserTokenByIdRepository };
+export { IDeleteUserTokenByIdRepository }

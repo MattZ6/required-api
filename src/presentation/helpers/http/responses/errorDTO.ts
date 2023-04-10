@@ -1,19 +1,19 @@
-import { ApplicationError } from '@domain/errors';
+import { ApplicationError } from '@domain/errors'
 
 export type ErrorDTO = {
-  code: string;
-  message: string;
-};
+  code: string
+  message: string
+}
 
 export function toErrorDTO(error: ApplicationError | Error): ErrorDTO {
-  let code = 'internal';
+  let code = 'internal'
 
   if (error instanceof ApplicationError) {
-    code = error.code;
+    code = error.code
   }
 
   return {
     code,
     message: error.message,
-  };
+  }
 }

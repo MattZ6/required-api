@@ -1,15 +1,15 @@
-import { IAuthenticateUserUseCase } from '@domain/usecases/user/Authenticate';
+import { IAuthenticateUserUseCase } from '@domain/usecases/user/Authenticate'
 
-import { makeAuthenticationMock } from '../../../../domain';
+import { makeAuthenticationMock } from '../../../../domain'
 
 export function makeAuthenticateUserUseCaseOutputMock(): IAuthenticateUserUseCase.Output {
-  return makeAuthenticationMock();
+  return makeAuthenticationMock()
 }
 
 export class AuthenticateUserUseCaseSpy implements IAuthenticateUserUseCase {
   async execute(
-    _: IAuthenticateUserUseCase.Input
+    _: IAuthenticateUserUseCase.Input,
   ): Promise<IAuthenticateUserUseCase.Output> {
-    return makeAuthenticateUserUseCaseOutputMock();
+    return makeAuthenticateUserUseCaseOutputMock()
   }
 }

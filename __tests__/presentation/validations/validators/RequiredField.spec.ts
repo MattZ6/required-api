@@ -1,39 +1,39 @@
-import { faker } from '@faker-js/faker';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { faker } from '@faker-js/faker'
+import { beforeEach, describe, expect, it } from 'vitest'
 
-import { RequiredFieldError } from '@presentation/validations/errors';
-import { RequiredFieldValidation } from '@presentation/validations/validators';
+import { RequiredFieldError } from '@presentation/validations/errors'
+import { RequiredFieldValidation } from '@presentation/validations/validators'
 
-import { makeRequiredFieldValidationFieldName } from '../../mocks';
+import { makeRequiredFieldValidationFieldName } from '../../mocks'
 
-let requiredFieldValidationFieldName: string;
+let requiredFieldValidationFieldName: string
 
 let requiredFieldValidation: RequiredFieldValidation<{
-  [key: string]: string;
-}>;
+  [key: string]: string
+}>
 
 describe('RequiredFieldValidation', () => {
   beforeEach(() => {
-    requiredFieldValidationFieldName = makeRequiredFieldValidationFieldName();
+    requiredFieldValidationFieldName = makeRequiredFieldValidationFieldName()
 
     requiredFieldValidation = new RequiredFieldValidation(
-      requiredFieldValidationFieldName
-    );
-  });
+      requiredFieldValidationFieldName,
+    )
+  })
 
   it('should return RequiredFieldError if validation fails', async () => {
-    const output = requiredFieldValidation.validate({});
+    const output = requiredFieldValidation.validate({})
 
     expect(output).toEqual(
-      new RequiredFieldError(requiredFieldValidationFieldName)
-    );
-  });
+      new RequiredFieldError(requiredFieldValidationFieldName),
+    )
+  })
 
   it('should return null if validation succeeds', async () => {
     const output = requiredFieldValidation.validate({
       [requiredFieldValidationFieldName]: faker.datatype.string(),
-    });
+    })
 
-    expect(output).toBeNull();
-  });
-});
+    expect(output).toBeNull()
+  })
+})

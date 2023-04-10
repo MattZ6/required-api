@@ -1,24 +1,24 @@
-import { ICreateErrorRepository } from '@application/protocols/repositories/error';
+import { ICreateErrorRepository } from '@application/protocols/repositories/error'
 
-import { internalServerError } from '@presentation/helpers/http';
+import { internalServerError } from '@presentation/helpers/http'
 import {
   IController,
   IHttpRequest,
   IHttpResponse,
-} from '@presentation/protocols';
+} from '@presentation/protocols'
 
 export class ControllerErrorHandlerDecorator implements IController {
   constructor(
     private readonly controller: IController,
     private readonly createErrorRepository: ICreateErrorRepository,
-    private readonly mustLog: boolean
+    private readonly mustLog: boolean,
   ) {}
 
   async handle(request: IHttpRequest): Promise<IHttpResponse> {
     try {
-      const response = await this.controller.handle(request);
+      const response = await this.controller.handle(request)
 
-      return response;
+      return response
     } catch (error) {
       this.createErrorRepository
         .create({
@@ -30,16 +30,16 @@ export class ControllerErrorHandlerDecorator implements IController {
         })
         .then(() => {
           if (this.mustLog) {
-            console.log('Error successfully registered');
+            console.log('Error successfully registered')
           }
         })
         .catch(() => {
           if (this.mustLog) {
-            console.log('Fail to register the error');
+            console.log('Fail to register the error')
           }
-        });
+        })
 
-      return internalServerError(error);
+      return internalServerError(error)
     }
   }
 }

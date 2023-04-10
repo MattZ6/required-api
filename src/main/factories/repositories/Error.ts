@@ -1,5 +1,5 @@
-import { PrismaErrorsRepository } from '@infra/database/prisma/repositories/Error';
+import { PrismaErrorsRepository } from '@infra/database/prisma/repositories/Error'
 
 export function makeErrorsRepository() {
-  return new PrismaErrorsRepository();
+  return new PrismaErrorsRepository()
 }

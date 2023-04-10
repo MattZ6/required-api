@@ -1,3 +1,3 @@
-export * from './providers';
-export * from './repositories';
-export * from './usecases';
+export * from './providers'
+export * from './repositories'
+export * from './usecases'

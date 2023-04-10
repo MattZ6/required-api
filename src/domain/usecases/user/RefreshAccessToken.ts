@@ -1,17 +1,17 @@
-import { Authentication } from '@domain/entities/Authentication';
+import { Authentication } from '@domain/entities/Authentication'
 
 interface IRefreshUserAccessTokenUseCase {
   execute(
-    data: IRefreshUserAccessTokenUseCase.Input
-  ): Promise<IRefreshUserAccessTokenUseCase.Output>;
+    data: IRefreshUserAccessTokenUseCase.Input,
+  ): Promise<IRefreshUserAccessTokenUseCase.Output>
 }
 
 namespace IRefreshUserAccessTokenUseCase {
   export type Input = {
-    refresh_token: string;
-  };
+    refresh_token: string
+  }
 
-  export type Output = Authentication;
+  export type Output = Authentication
 }
 
-export { IRefreshUserAccessTokenUseCase };
+export { IRefreshUserAccessTokenUseCase }

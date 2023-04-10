@@ -1,189 +1,189 @@
-import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { beforeEach, describe, expect, it, vitest } from 'vitest'
 
 import {
   UserNotFoundWithProvidedIdError,
   UserAlreadyExistsWithProvidedEmailError,
-} from '@domain/errors';
+} from '@domain/errors'
 
-import { UpdateUserEmailUseCase } from '@application/usecases/user/UpdateEmail';
+import { UpdateUserEmailUseCase } from '@application/usecases/user/UpdateEmail'
 
-import { makeErrorMock, makeUserMock } from '../../../domain';
+import { makeErrorMock, makeUserMock } from '../../../domain'
 import {
   FindUserByIdRepositorySpy,
   CheckIfUserExistsByEmailRepositorySpy,
   UpdateUserRepositorySpy,
   makeUpdateUserEmailUseCaseInputMock,
-} from '../../mocks';
+} from '../../mocks'
 
-let findUserByIdRepositorySpy: FindUserByIdRepositorySpy;
-let checkIfUserExistsByEmailRepositorySpy: CheckIfUserExistsByEmailRepositorySpy;
-let updateUserRepositorySpy: UpdateUserRepositorySpy;
+let findUserByIdRepositorySpy: FindUserByIdRepositorySpy
+let checkIfUserExistsByEmailRepositorySpy: CheckIfUserExistsByEmailRepositorySpy
+let updateUserRepositorySpy: UpdateUserRepositorySpy
 
-let updateUserEmailUseCase: UpdateUserEmailUseCase;
+let updateUserEmailUseCase: UpdateUserEmailUseCase
 
 describe('UpdateUserEmailUseCase', () => {
   beforeEach(() => {
-    findUserByIdRepositorySpy = new FindUserByIdRepositorySpy();
+    findUserByIdRepositorySpy = new FindUserByIdRepositorySpy()
     checkIfUserExistsByEmailRepositorySpy =
-      new CheckIfUserExistsByEmailRepositorySpy();
-    updateUserRepositorySpy = new UpdateUserRepositorySpy();
+      new CheckIfUserExistsByEmailRepositorySpy()
+    updateUserRepositorySpy = new UpdateUserRepositorySpy()
 
     updateUserEmailUseCase = new UpdateUserEmailUseCase(
       findUserByIdRepositorySpy,
       checkIfUserExistsByEmailRepositorySpy,
-      updateUserRepositorySpy
-    );
-  });
+      updateUserRepositorySpy,
+    )
+  })
 
   it('should call FindUserByIdRepository once with correct values', async () => {
-    const findByIdSpy = vitest.spyOn(findUserByIdRepositorySpy, 'findById');
+    const findByIdSpy = vitest.spyOn(findUserByIdRepositorySpy, 'findById')
 
-    const input = makeUpdateUserEmailUseCaseInputMock();
+    const input = makeUpdateUserEmailUseCaseInputMock()
 
-    await updateUserEmailUseCase.execute(input);
+    await updateUserEmailUseCase.execute(input)
 
-    expect(findByIdSpy).toHaveBeenCalledTimes(1);
-    expect(findByIdSpy).toHaveBeenCalledWith({ id: input.user_id });
-  });
+    expect(findByIdSpy).toHaveBeenCalledTimes(1)
+    expect(findByIdSpy).toHaveBeenCalledWith({ id: input.user_id })
+  })
 
   it('should throw if FindUserByIdRepository throws', async () => {
-    const errorMock = makeErrorMock();
+    const errorMock = makeErrorMock()
 
     vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockRejectedValueOnce(errorMock);
+      .mockRejectedValueOnce(errorMock)
 
-    const input = makeUpdateUserEmailUseCaseInputMock();
+    const input = makeUpdateUserEmailUseCaseInputMock()
 
-    const promise = updateUserEmailUseCase.execute(input);
+    const promise = updateUserEmailUseCase.execute(input)
 
-    await expect(promise).rejects.toThrowError(errorMock);
-  });
+    await expect(promise).rejects.toThrowError(errorMock)
+  })
 
   it('should throw UserNotFoundWithProvidedIdError if FindUserByIdRepository returns undefined', async () => {
     vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockResolvedValueOnce(undefined);
+      .mockResolvedValueOnce(undefined)
 
-    const input = makeUpdateUserEmailUseCaseInputMock();
+    const input = makeUpdateUserEmailUseCaseInputMock()
 
-    const promise = updateUserEmailUseCase.execute(input);
+    const promise = updateUserEmailUseCase.execute(input)
 
     await expect(promise).rejects.toBeInstanceOf(
-      UserNotFoundWithProvidedIdError
-    );
-  });
+      UserNotFoundWithProvidedIdError,
+    )
+  })
 
   it('should call CheckIfUserExistsByEmailRepository once with correct values only if the email has changed', async () => {
     const checkIfExistsByEmailSpy = vitest.spyOn(
       checkIfUserExistsByEmailRepositorySpy,
-      'checkIfExistsByEmail'
-    );
+      'checkIfExistsByEmail',
+    )
 
-    const input = makeUpdateUserEmailUseCaseInputMock();
+    const input = makeUpdateUserEmailUseCaseInputMock()
 
-    await updateUserEmailUseCase.execute(input);
+    await updateUserEmailUseCase.execute(input)
 
-    expect(checkIfExistsByEmailSpy).toHaveBeenCalledTimes(1);
+    expect(checkIfExistsByEmailSpy).toHaveBeenCalledTimes(1)
     expect(checkIfExistsByEmailSpy).toHaveBeenCalledWith({
       email: input.email,
-    });
-  });
+    })
+  })
 
   it('should not call CheckIfUserExistsByEmailRepository if the email has not changed', async () => {
-    const userMock = makeUserMock();
+    const userMock = makeUserMock()
 
     vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockResolvedValueOnce(userMock);
+      .mockResolvedValueOnce(userMock)
 
     const checkIfExistsByEmailSpy = vitest.spyOn(
       checkIfUserExistsByEmailRepositorySpy,
-      'checkIfExistsByEmail'
-    );
+      'checkIfExistsByEmail',
+    )
 
-    const input = makeUpdateUserEmailUseCaseInputMock();
+    const input = makeUpdateUserEmailUseCaseInputMock()
 
-    input.email = `   ${userMock.email.toUpperCase()} `;
+    input.email = `   ${userMock.email.toUpperCase()} `
 
-    await updateUserEmailUseCase.execute(input);
+    await updateUserEmailUseCase.execute(input)
 
-    expect(checkIfExistsByEmailSpy).not.toHaveBeenCalled();
-  });
+    expect(checkIfExistsByEmailSpy).not.toHaveBeenCalled()
+  })
 
   it('should throw if CheckIfUserExistsByEmailRepository throws', async () => {
-    const errorMock = makeErrorMock();
+    const errorMock = makeErrorMock()
 
     vitest
       .spyOn(checkIfUserExistsByEmailRepositorySpy, 'checkIfExistsByEmail')
-      .mockRejectedValueOnce(errorMock);
+      .mockRejectedValueOnce(errorMock)
 
-    const input = makeUpdateUserEmailUseCaseInputMock();
+    const input = makeUpdateUserEmailUseCaseInputMock()
 
-    const promise = updateUserEmailUseCase.execute(input);
+    const promise = updateUserEmailUseCase.execute(input)
 
-    await expect(promise).rejects.toThrowError(errorMock);
-  });
+    await expect(promise).rejects.toThrowError(errorMock)
+  })
 
   it('should throw UserAlreadyExistsWithProvidedEmailError if CheckIfUserExistsByEmailRepository returns true', async () => {
     vitest
       .spyOn(checkIfUserExistsByEmailRepositorySpy, 'checkIfExistsByEmail')
-      .mockResolvedValueOnce(true);
+      .mockResolvedValueOnce(true)
 
-    const input = makeUpdateUserEmailUseCaseInputMock();
+    const input = makeUpdateUserEmailUseCaseInputMock()
 
-    const promise = updateUserEmailUseCase.execute(input);
+    const promise = updateUserEmailUseCase.execute(input)
 
     await expect(promise).rejects.toBeInstanceOf(
-      UserAlreadyExistsWithProvidedEmailError
-    );
-  });
+      UserAlreadyExistsWithProvidedEmailError,
+    )
+  })
 
   it('should call UpdateUserRepository once with correct values', async () => {
-    const userMock = makeUserMock();
+    const userMock = makeUserMock()
 
     vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
-      .mockResolvedValueOnce(userMock);
+      .mockResolvedValueOnce(userMock)
 
-    const updateSpy = vitest.spyOn(updateUserRepositorySpy, 'update');
+    const updateSpy = vitest.spyOn(updateUserRepositorySpy, 'update')
 
-    const input = makeUpdateUserEmailUseCaseInputMock();
+    const input = makeUpdateUserEmailUseCaseInputMock()
 
-    await updateUserEmailUseCase.execute(input);
+    await updateUserEmailUseCase.execute(input)
 
-    expect(updateSpy).toBeCalledTimes(1);
+    expect(updateSpy).toBeCalledTimes(1)
     expect(updateSpy).toHaveBeenCalledWith({
       id: input.user_id,
       email: input.email,
-    });
-  });
+    })
+  })
 
   it('should throw if UpdateUserRepository throws', async () => {
-    const errorMock = makeErrorMock();
+    const errorMock = makeErrorMock()
 
     vitest
       .spyOn(updateUserRepositorySpy, 'update')
-      .mockRejectedValueOnce(errorMock);
+      .mockRejectedValueOnce(errorMock)
 
-    const input = makeUpdateUserEmailUseCaseInputMock();
+    const input = makeUpdateUserEmailUseCaseInputMock()
 
-    const promise = updateUserEmailUseCase.execute(input);
+    const promise = updateUserEmailUseCase.execute(input)
 
-    await expect(promise).rejects.toThrowError(errorMock);
-  });
+    await expect(promise).rejects.toThrowError(errorMock)
+  })
 
   it('should return user on success', async () => {
-    const userMock = makeUserMock();
+    const userMock = makeUserMock()
 
     vitest
       .spyOn(updateUserRepositorySpy, 'update')
-      .mockResolvedValueOnce(userMock);
+      .mockResolvedValueOnce(userMock)
 
-    const input = makeUpdateUserEmailUseCaseInputMock();
+    const input = makeUpdateUserEmailUseCaseInputMock()
 
-    const output = await updateUserEmailUseCase.execute(input);
+    const output = await updateUserEmailUseCase.execute(input)
 
-    expect(output).toEqual(userMock);
-  });
-});
+    expect(output).toEqual(userMock)
+  })
+})

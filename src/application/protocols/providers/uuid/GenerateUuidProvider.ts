@@ -1,9 +1,9 @@
 interface IGenerateUuidProvider {
-  generate(): Promise<IGenerateUuidProvider.Output>;
+  generate(): Promise<IGenerateUuidProvider.Output>
 }
 
 namespace IGenerateUuidProvider {
-  export type Output = string;
+  export type Output = string
 }
 
-export { IGenerateUuidProvider };
+export { IGenerateUuidProvider }
