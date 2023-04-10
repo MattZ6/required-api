@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { MinLengthFieldError } from '@presentation/validations/errors';
 import { MinLengthFieldValidation } from '@presentation/validations/validators';

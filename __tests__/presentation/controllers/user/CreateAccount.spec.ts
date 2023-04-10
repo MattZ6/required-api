@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+
 import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
 
 import { CreateAccountController } from '@presentation/controllers/user/CreateAccount';
@@ -28,7 +30,7 @@ describe('CreateAccountController', () => {
   });
 
   it('should call Validation with correct values', async () => {
-    const validateSpy = jest.spyOn(validation, 'validate');
+    const validateSpy = vitest.spyOn(validation, 'validate');
 
     const request = makeCreateAccountControllerRequestMock();
 
@@ -41,7 +43,7 @@ describe('CreateAccountController', () => {
   it('should throw if Validation throws', async () => {
     const error = makeErrorMock();
 
-    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+    vitest.spyOn(validation, 'validate').mockImplementationOnce(() => {
       throw error;
     });
 
@@ -55,7 +57,7 @@ describe('CreateAccountController', () => {
   it('should return bad request (400) if Validation throws ValidationError', async () => {
     const error = makeValidationErrorMock();
 
-    jest.spyOn(validation, 'validate').mockReturnValueOnce(error);
+    vitest.spyOn(validation, 'validate').mockReturnValueOnce(error);
 
     const request = makeCreateAccountControllerRequestMock();
 
@@ -65,7 +67,7 @@ describe('CreateAccountController', () => {
   });
 
   it('should call CreateUserUseCase once with correct values', async () => {
-    const executeSpy = jest.spyOn(createUserUseCaseSpy, 'execute');
+    const executeSpy = vitest.spyOn(createUserUseCaseSpy, 'execute');
 
     const request = makeCreateAccountControllerRequestMock();
 
@@ -82,7 +84,7 @@ describe('CreateAccountController', () => {
   it('should throw if CreateUserUseCase throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(createUserUseCaseSpy, 'execute')
       .mockRejectedValueOnce(errorMock);
 
@@ -96,7 +98,7 @@ describe('CreateAccountController', () => {
   it('should return conflict (409) if CreateUserUseCase throws UserAlreadyExistsWithProvidedEmailError', async () => {
     const error = new UserAlreadyExistsWithProvidedEmailError();
 
-    jest.spyOn(createUserUseCaseSpy, 'execute').mockRejectedValueOnce(error);
+    vitest.spyOn(createUserUseCaseSpy, 'execute').mockRejectedValueOnce(error);
 
     const request = makeCreateAccountControllerRequestMock();
 

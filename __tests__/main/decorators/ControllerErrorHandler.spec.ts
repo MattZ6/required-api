@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+
 import { internalServerError } from '@presentation/helpers/http';
 
 import { ControllerErrorHandlerDecorator } from '@main/decorators/ControllerErrorHandler';
@@ -27,7 +29,7 @@ describe('ControllerErrorHandlerDecorator', () => {
   });
 
   it('should call Controller once with correct values', async () => {
-    const handleSpy = jest.spyOn(controllerSpy, 'handle');
+    const handleSpy = vitest.spyOn(controllerSpy, 'handle');
 
     const request = makeControllerHttpRequestMock();
 
@@ -40,9 +42,9 @@ describe('ControllerErrorHandlerDecorator', () => {
   it('should call CreateErrorRepository once with correct values on error', async () => {
     const errorMock = makeErrorMock();
 
-    jest.spyOn(controllerSpy, 'handle').mockRejectedValueOnce(errorMock);
+    vitest.spyOn(controllerSpy, 'handle').mockRejectedValueOnce(errorMock);
 
-    const createSpy = jest.spyOn(createErrorRepositorySpy, 'create');
+    const createSpy = vitest.spyOn(createErrorRepositorySpy, 'create');
 
     const request = makeControllerHttpRequestMock();
 
@@ -63,9 +65,9 @@ describe('ControllerErrorHandlerDecorator', () => {
 
     errorMock.stack = undefined;
 
-    jest.spyOn(controllerSpy, 'handle').mockRejectedValueOnce(errorMock);
+    vitest.spyOn(controllerSpy, 'handle').mockRejectedValueOnce(errorMock);
 
-    const createSpy = jest.spyOn(createErrorRepositorySpy, 'create');
+    const createSpy = vitest.spyOn(createErrorRepositorySpy, 'create');
 
     const request = makeControllerHttpRequestMock();
 
@@ -84,7 +86,7 @@ describe('ControllerErrorHandlerDecorator', () => {
   it('should return internal server error (500) if Controller throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest.spyOn(controllerSpy, 'handle').mockRejectedValueOnce(errorMock);
+    vitest.spyOn(controllerSpy, 'handle').mockRejectedValueOnce(errorMock);
 
     const request = makeControllerHttpRequestMock();
 
@@ -96,7 +98,7 @@ describe('ControllerErrorHandlerDecorator', () => {
   it('should return same Controller response on success ', async () => {
     const responseMock = makeControllerHttpResponseMock();
 
-    jest.spyOn(controllerSpy, 'handle').mockResolvedValueOnce(responseMock);
+    vitest.spyOn(controllerSpy, 'handle').mockResolvedValueOnce(responseMock);
 
     const request = makeControllerHttpRequestMock();
 

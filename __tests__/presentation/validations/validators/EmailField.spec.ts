@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 
 import { InvalidEmailFieldError } from '@presentation/validations/errors';
 import { EmailFieldValidation } from '@presentation/validations/validators';
@@ -27,7 +28,7 @@ describe('EmailFieldValidation', () => {
   });
 
   it('should call EmailValidator once with correct values', async () => {
-    const isValidSpy = jest.spyOn(emailValidatorSpy, 'isValid');
+    const isValidSpy = vitest.spyOn(emailValidatorSpy, 'isValid');
 
     const email = faker.internet.email();
 
@@ -56,7 +57,7 @@ describe('EmailFieldValidation', () => {
   });
 
   it('should return InvalidEmailFieldError if EmailValidator returns false', async () => {
-    jest.spyOn(emailValidatorSpy, 'isValid').mockReturnValueOnce(false);
+    vitest.spyOn(emailValidatorSpy, 'isValid').mockReturnValueOnce(false);
 
     const output = emailFieldValidation.validate({
       [emailFieldValidationFieldName]: faker.internet.email(),

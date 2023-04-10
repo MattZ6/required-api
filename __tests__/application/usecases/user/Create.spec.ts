@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 
 import { UserAlreadyExistsWithProvidedEmailError } from '@domain/errors';
 
@@ -33,7 +34,7 @@ describe('CreateUserUseCase', () => {
   });
 
   it('should call CheckIfUserExistsByEmailRepository once with correct values', async () => {
-    const checkIfExistsByEmailSpy = jest.spyOn(
+    const checkIfExistsByEmailSpy = vitest.spyOn(
       checkIfUserExistsByEmailRepositorySpy,
       'checkIfExistsByEmail'
     );
@@ -51,7 +52,7 @@ describe('CreateUserUseCase', () => {
   it('should throw if CheckIfUserExistsByEmailRepository throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(checkIfUserExistsByEmailRepositorySpy, 'checkIfExistsByEmail')
       .mockRejectedValueOnce(errorMock);
 
@@ -63,7 +64,7 @@ describe('CreateUserUseCase', () => {
   });
 
   it('should throw UserAlreadyExistsWithProvidedEmailError if CheckIfUserExistsByEmailRepository returns true', async () => {
-    jest
+    vitest
       .spyOn(checkIfUserExistsByEmailRepositorySpy, 'checkIfExistsByEmail')
       .mockResolvedValueOnce(true);
 
@@ -77,7 +78,7 @@ describe('CreateUserUseCase', () => {
   });
 
   it('should call GenerateHashProvider once with correct values', async () => {
-    const hashSpy = jest.spyOn(generateHashProviderSpy, 'hash');
+    const hashSpy = vitest.spyOn(generateHashProviderSpy, 'hash');
 
     const input = makeCreateUserUseCaseInputMock();
 
@@ -92,7 +93,7 @@ describe('CreateUserUseCase', () => {
   it('should throw if GenerateHashProvider throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(generateHashProviderSpy, 'hash')
       .mockRejectedValueOnce(errorMock);
 
@@ -106,11 +107,11 @@ describe('CreateUserUseCase', () => {
   it('should call CreateUserRepository once with correct values', async () => {
     const hashedPassword = faker.internet.password();
 
-    jest
+    vitest
       .spyOn(generateHashProviderSpy, 'hash')
       .mockResolvedValueOnce(hashedPassword);
 
-    const createSpy = jest.spyOn(createUserRepositorySpy, 'create');
+    const createSpy = vitest.spyOn(createUserRepositorySpy, 'create');
 
     const input = makeCreateUserUseCaseInputMock();
 
@@ -127,7 +128,7 @@ describe('CreateUserUseCase', () => {
   it('should throw if CreateUserRepository throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(createUserRepositorySpy, 'create')
       .mockRejectedValueOnce(errorMock);
 
@@ -141,7 +142,7 @@ describe('CreateUserUseCase', () => {
   it('should return user on success', async () => {
     const userMock = makeUserMock();
 
-    jest
+    vitest
       .spyOn(createUserRepositorySpy, 'create')
       .mockResolvedValueOnce(userMock);
 

@@ -47,7 +47,7 @@ jobs:
       run: pnpm install
 
     - name: Collect coverage
-      run: pnpm test:cov
+      run: pnpm test:ci:cov
 
     - name: Report to Coveralls
       uses: coverallsapp/github-action@1.1.3

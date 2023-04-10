@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+
 import {
   AccessTokenNotProvidedError,
   InvalidAccessTokenError,
@@ -37,7 +39,7 @@ describe('AuthenticationMiddleware', () => {
   });
 
   it('should call VerifyCriptographyProvider once with correct values', async () => {
-    const verifySpy = jest.spyOn(verifyCriptographyProviderSpy, 'verify');
+    const verifySpy = vitest.spyOn(verifyCriptographyProviderSpy, 'verify');
 
     const request = makeAuthenticationMiddlewareRequestMock();
 
@@ -52,7 +54,7 @@ describe('AuthenticationMiddleware', () => {
   it('should throw if VerifyCriptographyProvider throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(verifyCriptographyProviderSpy, 'verify')
       .mockRejectedValueOnce(errorMock);
 
@@ -66,7 +68,7 @@ describe('AuthenticationMiddleware', () => {
   it('should return unauthorized (401) if VerifyCriptographyProvider throws a InvalidAccessTokenError', async () => {
     const errorMock = new InvalidAccessTokenError();
 
-    jest
+    vitest
       .spyOn(verifyCriptographyProviderSpy, 'verify')
       .mockRejectedValueOnce(errorMock);
 
@@ -80,7 +82,7 @@ describe('AuthenticationMiddleware', () => {
   it('should return unauthorized (401) if VerifyCriptographyProvider throws a AccessTokenExpiredError', async () => {
     const errorMock = new AccessTokenExpiredError();
 
-    jest
+    vitest
       .spyOn(verifyCriptographyProviderSpy, 'verify')
       .mockRejectedValueOnce(errorMock);
 
@@ -94,7 +96,7 @@ describe('AuthenticationMiddleware', () => {
   it('should return ok (200) on success', async () => {
     const outputMock = makeVerifyCriptographyProviderOutputMock();
 
-    jest
+    vitest
       .spyOn(verifyCriptographyProviderSpy, 'verify')
       .mockResolvedValueOnce(outputMock);
 

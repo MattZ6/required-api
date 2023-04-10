@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 
 import { UpdateUserNameUseCase } from '@application/usecases/user/UpdateName';
@@ -26,7 +28,7 @@ describe('UpdateUserNameUseCase', () => {
   });
 
   it('should call FindUserByIdRepository once with correct values', async () => {
-    const findByIdSpy = jest.spyOn(findUserByIdRepositorySpy, 'findById');
+    const findByIdSpy = vitest.spyOn(findUserByIdRepositorySpy, 'findById');
 
     const input = makeUpdateUserNameUseCaseInputMock();
 
@@ -39,7 +41,7 @@ describe('UpdateUserNameUseCase', () => {
   it('should throw if FindUserByIdRepository throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockRejectedValueOnce(errorMock);
 
@@ -51,7 +53,7 @@ describe('UpdateUserNameUseCase', () => {
   });
 
   it('should throw UserNotFoundWithProvidedIdError if FindUserByIdRepository returns undefined', async () => {
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockResolvedValueOnce(undefined);
 
@@ -67,11 +69,11 @@ describe('UpdateUserNameUseCase', () => {
   it('should call UpdateUserRepository once with correct values', async () => {
     const userMock = makeUserMock();
 
-    jest
+    vitest
       .spyOn(findUserByIdRepositorySpy, 'findById')
       .mockResolvedValueOnce(userMock);
 
-    const updateSpy = jest.spyOn(updateUserRepositorySpy, 'update');
+    const updateSpy = vitest.spyOn(updateUserRepositorySpy, 'update');
 
     const input = makeUpdateUserNameUseCaseInputMock();
 
@@ -87,7 +89,7 @@ describe('UpdateUserNameUseCase', () => {
   it('should throw if UpdateUserRepository throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(updateUserRepositorySpy, 'update')
       .mockRejectedValueOnce(errorMock);
 
@@ -101,7 +103,7 @@ describe('UpdateUserNameUseCase', () => {
   it('should return user on success', async () => {
     const userMock = makeUserMock();
 
-    jest
+    vitest
       .spyOn(updateUserRepositorySpy, 'update')
       .mockResolvedValueOnce(userMock);
 

@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+
 import {
   UserNotFoundWithProvidedEmailError,
   WrongPasswordError,
@@ -38,7 +40,7 @@ describe('AuthenticateUserController', () => {
   });
 
   it('should call Validation with correct values', async () => {
-    const validateSpy = jest.spyOn(validation, 'validate');
+    const validateSpy = vitest.spyOn(validation, 'validate');
 
     const request = makeAuthenticateUserControllerRequestMock();
 
@@ -51,7 +53,7 @@ describe('AuthenticateUserController', () => {
   it('should throw if Validation throws', async () => {
     const error = makeErrorMock();
 
-    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+    vitest.spyOn(validation, 'validate').mockImplementationOnce(() => {
       throw error;
     });
 
@@ -65,7 +67,7 @@ describe('AuthenticateUserController', () => {
   it('should return bad request (400) if Validation throws ValidationError', async () => {
     const error = makeValidationErrorMock();
 
-    jest.spyOn(validation, 'validate').mockReturnValueOnce(error);
+    vitest.spyOn(validation, 'validate').mockReturnValueOnce(error);
 
     const request = makeAuthenticateUserControllerRequestMock();
 
@@ -75,7 +77,7 @@ describe('AuthenticateUserController', () => {
   });
 
   it('should call AuthenticateUserUseCase once with correct values', async () => {
-    const executeSpy = jest.spyOn(authenticateUserUseCaseSpy, 'execute');
+    const executeSpy = vitest.spyOn(authenticateUserUseCaseSpy, 'execute');
 
     const request = makeAuthenticateUserControllerRequestMock();
 
@@ -91,7 +93,7 @@ describe('AuthenticateUserController', () => {
   it('should throw if AuthenticateUserUseCase throws', async () => {
     const error = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(authenticateUserUseCaseSpy, 'execute')
       .mockRejectedValueOnce(error);
 
@@ -105,7 +107,7 @@ describe('AuthenticateUserController', () => {
   it('should return no found (404) if AuthenticateUserUseCase throws UserNotFoundWithProvidedEmailError', async () => {
     const error = new UserNotFoundWithProvidedEmailError();
 
-    jest
+    vitest
       .spyOn(authenticateUserUseCaseSpy, 'execute')
       .mockRejectedValueOnce(error);
 
@@ -119,7 +121,7 @@ describe('AuthenticateUserController', () => {
   it('should return unprocessable entity (422) if AuthenticateUserUseCase throws WrongPasswordError', async () => {
     const error = new WrongPasswordError();
 
-    jest
+    vitest
       .spyOn(authenticateUserUseCaseSpy, 'execute')
       .mockRejectedValueOnce(error);
 
@@ -133,7 +135,7 @@ describe('AuthenticateUserController', () => {
   it('should return ok (200) with authentication data on success', async () => {
     const outputMock = makeAuthenticateUserUseCaseOutputMock();
 
-    jest
+    vitest
       .spyOn(authenticateUserUseCaseSpy, 'execute')
       .mockResolvedValueOnce(outputMock);
 

@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 
 import {
   UserTokenNotFoundWithProvidedTokenError,
@@ -32,11 +32,11 @@ let refreshUserAccessTokenUseCase: RefreshUserAccessTokenUseCase;
 function setValidTokenTimeMock() {
   const userTokenMock = makeUserTokenMock();
 
-  jest
+  vitest
     .spyOn(findUserTokenByTokenRepositorySpy, 'findByToken')
     .mockResolvedValueOnce(userTokenMock);
 
-  jest
+  vitest
     .spyOn(Date, 'now')
     .mockReturnValueOnce(userTokenMock.expires_in.getTime());
 
@@ -64,7 +64,7 @@ describe('RefreshUserAccessTokenUseCase', () => {
   });
 
   it('should call FindUserTokenByTokenRepository once with correct values', async () => {
-    const findByTokenSpy = jest.spyOn(
+    const findByTokenSpy = vitest.spyOn(
       findUserTokenByTokenRepositorySpy,
       'findByToken'
     );
@@ -80,7 +80,7 @@ describe('RefreshUserAccessTokenUseCase', () => {
   it('should throw if FindUserTokenByTokenRepository throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(findUserTokenByTokenRepositorySpy, 'findByToken')
       .mockRejectedValueOnce(errorMock);
 
@@ -92,7 +92,7 @@ describe('RefreshUserAccessTokenUseCase', () => {
   });
 
   it('should throw UserTokenNotFoundWithProvidedTokenError if token does not exist', async () => {
-    jest
+    vitest
       .spyOn(findUserTokenByTokenRepositorySpy, 'findByToken')
       .mockResolvedValueOnce(undefined);
 
@@ -108,11 +108,11 @@ describe('RefreshUserAccessTokenUseCase', () => {
   it('should throw UserTokenExpiredError if token has expired', async () => {
     const userTokenMock = makeUserTokenMock();
 
-    jest
+    vitest
       .spyOn(findUserTokenByTokenRepositorySpy, 'findByToken')
       .mockResolvedValueOnce(userTokenMock);
 
-    jest
+    vitest
       .spyOn(Date, 'now')
       .mockReturnValueOnce(userTokenMock.expires_in.getTime() + 1);
 
@@ -126,7 +126,7 @@ describe('RefreshUserAccessTokenUseCase', () => {
   it('should call EncryptProvider once with correct values', async () => {
     const { userTokenMock } = setValidTokenTimeMock();
 
-    const encryptSpy = jest.spyOn(encryptProviderSpy, 'encrypt');
+    const encryptSpy = vitest.spyOn(encryptProviderSpy, 'encrypt');
 
     const input = makeRefreshUserAccessTokenUseCaseInputMock();
 
@@ -143,7 +143,9 @@ describe('RefreshUserAccessTokenUseCase', () => {
 
     const errorMock = makeErrorMock();
 
-    jest.spyOn(encryptProviderSpy, 'encrypt').mockRejectedValueOnce(errorMock);
+    vitest
+      .spyOn(encryptProviderSpy, 'encrypt')
+      .mockRejectedValueOnce(errorMock);
 
     const input = makeRefreshUserAccessTokenUseCaseInputMock();
 
@@ -155,7 +157,7 @@ describe('RefreshUserAccessTokenUseCase', () => {
   it('should call GenerateUuidProvider once', async () => {
     setValidTokenTimeMock();
 
-    const generateSpy = jest.spyOn(generateUuidProviderSpy, 'generate');
+    const generateSpy = vitest.spyOn(generateUuidProviderSpy, 'generate');
 
     const input = makeRefreshUserAccessTokenUseCaseInputMock();
 
@@ -169,7 +171,7 @@ describe('RefreshUserAccessTokenUseCase', () => {
 
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(generateUuidProviderSpy, 'generate')
       .mockRejectedValueOnce(errorMock);
 
@@ -183,17 +185,17 @@ describe('RefreshUserAccessTokenUseCase', () => {
   it('should call CreateUserTokenRepository once with correct values', async () => {
     const { userTokenMock } = setValidTokenTimeMock();
 
-    const now = faker.datatype.datetime();
+    const now = userTokenMock.expires_in;
 
-    jest.spyOn(Date, 'now').mockReturnValueOnce(now.getTime());
+    vitest.spyOn(Date, 'now').mockReturnValueOnce(now.getTime());
 
     const token = makeGenerateUuidProviderOutputMock();
 
-    jest
+    vitest
       .spyOn(generateUuidProviderSpy, 'generate')
       .mockResolvedValueOnce(token);
 
-    const createSpy = jest.spyOn(createUserTokenRepositorySpy, 'create');
+    const createSpy = vitest.spyOn(createUserTokenRepositorySpy, 'create');
 
     const input = makeRefreshUserAccessTokenUseCaseInputMock();
 
@@ -216,7 +218,7 @@ describe('RefreshUserAccessTokenUseCase', () => {
 
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(createUserTokenRepositorySpy, 'create')
       .mockRejectedValueOnce(errorMock);
 
@@ -230,7 +232,7 @@ describe('RefreshUserAccessTokenUseCase', () => {
   it('should call DeleteUserTokenByIdRepositorySpy once with correct values', async () => {
     const { userTokenMock } = setValidTokenTimeMock();
 
-    const deleteByIdSpy = jest.spyOn(
+    const deleteByIdSpy = vitest.spyOn(
       deleteUserTokenByIdRepositorySpy,
       'deleteById'
     );
@@ -248,7 +250,7 @@ describe('RefreshUserAccessTokenUseCase', () => {
 
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(deleteUserTokenByIdRepositorySpy, 'deleteById')
       .mockRejectedValueOnce(errorMock);
 
@@ -264,17 +266,17 @@ describe('RefreshUserAccessTokenUseCase', () => {
 
     const userTokenMock = makeUserTokenMock();
 
-    jest
+    vitest
       .spyOn(createUserTokenRepositorySpy, 'create')
       .mockResolvedValueOnce(userTokenMock);
 
     const accessToken = makeEncryptProviderOutputMock();
     const refreshToken = makeGenerateUuidProviderOutputMock();
 
-    jest
+    vitest
       .spyOn(encryptProviderSpy, 'encrypt')
       .mockResolvedValueOnce(accessToken);
-    jest
+    vitest
       .spyOn(generateUuidProviderSpy, 'generate')
       .mockResolvedValueOnce(refreshToken);
 

@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 
 import {
   MinLengthFieldError,
@@ -30,7 +31,7 @@ describe('ValidationComposite', () => {
 
     const errorMock = new RequiredFieldError(field);
 
-    jest
+    vitest
       .spyOn(validationsSpy[validationsSpy.length - 1], 'validate')
       .mockReturnValueOnce(errorMock);
 
@@ -46,8 +47,8 @@ describe('ValidationComposite', () => {
 
     const errorMock = new MinLengthFieldError(field, 3);
 
-    jest.spyOn(validationsSpy[0], 'validate').mockReturnValueOnce(errorMock);
-    jest
+    vitest.spyOn(validationsSpy[0], 'validate').mockReturnValueOnce(errorMock);
+    vitest
       .spyOn(validationsSpy[2], 'validate')
       .mockReturnValueOnce(new RequiredFieldError(field));
 

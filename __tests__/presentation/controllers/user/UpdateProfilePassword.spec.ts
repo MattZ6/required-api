@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+
 import {
   UserNotFoundWithProvidedIdError,
   WrongPasswordError,
@@ -36,7 +38,7 @@ describe('UpdateProfilePasswordController', () => {
   });
 
   it('should call Validation with correct values', async () => {
-    const validateSpy = jest.spyOn(validation, 'validate');
+    const validateSpy = vitest.spyOn(validation, 'validate');
 
     const request = makeUpdateProfilePasswordControllerRequestMock();
 
@@ -49,7 +51,7 @@ describe('UpdateProfilePasswordController', () => {
   it('should throw if Validation throws', async () => {
     const error = makeErrorMock();
 
-    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+    vitest.spyOn(validation, 'validate').mockImplementationOnce(() => {
       throw error;
     });
 
@@ -63,7 +65,7 @@ describe('UpdateProfilePasswordController', () => {
   it('should return bad request (400) if Validation throws ValidationError', async () => {
     const error = makeValidationErrorMock();
 
-    jest.spyOn(validation, 'validate').mockReturnValueOnce(error);
+    vitest.spyOn(validation, 'validate').mockReturnValueOnce(error);
 
     const request = makeUpdateProfilePasswordControllerRequestMock();
 
@@ -73,7 +75,7 @@ describe('UpdateProfilePasswordController', () => {
   });
 
   it('should call UpdateProfilePasswordController once with correct data', async () => {
-    const executeSpy = jest.spyOn(updateUserPasswordUseCaseSpy, 'execute');
+    const executeSpy = vitest.spyOn(updateUserPasswordUseCaseSpy, 'execute');
 
     const request = makeUpdateProfilePasswordControllerRequestMock();
 
@@ -90,7 +92,7 @@ describe('UpdateProfilePasswordController', () => {
   it('should throw if UpdateProfilePasswordController throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(updateUserPasswordUseCaseSpy, 'execute')
       .mockRejectedValueOnce(errorMock);
 
@@ -104,7 +106,7 @@ describe('UpdateProfilePasswordController', () => {
   it('should return not found (404) if UpdateUserPasswordUseCase throws UserNotFoundWithProvidedIdError', async () => {
     const error = new UserNotFoundWithProvidedIdError();
 
-    jest
+    vitest
       .spyOn(updateUserPasswordUseCaseSpy, 'execute')
       .mockRejectedValueOnce(error);
 
@@ -118,7 +120,7 @@ describe('UpdateProfilePasswordController', () => {
   it('should return unprocessable entity (422) if UpdateUserPasswordUseCase throws WrongPasswordError', async () => {
     const error = new WrongPasswordError();
 
-    jest
+    vitest
       .spyOn(updateUserPasswordUseCaseSpy, 'execute')
       .mockRejectedValueOnce(error);
 

@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+
 import { UserNotFoundWithProvidedIdError } from '@domain/errors';
 
 import { UpdateProfileNameController } from '@presentation/controllers/user/UpdateProfileName';
@@ -28,7 +30,7 @@ describe('UpdateProfileNameController', () => {
   });
 
   it('should call Validation with correct values', async () => {
-    const validateSpy = jest.spyOn(validation, 'validate');
+    const validateSpy = vitest.spyOn(validation, 'validate');
 
     const request = makeUpdateProfileNameControllerRequestMock();
 
@@ -41,7 +43,7 @@ describe('UpdateProfileNameController', () => {
   it('should throw if Validation throws', async () => {
     const error = makeErrorMock();
 
-    jest.spyOn(validation, 'validate').mockImplementationOnce(() => {
+    vitest.spyOn(validation, 'validate').mockImplementationOnce(() => {
       throw error;
     });
 
@@ -55,7 +57,7 @@ describe('UpdateProfileNameController', () => {
   it('should return bad request (400) if Validation throws ValidationError', async () => {
     const error = makeValidationErrorMock();
 
-    jest.spyOn(validation, 'validate').mockReturnValueOnce(error);
+    vitest.spyOn(validation, 'validate').mockReturnValueOnce(error);
 
     const request = makeUpdateProfileNameControllerRequestMock();
 
@@ -65,7 +67,7 @@ describe('UpdateProfileNameController', () => {
   });
 
   it('should call UpdateProfileNameController once with correct values', async () => {
-    const executeSpy = jest.spyOn(updateUserNameUseCaseSpy, 'execute');
+    const executeSpy = vitest.spyOn(updateUserNameUseCaseSpy, 'execute');
 
     const request = makeUpdateProfileNameControllerRequestMock();
 
@@ -81,7 +83,7 @@ describe('UpdateProfileNameController', () => {
   it('should throw if UpdateProfileNameController throws', async () => {
     const errorMock = makeErrorMock();
 
-    jest
+    vitest
       .spyOn(updateUserNameUseCaseSpy, 'execute')
       .mockRejectedValueOnce(errorMock);
 
@@ -95,7 +97,7 @@ describe('UpdateProfileNameController', () => {
   it('should return not found (404) if UpdateUserNameUseCase throws UserNotFoundWithProvidedIdError', async () => {
     const error = new UserNotFoundWithProvidedIdError();
 
-    jest
+    vitest
       .spyOn(updateUserNameUseCaseSpy, 'execute')
       .mockRejectedValueOnce(error);
 
