@@ -24,7 +24,8 @@ describe('ControllerErrorHandlerDecorator', () => {
 
     controllerErrorHandlerDecorator = new ControllerErrorHandlerDecorator(
       controllerSpy,
-      createErrorRepositorySpy
+      createErrorRepositorySpy,
+      false
     );
   });
 
