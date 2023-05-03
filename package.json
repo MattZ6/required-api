@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "auth-flow-api",
-  "description": "Simple API for user authentication.",
+  "name": "required-api",
+  "description": "API for simple user authentication flow",
   "version": "1.0.0",
   "license": "MIT",
   "author": {
@@ -11,9 +11,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/MattZ6/auth-flow-api"
+    "url": "https://github.com/MattZ6/required-api"
   },
-  "bugs": "https://github.com/MattZ6/auth-flow-api/issues",
+  "bugs": "https://github.com/MattZ6/required-api/issues",
   "scripts": {
     "prestart": "pnpm run db:migrate",
     "postinstall": "pnpm exec prisma generate",

@@ -1,9 +1,9 @@
 <div align="center">
   <h1>
-    🛡️ Auth Flow API
+    ✳️ required API
   </h1>
 
-  > Simple user authentication flow API.
+  > API for simple user authentication flow.
 
   <strong>🚧 Under development... 🚧</strong>
 
@@ -12,7 +12,7 @@
 
 ## 📝 Requirements
 
-You can find the project requirements [here](https://github.com/MattZ6/auth-flow-api/tree/main/.github/requirements).
+You can find the project requirements [here](https://github.com/MattZ6/required-api/tree/main/.github/requirements).
 
 ## 💡 You will need
 
@@ -27,15 +27,15 @@ You can find the project requirements [here](https://github.com/MattZ6/auth-flow
 In order to clone the project (via HTTPS), run this command:
 
 ```bash
-git clone https://github.com/MattZ6/auth-flow-api.git
+git clone https://github.com/MattZ6/required-api.git
 ```
 
-> 💡 SSH URLs provide access to a Git repository via SSH, a secure protocol. If you have a SSH key registered in your Github account, clone the project using this command: `git clone git@github.com:MattZ6/auth-flow-api.git`
+> 💡 SSH URLs provide access to a Git repository via SSH, a secure protocol. If you have a SSH key registered in your Github account, clone the project using this command: `git clone git@github.com:MattZ6/required-api.git`
 
 Go to project folder:
 
 ```bash
-cd auth-flow-api
+cd required-api
 ```
 
 ### Dependencies
@@ -111,9 +111,9 @@ pnpm test
 
 ## 🤝 Contributing
 
-> Contributions, issues and new features are **always welcome**! You can explore them [here](https://github.com/MattZ6/auth-flow-api/issues).
+> Contributions, issues and new features are **always welcome**! You can explore them [here](https://github.com/MattZ6/required-api/issues).
 
-Feel free to submit a new issue with a respective title and description on the the Auth Flow API repository. If you already found a solution to your problem, i would love to review your pull request! Have a look at our [contribution guidelines](.github/CONTRIBUTING.md) to find out about the coding standards.
+Feel free to submit a new issue with a respective title and description on the the **Required API** repository. If you already found a solution to your problem, i would love to review your pull request! Have a look at our [contribution guidelines](.github/CONTRIBUTING.md) to find out about the coding standards.
 
 ## 📜 License
 
@@ -126,10 +126,10 @@ Made with ❤ by [Matheus Felipe Zanin](https://github.com/MattZ6).<br/>
 
 
 [license-url]: LICENSE.md
-[license-image]: https://img.shields.io/github/license/MattZ6/auth-flow-api?color=303030&labelColor=232320&style=for-the-badge
+[license-image]: https://img.shields.io/github/license/MattZ6/required-api?color=303030&labelColor=232320&style=for-the-badge
 
-[build-image]: https://img.shields.io/github/actions/workflow/status/mattz6/auth-flow-api/coverage.yml?style=for-the-badge&labelColor=232320
-[build-url]: https://github.com/MattZ6/auth-flow-api/actions
+[build-image]: https://img.shields.io/github/actions/workflow/status/mattz6/required-api/coverage.yml?style=for-the-badge&labelColor=232320
+[build-url]: https://github.com/MattZ6/required-api/actions
 
-[coveralls-image]: https://img.shields.io/coveralls/github/MattZ6/auth-flow-api/main?style=for-the-badge&labelColor=232320
-[coveralls-url]: https://coveralls.io/github/MattZ6/auth-flow-api?branch=main
+[coveralls-image]: https://img.shields.io/coveralls/github/MattZ6/required-api/main?style=for-the-badge&labelColor=232320
+[coveralls-url]: https://coveralls.io/github/MattZ6/required-api?branch=main

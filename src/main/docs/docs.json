@@ -2,11 +2,11 @@
   "openapi": "3.0.0",
   "info": {
     "version": "v1.0.0",
-    "title": "Auth Flow API Docs",
+    "title": "required API Docs",
     "description": "API docs for authentication application.",
     "license": {
       "name": "MIT",
-      "url": "https://github.com/MattZ6/auth-flow-api/blob/main/LICENSE.md"
+      "url": "https://github.com/MattZ6/required-api/blob/main/LICENSE.md"
     },
     "contact": {
       "name": "Matheus",
@@ -15,7 +15,7 @@
     }
   },
   "externalDocs": {
-    "url": "https://github.com/MattZ6/auth-flow-api",
+    "url": "https://github.com/MattZ6/required-api",
     "description": "More info"
   },
   "tags": [
@@ -36,7 +36,7 @@
           "content": {
             "application/json": {
               "example": {
-                "email": "john.doe@authflow.com",
+                "email": "john.doe@required.com",
                 "password": "johnspassword"
               },
               "schema": {
@@ -162,7 +162,7 @@
             "application/json": {
               "example": {
                 "name": "Jane Doe",
-                "email": "jane.doe@authflow.com",
+                "email": "jane.doe@required.com",
                 "password": "janespassword",
                 "password_confirmation": "janespassword"
               },
@@ -432,7 +432,7 @@
                 "example": {
                   "id": "...",
                   "name": "John Doe",
-                  "email": "john.doe@authflow.com"
+                  "email": "john.doe@required.com"
                 }
               }
             }
@@ -610,7 +610,7 @@
           "content": {
             "application/json": {
               "example": {
-                "email": "jane.doe@authflow.com.br"
+                "email": "jane.doe@required.com.br"
               },
               "schema": {
                 "$ref": "#/components/schemas/UpdateUserEmailData"
