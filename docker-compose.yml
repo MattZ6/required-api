@@ -3,9 +3,9 @@ version: "3.9"
 services:
 
   # Database
-  auth_flow_database:
+  required_database:
     image: postgres:15.2-alpine
-    container_name: auth_flow_database
+    container_name: required_database
     restart: always
     ports:
       - ${DATABASE_PORT}:5432
@@ -19,9 +19,9 @@ services:
       - net
 
   # Application
-  auth_flow_api:
+  required_api:
     build: .
-    container_name: auth_flow_api
+    container_name: required_api
     restart: always
     env_file:
       - .env
@@ -30,9 +30,9 @@ services:
     volumes:
       - .:/node/app
     depends_on:
-      - auth_flow_database
+      - required_database
     links:
-      - auth_flow_database
+      - required_database
     networks:
       - net
 
