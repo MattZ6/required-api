@@ -5,7 +5,7 @@ export function setupHealthCheckEndpoint(app: Express) {
   // Maybe run migrations at this time
 
   app.get('/health', (_, res) => {
-    execSync(`npm run prisma migrate deploy`, { stdio: 'inherit' })
+    execSync(`pnpm run prisma migrate deploy`, { stdio: 'inherit' })
 
     return res.status(200).send()
   })
