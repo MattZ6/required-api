@@ -17,4 +17,6 @@ COPY --chown=node:node . .
 
 RUN pnpm prisma generate
 
+RUN pnpm run prisma migrate deploy
+
 CMD [ "pnpm", "dev" ]
