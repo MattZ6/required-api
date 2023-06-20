@@ -15,7 +15,7 @@
   },
   "bugs": "https://github.com/MattZ6/required-api/issues",
   "scripts": {
-    "prestart": "pnpm run db:migrate",
+    "prestart": "pnpm exec prisma migrate deploy",
     "postinstall": "pnpm exec prisma generate",
     "build": "rm -rf dist && babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "start": "node dist/main/server.js",
@@ -34,7 +34,7 @@
     "db:config": "pnpm run db:migrate"
   },
   "engines": {
-    "node": "18.16.0"
+    "node": ">=18.12.1"
   },
   "prisma": {
     "schema": "src/infra/database/prisma/schema.prisma"
