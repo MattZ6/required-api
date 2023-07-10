@@ -5,6 +5,8 @@
 
   > API for simple user authentication flow.
 
+  <strong>🚧 Discontinued 🚧</strong>
+
   [![build-image]][build-url] [![coveralls-image]][coveralls-url] [![license-image]][license-url]
 </div>
 
