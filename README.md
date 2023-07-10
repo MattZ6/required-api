@@ -5,8 +5,6 @@
 
   > API for simple user authentication flow.
 
-  <strong>🚧 Under development... 🚧</strong>
-
   [![build-image]][build-url] [![coveralls-image]][coveralls-url] [![license-image]][license-url]
 </div>
 
