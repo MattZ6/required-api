@@ -9,6 +9,7 @@
     "no-useless-constructor": "off",
     "camelcase": "off",
     "no-redeclare": "off",
+    "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/naming-convention": [
       "error",
       {
